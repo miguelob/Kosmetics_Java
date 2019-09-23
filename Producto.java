@@ -14,6 +14,10 @@ public abstract class Producto{
         this.price = price;
         this.brand = brand;
         this.description = description;
+        this.initializeSurvey();
+    }
+    private void initializeSurvey(){
+        this.survey.put("longwear",0);
     }
     public abstract setHashMap();
 

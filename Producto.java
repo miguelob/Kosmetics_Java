@@ -19,8 +19,6 @@ public abstract class Producto{
     private void initializeSurvey(){
         this.survey.put("longwear",0);
     }
-    public abstract setHashMap();
-
     public String getName(){
         return name;
     }
@@ -33,5 +31,7 @@ public abstract class Producto{
     public String getDescription(){
         return description;
     }
+
+    public abstract setHashMap();
 
 }

@@ -1,12 +1,12 @@
 import java.util.*;
 
-public abstract class Producto{
+public calss Lipstick extends Producto{
     public final int idProduct;
     private String name;
     private double price;
     private String brand;
     private String description;
-    private HashMap<Integer,Integer> survey = new HashMap<Integer,Integer>;
+    private HashMap<Integer,Integer> survey;
     private ArrayList<String> features = new ArrayList<String>();
     private String productCategory;
 
@@ -19,9 +19,7 @@ public abstract class Producto{
         this.productCategory = productCategory;
 
     }
-    public void initializeSurvey(){
-        
-    };
+    abstract void initializeSurvey();
 
     public String getName(){
         return name;
@@ -44,5 +42,6 @@ public abstract class Producto{
     public Collection getFeatures(){
         return features;
     }
+    public abstract setHashMap();
 
 }

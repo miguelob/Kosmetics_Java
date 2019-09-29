@@ -1,6 +1,7 @@
-import java.util.*;
+'import java.util.*;
 
-public abstract class Producto{
+
+public class Producto{
     public final int idProduct;
     private String name;
     private double price;

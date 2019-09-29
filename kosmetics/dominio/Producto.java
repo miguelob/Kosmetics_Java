@@ -19,9 +19,7 @@ public abstract class Producto{
         this.productCategory = productCategory;
 
     }
-    public void initializeSurvey(){
-        
-    };
+
 
     public String getName(){
         return name;

@@ -11,7 +11,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import icai.dtc.isw.controler.CustomerControler;
+import icai.dtc.isw.controler.TestControler;
 import icai.dtc.isw.domain.Customer;
+import icai.dtc.isw.domain.Test;
 import icai.dtc.isw.message.Message;
 
 public class SocketServer extends Thread {
@@ -49,10 +51,20 @@ public class SocketServer extends Thread {
 		    		mensajeOut.setSession(session);
 		    		objectOutputStream.writeObject(mensajeOut);		    		
 		    	break;
+		    	case "/getTest":
+		    		TestControler testControler=new TestControler();
+		    		ArrayList<Test> lista1=new ArrayList<Test>();
+		    		testControler.getTests(lista1);
+		    		mensajeOut.setContext("/getTestResponse");
+		    		HashMap<String,Object> session1=new HashMap<String, Object>();
+		    		session1.put("Test",lista1);
+		    		mensajeOut.setSession(session1);
+		    		objectOutputStream.writeObject(mensajeOut);		    		
+		    	break;
 		    	
 		    	
 		    	default:
-		    		System.out.println("\nPar√°metro no encontrado");
+		    		System.out.println("\nPar·metro no encontrado");
 		    		break;
 		    }
 		    

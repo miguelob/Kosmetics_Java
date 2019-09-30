@@ -14,6 +14,7 @@ import org.apache.log4j.Logger;
 
 import icai.dtc.isw.configuration.PropertiesISW;
 import icai.dtc.isw.domain.Customer;
+import icai.dtc.isw.domain.Test;
 import icai.dtc.isw.message.Message;
 
 public class Client {
@@ -34,7 +35,7 @@ public class Client {
 		
 		Message mensajeEnvio=new Message();
 		Message mensajeVuelta=new Message();
-		mensajeEnvio.setContext("/getCustomer");
+		mensajeEnvio.setContext("/getTest");
 		mensajeEnvio.setSession(session);
 		cliente.sent(mensajeEnvio,mensajeVuelta);
 		
@@ -43,7 +44,13 @@ public class Client {
 			case "/getCustomerResponse":
 				ArrayList<Customer> customerList=(ArrayList<Customer>)(mensajeVuelta.getSession().get("Customer"));
 				 for (Customer customer : customerList) {			
-						System.out.println("He leído el id: "+customer.getId()+" con nombre: "+customer.getName());
+						System.out.println("He leido el id: "+customer.getId()+" con nombre: "+customer.getName());
+					} 
+				break;
+			case "/getTestResponse":
+				ArrayList<Test> testList=(ArrayList<Test>)(mensajeVuelta.getSession().get("Test"));
+				 for (Test test : testList) {			
+						System.out.println("He leido el id: "+test.getId()+" con nombre: "+test.getName());
 					} 
 				break;
 				

@@ -35,7 +35,7 @@ public class TestDAO {
 		
 		
 		 for (Test test : lista) {			
-			System.out.println("He leído el id: "+test.getId()+" con nombre: "+test.getName());
+			System.out.println("He leido el id: "+test.getId()+" con Texto: "+test.getName());
 		}
 		
 	

@@ -15,6 +15,8 @@ import icai.dtc.isw.controler.TestControler;
 import icai.dtc.isw.domain.Customer;
 import icai.dtc.isw.domain.Test;
 import icai.dtc.isw.message.Message;
+import icai.dtc.isw.controler.ProductControler;
+import icai.dtc.isw.domain.Product;
 
 public class SocketServer extends Thread {
 	public static final int PORT_NUMBER = 8081;
@@ -61,6 +63,17 @@ public class SocketServer extends Thread {
 		    		mensajeOut.setSession(session1);
 		    		objectOutputStream.writeObject(mensajeOut);		    		
 		    	break;
+		    	case "/getProduct":
+		    		ProductControler productoControler = new ProductControler();
+		    		ArrayList<Product> lista2=new ArrayList<Product>();
+		    		productoControler.getProduct(lista2);
+		    		mensajeOut.setContext("/getProductResponse");
+		    		HashMap<String,Object> session2=new HashMap<String, Object>();
+		    		session2.put("Product",lista2);
+		    		mensajeOut.setSession(session2);
+		    		objectOutputStream.writeObject(mensajeOut);
+		    	break;
+		    		
 		    	
 		    	
 		    	default:

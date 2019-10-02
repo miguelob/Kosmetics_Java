@@ -15,6 +15,7 @@ import org.apache.log4j.Logger;
 import icai.dtc.isw.configuration.PropertiesISW;
 import icai.dtc.isw.domain.Customer;
 import icai.dtc.isw.domain.Test;
+import icai.dtc.isw.domain.Product;
 import icai.dtc.isw.message.Message;
 
 public class Client {
@@ -35,7 +36,7 @@ public class Client {
 		
 		Message mensajeEnvio=new Message();
 		Message mensajeVuelta=new Message();
-		mensajeEnvio.setContext("/getTest");
+		mensajeEnvio.setContext("/getProduct");
 		mensajeEnvio.setSession(session);
 		cliente.sent(mensajeEnvio,mensajeVuelta);
 		
@@ -51,6 +52,12 @@ public class Client {
 				ArrayList<Test> testList=(ArrayList<Test>)(mensajeVuelta.getSession().get("Test"));
 				 for (Test test : testList) {			
 						System.out.println("He leido el id: "+test.getId()+" con nombre: "+test.getName());
+					} 
+				break;
+			case "/getProductResponse":
+				ArrayList<Product> productList=(ArrayList<Product>)(mensajeVuelta.getSession().get("Product"));
+				 for (Product producto : productList) {			
+					 System.out.println("He leido el id: "+producto.getId()+" con nombre: "+producto.getName()+" con precio: "+producto.getPrice()+" con marca: "+producto.getBrand()+" con Descripcion: "+producto.getDescription());
 					} 
 				break;
 				
@@ -100,6 +107,7 @@ public class Client {
 				System.err.println("Unknown host: " + host);
 				System.exit(1);
 			} catch (IOException e) {
+				e.printStackTrace();
 				System.err.println("Unable to get streams from server");
 				System.exit(1);
 			}		

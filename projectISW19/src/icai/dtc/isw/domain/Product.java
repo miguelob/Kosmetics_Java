@@ -32,8 +32,7 @@ public class Product implements Serializable{
         this.reviews=reviews;
     }
         
-    public Product(int idProduct, String name, String productCategory, double price, 
-            String brand, String description){
+    public Product(int idProduct, String productCategory, String name,  String brand, double price, String description){
 
             this.idProduct = idProduct;
             this.name = name;

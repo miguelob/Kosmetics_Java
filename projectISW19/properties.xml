@@ -2,7 +2,7 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 <comment>This is easy!</comment>
-	<entry key="ddbb.connection">jdbc:postgresql://127.0.0.1:5432/isw2019</entry>
+	<entry key="ddbb.connection">jdbc:postgresql://127.0.0.1:5432/Kosmetics</entry>
 	<entry key="ddbb.user">cliente</entry>
 	<entry key="ddbb.password">cliente</entry>
 	<entry key="host">127.0.0.1</entry>	

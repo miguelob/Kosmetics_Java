@@ -16,11 +16,11 @@ public class ProductDAO {
 	
 	public static void getProduct(ArrayList<Product> lista) {
 		Connection con=ConnectionDAO.getInstance().getConnection();
-		try (PreparedStatement pst = con.prepareStatement("SELECT * FROM productos");
+		try (PreparedStatement pst = con.prepareStatement("SELECT * FROM \"Producto\"");
                 ResultSet rs = pst.executeQuery()) {
 
             while (rs.next()) {
-            	lista.add(new Product(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDouble(4), rs.getString(5), rs.getString(6)));
+            	lista.add(new Product(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDouble(5), rs.getString(7)));
             }
 
         } catch (SQLException ex) {

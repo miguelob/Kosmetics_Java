@@ -67,5 +67,9 @@ public class Product implements Serializable{
     public int getId() {
     	return idProduct;
     }
+    @Override
+    public String toString() {
+    	return "He leido el id: "+this.getId()+" con nombre: "+this.getName()+" con precio: "+this.getPrice()+" con marca: "+this.getBrand()+" con Descripcion: "+this.getDescription();
+    }
 
 }

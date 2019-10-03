@@ -21,44 +21,42 @@ import icai.dtc.isw.message.Message;
 public class Client {
 	private String host;
 	private int port;
+	private HashMap<String,Object> session;
 	final static Logger logger = Logger.getLogger(Client.class);
 
-	public static void main(String args[]) {
-		//Configure connections
-		String host = PropertiesISW.getInstance().getProperty("host");
-		int port = Integer.parseInt(PropertiesISW.getInstance().getProperty("port"));
+	
+	public Client() {
+		this.host = PropertiesISW.getInstance().getProperty("host");
+		this.port = Integer.parseInt(PropertiesISW.getInstance().getProperty("port"));
 		Logger.getRootLogger().info("Host: "+host+" port"+port);
-		//Create a cliente class
-		Client cliente=new Client(host, port);
-		
-		HashMap<String,Object> session=new HashMap<String, Object>();
-		//session.put("/getCustomer","");
+		session=new HashMap<String, Object>();
+	}
+	
+	public ArrayList clientInteraction(String command) {
 		
 		Message mensajeEnvio=new Message();
 		Message mensajeVuelta=new Message();
-		mensajeEnvio.setContext("/getProduct");
+		mensajeEnvio.setContext(command);
 		mensajeEnvio.setSession(session);
-		cliente.sent(mensajeEnvio,mensajeVuelta);
+		this.sent(mensajeEnvio,mensajeVuelta);
 		
+		ArrayList response = new ArrayList();
 		
 		switch (mensajeVuelta.getContext()) {
 			case "/getCustomerResponse":
-				ArrayList<Customer> customerList=(ArrayList<Customer>)(mensajeVuelta.getSession().get("Customer"));
-				 for (Customer customer : customerList) {			
+				response = (ArrayList<Customer>)(mensajeVuelta.getSession().get("Customer"));
+				 /*for (Customer customer : response) {			
 						System.out.println("He leido el id: "+customer.getId()+" con nombre: "+customer.getName());
-					} 
+					} */
 				break;
 			case "/getTestResponse":
-				ArrayList<Test> testList=(ArrayList<Test>)(mensajeVuelta.getSession().get("Test"));
-				 for (Test test : testList) {			
+				response = (ArrayList<Test>)(mensajeVuelta.getSession().get("Test"));
+				/* for (Test test : response) {			
 						System.out.println("He leido el id: "+test.getId()+" con nombre: "+test.getName());
-					} 
+					} */
 				break;
 			case "/getProductResponse":
-				ArrayList<Product> productList=(ArrayList<Product>)(mensajeVuelta.getSession().get("Product"));
-				 for (Product producto : productList) {			
-					 System.out.println("He leido el id: "+producto.getId()+" con nombre: "+producto.getName()+" con precio: "+producto.getPrice()+" con marca: "+producto.getBrand()+" con Descripcion: "+producto.getDescription());
-					} 
+				response=(ArrayList<Product>)(mensajeVuelta.getSession().get("Product"));
 				break;
 				
 			default:
@@ -68,11 +66,7 @@ public class Client {
 		
 		}
 		//System.out.println("3.- En Main.- El valor devuelto es: "+((String)mensajeVuelta.getSession().get("Nombre")));
-	}
-	
-	public Client(String host, int port) {
-		this.host=host;
-		this.port=port;
+		return response;
 	}
 	
 

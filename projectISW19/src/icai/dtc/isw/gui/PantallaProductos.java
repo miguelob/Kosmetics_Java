@@ -93,7 +93,7 @@ public class PantallaProductos extends JFrame {
 		MyJButton mjbtnProfile = new MyJButton();
 		mjbtnProfile.setBackground(new Color(255, 204, 255));
 		mjbtnProfile.setText("Profile");
-		mjbtnProfile.setIcon( new ImageIcon("icons/user.png"));
+		mjbtnProfile.setIcon( new ImageIcon("media/icons/user.png"));
 		myJPanel.add(mjbtnProfile, BorderLayout.EAST);
 		
 		MyJPanel myJPanel_3 = new MyJPanel();
@@ -101,7 +101,7 @@ public class PantallaProductos extends JFrame {
 		myJPanel_3.setBackground(new Color(255, 153, 153));
 		myJPanel.add(myJPanel_3, BorderLayout.SOUTH);
 		
-		MyJButton mjbtnFoundation = new MyJButton();
+		MyJButton mjbtnFoundation = new MyJButton(); 
 		mjbtnFoundation.setText("FOUNDATION");
 		myJPanel_3.add(mjbtnFoundation);
 		
@@ -125,7 +125,7 @@ public class PantallaProductos extends JFrame {
 		myJPanel_8.setBackground(new Color(255, 153, 153));
 		myJPanel.add(myJPanel_8, BorderLayout.CENTER);
 		
-		MyJLabel myJLabel_1 = new MyJLabel(new ImageIcon("icons/magnifying-glass.png"));
+		MyJLabel myJLabel_1 = new MyJLabel(new ImageIcon("media/icons/magnifying-glass.png"));
 		myJPanel_8.add(myJLabel_1);
 		
 		txtWhatAreYou = new JFormattedTextField();
@@ -232,7 +232,7 @@ public class PantallaProductos extends JFrame {
 	          
 	          //Button with the photo of the product
 	          //Takes you to the product's screen
-	          MyJButton mjb = new MyJButton(new ImageIcon("images/product0.jpg"));
+	          MyJButton mjb = new MyJButton(new ImageIcon("media/images/product0.jpg"));
 	          productPanel.add(mjb);
 	          
 	          //Panel for the name, brand, category and type
@@ -274,11 +274,11 @@ public class PantallaProductos extends JFrame {
 	          reviewPanel.setLayout(new GridLayout(0, 1));
 	          //Panel for the stars
 	          MyJPanel starsPanel = new MyJPanel();
-	          starsPanel.add(new MyJLabel(new ImageIcon("icons/star.png")));
-	          starsPanel.add(new MyJLabel(new ImageIcon("icons/star.png")));
-	          starsPanel.add(new MyJLabel(new ImageIcon("icons/star.png")));
-	          starsPanel.add(new MyJLabel(new ImageIcon("icons/star.png")));
-	          starsPanel.add(new MyJLabel(new ImageIcon("icons/star.png")));
+	          starsPanel.add(new MyJLabel(new ImageIcon("media/icons/star.png")));
+	          starsPanel.add(new MyJLabel(new ImageIcon("media/icons/star.png")));
+	          starsPanel.add(new MyJLabel(new ImageIcon("media/icons/star.png")));
+	          starsPanel.add(new MyJLabel(new ImageIcon("media/icons/star.png")));
+	          starsPanel.add(new MyJLabel(new ImageIcon("media/icons/star.png")));
 
 	          reviewPanel.add(starsPanel);
 	          //Features of the product

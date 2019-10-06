@@ -36,6 +36,7 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JTextPane;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 import javax.swing.JList;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
@@ -165,28 +166,34 @@ public class PantallaProductos extends JFrame {
 		mjlblBrand.setText("Brand");
 		myJPanel_1.add(mjlblBrand);
 		
-		Checkbox checkbox_2 = new Checkbox("Fenty Beauty");
+		Checkbox checkbox_2 = new Checkbox(" Fenty Beauty");
+		checkbox_2.setForeground(Color.WHITE);
 		checkbox_2.setFont(GUIConstants.FONT_REGULAR);
 		myJPanel_1.add(checkbox_2);
 		
 		
-		Checkbox checkbox_3 = new Checkbox("Kylie Cosmetics");
+		Checkbox checkbox_3 = new Checkbox(" Kylie Cosmetics");
+		checkbox_3.setForeground(Color.WHITE);
 		checkbox_3.setFont(GUIConstants.FONT_REGULAR);
 		myJPanel_1.add(checkbox_3);
 		
-		Checkbox checkbox_4 = new Checkbox("Anastasia");
+		Checkbox checkbox_4 = new Checkbox(" Anastasia");
+		checkbox_4.setForeground(Color.WHITE);
 		checkbox_4.setFont(GUIConstants.FONT_REGULAR);
 		myJPanel_1.add(checkbox_4);
 		
-		Checkbox checkbox_5 = new Checkbox("Too Faced");
+		Checkbox checkbox_5 = new Checkbox(" Too Faced");
+		checkbox_5.setForeground(Color.WHITE);
 		checkbox_5.setFont(GUIConstants.FONT_REGULAR);
 		myJPanel_1.add(checkbox_5);
 		
-		Checkbox checkbox = new Checkbox("KKW Beauty");
+		Checkbox checkbox = new Checkbox(" KKW Beauty");
+		checkbox.setForeground(Color.WHITE);
 		checkbox.setFont(GUIConstants.FONT_REGULAR);
 		myJPanel_1.add(checkbox);
 		
-		Checkbox checkbox_6 = new Checkbox("Benefit");
+		Checkbox checkbox_6 = new Checkbox(" Benefit");
+		checkbox_6.setForeground(Color.WHITE);
 		checkbox_6.setFont(GUIConstants.FONT_REGULAR);
 		myJPanel_1.add(checkbox_6);
 		
@@ -194,30 +201,38 @@ public class PantallaProductos extends JFrame {
 		mjlblBrand_1.setText("Popularity");
 		myJPanel_1.add(mjlblBrand_1);
 		
-		Checkbox checkbox_7 = new Checkbox("5 stars");
+		Checkbox checkbox_7 = new Checkbox(" 5 stars");
+		checkbox_7.setForeground(Color.WHITE);
 		checkbox_7.setFont(GUIConstants.FONT_REGULAR);
 		myJPanel_1.add(checkbox_7);
 		
-		Checkbox checkbox_8 = new Checkbox("4 stars");
+		Checkbox checkbox_8 = new Checkbox(" 4 stars");
+		checkbox_8.setForeground(Color.WHITE);
 		checkbox_8.setFont(GUIConstants.FONT_REGULAR);
 		myJPanel_1.add(checkbox_8);
 		
-		Checkbox checkbox_11 = new Checkbox("3 stars");
+		Checkbox checkbox_11 = new Checkbox(" 3 stars");
+		checkbox_11.setForeground(Color.WHITE);
 		checkbox_11.setFont(GUIConstants.FONT_REGULAR);
 		myJPanel_1.add(checkbox_11);
 		
-		Checkbox checkbox_9 = new Checkbox("2 stars");
+		Checkbox checkbox_9 = new Checkbox(" 2 stars");
+		checkbox_9.setForeground(Color.WHITE);
 		checkbox_9.setFont(GUIConstants.FONT_REGULAR);
 		myJPanel_1.add(checkbox_9);
 		
-		Checkbox checkbox_10 = new Checkbox("1 star");
+		Checkbox checkbox_10 = new Checkbox(" 1 star");
+		checkbox_10.setForeground(Color.WHITE);
 		checkbox_10.setFont(GUIConstants.FONT_REGULAR);
 		myJPanel_1.add(checkbox_10);
 		
+		//Panel for the list of products in out database
 		MyJPanel myJPanel_2 = new MyJPanel();
+		JScrollPane jsp = new JScrollPane(myJPanel_2);
+		jsp.setBorder(BorderFactory.createEmptyBorder());
 		myJPanel_2.setBorder(new MatteBorder(1, 1, 1, 100, (Color) new Color(255, 204, 204)));
 		myJPanel_2.setBackground(new Color(255, 204, 204));
-		getContentPane().add(myJPanel_2, BorderLayout.CENTER);
+		getContentPane().add(jsp, BorderLayout.CENTER);
 		myJPanel_2.setLayout(new GridLayout(0, 1, 5, 10));
 
 		
@@ -282,14 +297,20 @@ public class PantallaProductos extends JFrame {
 
 	          reviewPanel.add(starsPanel);
 	          //Features of the product
-	          reviewPanel.add(new MyJLabel("Longwear"));
-	          reviewPanel.add(new MyJLabel("High Coverage"));
-	          reviewPanel.add(new MyJLabel("Matte"));
+	          //Feature 1
+	          MyJLabel feature_1 = new MyJLabel("Longwear");
+	          feature_1.setForeground(Color.DARK_GRAY);
+	          reviewPanel.add(feature_1);
+	          MyJLabel feature_2 = new MyJLabel("High Coverage");
+	          feature_2.setForeground(Color.DARK_GRAY);
+	          reviewPanel.add(feature_2);
+	          MyJLabel feature_3 = new MyJLabel("Matte");
+	          feature_2.setForeground(Color.DARK_GRAY);
+	          reviewPanel.add(feature_3);
 	 
 
 	          mjb.setHorizontalAlignment(SwingConstants.CENTER);
-	          //Category of the product
-	          reviewPanel.add(new MyJLabel(product.getCategory()));
+	        
 	          
 	          productPanel.add(reviewPanel);
 	          myJPanel_2.add(productPanel);

@@ -32,6 +32,8 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 import javax.swing.JFormattedTextField;
 import javax.swing.JTextPane;
 import javax.swing.JRadioButton;
@@ -58,6 +60,11 @@ public class PantallaProductos extends JFrame {
 			public void run() {
 				try {
 					PantallaProductos frame = new PantallaProductos();
+					UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+					SwingUtilities.updateComponentTreeUI(frame);
+					ImageIcon logo = new ImageIcon("media/icons/Main_Logo.png");
+					frame.setIconImage(logo.getImage());
+					frame.setTitle("Kosmetics");
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

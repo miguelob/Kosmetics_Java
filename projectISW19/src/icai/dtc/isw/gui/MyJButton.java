@@ -13,7 +13,6 @@ import java.awt.event.MouseAdapter;
 
 public class MyJButton extends JButton {
 	
-	public static final Color COLOR_DEFECTO = new Color(60, 60, 60);
 
 	public MyJButton() {
 		this.changeBackgroundColor();
@@ -43,7 +42,7 @@ public class MyJButton extends JButton {
 		this.setContentAreaFilled(false);
 		this.setBorder(BorderFactory.createEmptyBorder());
 		this.setFont(GUIConstants.FONT_TITLE);
-		this.setForeground(COLOR_DEFECTO);
+		this.setForeground(GUIConstants.DEFAULT_FONT_COLOR);
 		
 		this.addMouseListener(new MouseAdapter()
          { @Override
@@ -53,7 +52,7 @@ public class MyJButton extends JButton {
              }
            @Override
            public void mouseExited(MouseEvent me)
-             { MyJButton.this.setForeground(COLOR_DEFECTO);
+             { MyJButton.this.setForeground(GUIConstants.DEFAULT_FONT_COLOR);
              }
          });
 	}

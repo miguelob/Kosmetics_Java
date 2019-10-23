@@ -32,8 +32,6 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 import javax.swing.JFormattedTextField;
 import javax.swing.JTextPane;
 import javax.swing.JRadioButton;
@@ -60,11 +58,6 @@ public class PantallaProductos extends JFrame {
 			public void run() {
 				try {
 					PantallaProductos frame = new PantallaProductos();
-					UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-					SwingUtilities.updateComponentTreeUI(frame);
-					ImageIcon logo = new ImageIcon("media/icons/Main_Logo.png");
-					frame.setIconImage(logo.getImage());
-					frame.setTitle("Kosmetics");
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -137,6 +130,7 @@ public class PantallaProductos extends JFrame {
 		myJPanel_8.add(myJLabel_1);
 		
 		txtWhatAreYou = new JFormattedTextField();
+		txtWhatAreYou.setCaretColor(Color.BLACK);
 		txtWhatAreYou.setForeground(Color.GRAY);
 		txtWhatAreYou.setText("What are you looking for?");
 		txtWhatAreYou.setBorder(BorderFactory.createEmptyBorder());

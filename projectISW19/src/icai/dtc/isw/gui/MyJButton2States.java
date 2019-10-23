@@ -4,6 +4,7 @@ import java.awt.event.MouseEvent;
 //import java.awt.event.MouseListener;
 import javax.swing.JButton;
 import javax.swing.Action;
+import javax.swing.BorderFactory;
 import javax.swing.Icon;
 
 public class MyJButton2States extends JButton {
@@ -24,7 +25,11 @@ public class MyJButton2States extends JButton {
 	        this.setIcon1Bright(icon1Bright);
 	        this.setIcon2Default(icon2Default);
 	        this.setIcon2Bright(icon2Bright);
-	        
+	        this.setContentAreaFilled(false);
+	        this.setBorder(BorderFactory.createEmptyBorder());
+			this.setFont(GUIConstants.FONT_TITLE);
+			this.setForeground(GUIConstants.DEFAULT_FONT_COLOR);
+			
 			this.addMouseListener(new MouseAdapter()
 	         { @Override
 	           public void mouseEntered(MouseEvent me)

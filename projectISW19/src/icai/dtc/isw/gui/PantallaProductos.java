@@ -47,8 +47,8 @@ import icai.dtc.isw.domain.Product;
 
 public class PantallaProductos extends JFrame {
 	private JFormattedTextField txtWhatAreYou;
-    ArrayList products;
-    Client client;
+    ArrayList products; //This is where all the products from the DB are storaged and ready to display.
+    Client client; //Instance of the main client class -> connects to the server and send and recieves info.
 
 	/**
 	 * Launch the application.

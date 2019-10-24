@@ -10,7 +10,6 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import icai.dtc.isw.controler.CustomerControler;
 import icai.dtc.isw.controler.TestControler;
 import icai.dtc.isw.domain.Customer;
 import icai.dtc.isw.domain.Test;

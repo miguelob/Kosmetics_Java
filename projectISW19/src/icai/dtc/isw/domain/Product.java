@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 public class Product implements Serializable{
 	private static final long serialVersionUID = 1L;
-    public int idProduct; //FINAL???============================================================================!!!!!!!!!!!!!!!!!!!!!!!!!!
+    public final int idProduct;
     private String name;
     private double price;
     private String brand;
@@ -27,7 +27,7 @@ public class Product implements Serializable{
         String brand, String description,HashMap<Integer,Integer> survey, ArrayList<String> features,
          ArrayList<Review> reviews,String imageDirectory ){
 
-        this.setId(idProduct);
+        this.idProduct = idProduct;
         this.setName(name);
         this.setPrice(price);
         this.setBrand(brand);
@@ -43,7 +43,7 @@ public class Product implements Serializable{
     //Constructor with the basic information to show on the main screen
     public Product(int idProduct, String productCategory, String name,  String brand, double price, String description, String imageDirectory){
 
-            this.setId(idProduct);
+    		this.idProduct = idProduct;
             this.setName(name);
             this.setPrice(price);
             this.setBrand(brand);
@@ -55,7 +55,7 @@ public class Product implements Serializable{
     //TEMPORAL CONSTRUCTOR TO CHECK PROGRESS
     public Product(int idProduct, String productCategory, String name,  String brand, double price, String description){
 
-        this.setId(idProduct);
+    	this.idProduct = idProduct;
         this.setName(name);
         this.setPrice(price);
         this.setBrand(brand);
@@ -64,12 +64,6 @@ public class Product implements Serializable{
     }
 
     //setters
-    private void setId(int id){
-    	if(id > 0) 
-    		this.idProduct = id;
-    	else
-    		this.idProduct = 0;
-    }
     private void setName(String name) {
     	if(name != null)
     		this.name = name;

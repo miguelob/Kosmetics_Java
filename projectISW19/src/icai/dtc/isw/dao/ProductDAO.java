@@ -51,7 +51,7 @@ public class ProductDAO {
 		
 		
 		 for (Product producto : lista) {			
-			System.out.println("He leido el id: "+producto.getId()+" con nombre: "+producto.getName()+" con precio: "+producto.getPrice()+" con marca: "+producto.getBrand()+" con Descripcion: "+producto.getDescription());
+			System.out.println(producto);
 		}
 		
 	

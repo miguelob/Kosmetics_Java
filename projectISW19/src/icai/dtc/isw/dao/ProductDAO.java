@@ -14,7 +14,21 @@ public class ProductDAO {
 	
 	
 	
-	public static void getProduct(ArrayList<Product> lista) {
+	public static void getProductBasicInfo(ArrayList<Product> lista) {
+		Connection con=ConnectionDAO.getInstance().getConnection();
+		try (PreparedStatement pst = con.prepareStatement("SELECT * FROM \"Producto\"");
+                ResultSet rs = pst.executeQuery()) {
+
+            while (rs.next()) {
+            	lista.add(new Product(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDouble(5), rs.getString(7)));
+            }
+
+        } catch (SQLException ex) {
+
+            System.out.println(ex.getMessage());
+        }
+	}
+	public static void getProductFullInfo(ArrayList<Product> lista) {
 		Connection con=ConnectionDAO.getInstance().getConnection();
 		try (PreparedStatement pst = con.prepareStatement("SELECT * FROM \"Producto\"");
                 ResultSet rs = pst.executeQuery()) {
@@ -33,7 +47,7 @@ public class ProductDAO {
 		
 		
 		ArrayList<Product> lista=new ArrayList<Product>();
-		ProductDAO.getProduct(lista);
+		ProductDAO.getProductBasicInfo(lista);
 		
 		
 		 for (Product producto : lista) {			

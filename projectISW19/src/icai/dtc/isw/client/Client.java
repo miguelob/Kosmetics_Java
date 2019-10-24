@@ -43,26 +43,30 @@ public class Client {
 		ArrayList response = new ArrayList();
 		
 		switch (mensajeVuelta.getContext()) {
-			case "/getCustomerResponse":
-				response = (ArrayList<Customer>)(mensajeVuelta.getSession().get("Customer"));
-				 /*for (Customer customer : response) {			
-						System.out.println("He leido el id: "+customer.getId()+" con nombre: "+customer.getName());
-					} */
+			case "/getBasicProductResponse":
+				response=(ArrayList<Product>)(mensajeVuelta.getSession().get("basicProduct"));
 				break;
-			case "/getTestResponse":
-				response = (ArrayList<Test>)(mensajeVuelta.getSession().get("Test"));
-				/* for (Test test : response) {			
-						System.out.println("He leido el id: "+test.getId()+" con nombre: "+test.getName());
-					} */
-				break;
-			case "/getProductResponse":
-				response=(ArrayList<Product>)(mensajeVuelta.getSession().get("Product"));
+			case "/getFullProductResponse":
+				response=(ArrayList<Product>)(mensajeVuelta.getSession().get("fullProduct"));
 				break;
 				
 			default:
 				Logger.getRootLogger().info("Option not found");
 				System.out.println("\nError a la vuelta");
 				break;
+			
+			/*case "/getCustomerResponse":
+				response = (ArrayList<Customer>)(mensajeVuelta.getSession().get("Customer"));
+				 /*for (Customer customer : response) {			
+						System.out.println("He leido el id: "+customer.getId()+" con nombre: "+customer.getName());
+					}
+				break;
+			case "/getTestResponse":
+				response = (ArrayList<Test>)(mensajeVuelta.getSession().get("Test"));
+				/* for (Test test : response) {			
+						System.out.println("He leido el id: "+test.getId()+" con nombre: "+test.getName());
+					}
+				break;*/
 		
 		}
 		//System.out.println("3.- En Main.- El valor devuelto es: "+((String)mensajeVuelta.getSession().get("Nombre")));

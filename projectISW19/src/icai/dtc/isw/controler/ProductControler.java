@@ -7,7 +7,10 @@ import icai.dtc.isw.domain.Product;
 
 public class ProductControler{
 
-	public void getProduct(ArrayList<Product> lista) {
-		ProductDAO.getProduct(lista);
+	public void getProduct(ArrayList<Product> lista,String command) {
+		if(command.contentEquals("/getBasicProductInfo"))
+			ProductDAO.getProductBasicInfo(lista);
+		else if(command.contentEquals("/getFullProductInfo"))
+			ProductDAO.getProductFullInfo(lista);
 	}	
 }

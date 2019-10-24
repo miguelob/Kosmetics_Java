@@ -324,7 +324,7 @@ public class PantallaProductos extends JFrame {
 	
 	public void initialiseProducts(){
 		client = new Client();
-		products = client.clientInteraction("/getProduct");
+		products = client.clientInteraction("/getProductBasicInfo");
 	}
 
 }

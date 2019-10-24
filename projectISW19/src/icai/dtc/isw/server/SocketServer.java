@@ -20,7 +20,10 @@ import icai.dtc.isw.domain.Product;
 
 public class SocketServer extends Thread {
 	public static final int PORT_NUMBER = 8081;
-
+	ProductControler productoControler = new ProductControler();
+	ArrayList<Product> basicProductList = new ArrayList<Product>();
+	ArrayList<Product> fullProductList = new ArrayList<Product>();
+	HashMap<String,Object> session = new HashMap<String, Object>();
 	protected Socket socket;
 
 	private SocketServer(Socket socket) {
@@ -43,7 +46,31 @@ public class SocketServer extends Thread {
 		    ObjectOutputStream objectOutputStream = new ObjectOutputStream(out);
 		    Message mensajeOut=new Message();
 		    switch (mensajeIn.getContext()) {
-		    	case "/getCustomer":
+		    	case "/getProductBasicInfo":
+		    		basicProductList = new ArrayList<Product>();
+		    		productoControler.getProduct(basicProductList,"/getBasicProductInfo");
+		    		mensajeOut.setContext("/getBasicProductResponse");
+		    		HashMap<String,Object> session2=new HashMap<String, Object>();
+		    		session.put("basicProduct",basicProductList);
+		    		mensajeOut.setSession(session);
+		    		objectOutputStream.writeObject(mensajeOut);
+		    	break;
+		    	case "/getProductFullInfo":
+		    		fullProductList = new ArrayList<Product>();
+		    		productoControler.getProduct(fullProductList,"/getFullProductInfo");
+		    		mensajeOut.setContext("/getFullProductResponse");
+		    		session.put("fullProduct",fullProductList);
+		    		mensajeOut.setSession(session);
+		    		objectOutputStream.writeObject(mensajeOut);
+		    	break;
+		    		
+		    	
+		    	
+		    	default:
+		    		System.out.println("\nParámetro no encontrado");
+		    		break;
+		    		
+		    		/*case "/getCustomer":
 		    		CustomerControler customerControler=new CustomerControler();
 		    		ArrayList<Customer> lista=new ArrayList<Customer>();
 		    		customerControler.getCustomer(lista);
@@ -62,23 +89,7 @@ public class SocketServer extends Thread {
 		    		session1.put("Test",lista1);
 		    		mensajeOut.setSession(session1);
 		    		objectOutputStream.writeObject(mensajeOut);		    		
-		    	break;
-		    	case "/getProduct":
-		    		ProductControler productoControler = new ProductControler();
-		    		ArrayList<Product> lista2=new ArrayList<Product>();
-		    		productoControler.getProduct(lista2);
-		    		mensajeOut.setContext("/getProductResponse");
-		    		HashMap<String,Object> session2=new HashMap<String, Object>();
-		    		session2.put("Product",lista2);
-		    		mensajeOut.setSession(session2);
-		    		objectOutputStream.writeObject(mensajeOut);
-		    	break;
-		    		
-		    	
-		    	
-		    	default:
-		    		System.out.println("\nParámetro no encontrado");
-		    		break;
+		    	break;*/
 		    }
 		    
 		    //LÃ³gica del controlador 

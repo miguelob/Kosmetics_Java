@@ -15,7 +15,7 @@ public class ReviewDAO {
                 ResultSet rs = pst.executeQuery()) {
 
             while (rs.next()) {
-            	lista.add(new Review(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDouble(5), rs.getString(7)));
+            	lista.add(new Review(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getInt(4), rs.getInt(5), rs.getInt(6), rs.getString(7)));
             }
 
         } catch (SQLException ex) {
@@ -33,5 +33,7 @@ public class ReviewDAO {
 		
 		 for (Review review : lista) {			
 			System.out.println(review);
+		 }
 	}
 }
+	

@@ -11,17 +11,25 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import icai.dtc.isw.controler.TestControler;
+import icai.dtc.isw.controler.UserControler;
 import icai.dtc.isw.domain.Customer;
 import icai.dtc.isw.domain.Test;
+import icai.dtc.isw.domain.User;
 import icai.dtc.isw.message.Message;
 import icai.dtc.isw.controler.ProductControler;
+import icai.dtc.isw.controler.ReviewControler;
 import icai.dtc.isw.domain.Product;
+import icai.dtc.isw.domain.Review;
 
 public class SocketServer extends Thread {
 	public static final int PORT_NUMBER = 8081;
 	ProductControler productoControler = new ProductControler();
-	ArrayList<Product> basicProductList = new ArrayList<Product>();
-	ArrayList<Product> fullProductList = new ArrayList<Product>();
+	UserControler userControler = new UserControler();
+	ReviewControler reviewControler = new ReviewControler();
+	ArrayList<Product> basicProductList;
+	ArrayList<Product> fullProductList;
+	ArrayList<Review> reviewList;
+	ArrayList<User> userList;
 	HashMap<String,Object> session = new HashMap<String, Object>();
 	protected Socket socket;
 
@@ -59,6 +67,22 @@ public class SocketServer extends Thread {
 		    		productoControler.getProduct(fullProductList,"/getFullProductInfo");
 		    		mensajeOut.setContext("/getFullProductResponse");
 		    		session.put("fullProduct",fullProductList);
+		    		mensajeOut.setSession(session);
+		    		objectOutputStream.writeObject(mensajeOut);
+		    	break;
+		    	case "/getUser":
+		    		userList = new ArrayList<User>();
+		    		userControler.getUser(userList);
+		    		mensajeOut.setContext("/getUser");
+		    		session.put("users",userList);
+		    		mensajeOut.setSession(session);
+		    		objectOutputStream.writeObject(mensajeOut);
+		    	break;
+		    	case "/getReview":
+		    		reviewList = new ArrayList<Review>();
+		    		reviewControler.getReview(reviewList);
+		    		mensajeOut.setContext("/getReview");
+		    		session.put("reviews",reviewList);
 		    		mensajeOut.setSession(session);
 		    		objectOutputStream.writeObject(mensajeOut);
 		    	break;

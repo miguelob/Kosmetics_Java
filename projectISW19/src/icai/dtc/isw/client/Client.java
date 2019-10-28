@@ -15,7 +15,9 @@ import org.apache.log4j.Logger;
 import icai.dtc.isw.configuration.PropertiesISW;
 import icai.dtc.isw.domain.Customer;
 import icai.dtc.isw.domain.Test;
+import icai.dtc.isw.domain.User;
 import icai.dtc.isw.domain.Product;
+import icai.dtc.isw.domain.Review;
 import icai.dtc.isw.message.Message;
 
 public class Client {
@@ -45,10 +47,16 @@ public class Client {
 		switch (mensajeVuelta.getContext()) {
 			case "/getBasicProductResponse":
 				response=(ArrayList<Product>)(mensajeVuelta.getSession().get("basicProduct"));
-				break;
+			break;
 			case "/getFullProductResponse":
 				response=(ArrayList<Product>)(mensajeVuelta.getSession().get("fullProduct"));
-				break;
+			break;
+			case "/getUser":
+				response=(ArrayList<User>)(mensajeVuelta.getSession().get("users"));
+			break;
+			case "/getReview":
+				response=(ArrayList<Review>)(mensajeVuelta.getSession().get("reviews"));
+			break;
 				
 			default:
 				Logger.getRootLogger().info("Option not found");

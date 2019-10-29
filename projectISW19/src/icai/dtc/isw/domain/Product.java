@@ -15,17 +15,17 @@ public class Product implements Serializable{
     private double price;
     private String brand;
     private String description;
-    private HashMap<Integer,Integer> survey = new HashMap<Integer,Integer>();
+    private Survey survey;
     private ArrayList<String> features = new ArrayList<String>();
     private ArrayList<Review> reviews = new ArrayList<Review>();
     private String productCategory;
     private String imageDirectory;
     private ImageIcon productImage;
 
-    //Constructor with all the information
-    public Product(int idProduct, String name, String productCategory, double price, 
-        String brand, String description,HashMap<Integer,Integer> survey, ArrayList<String> features,
-         ArrayList<Review> reviews,String imageDirectory ){
+    //Constructor with all the information-> No tiene sentido, cuando el usuario requiera ás info del producto se carga sobre el ya existente.
+   /* public Product(int idProduct, String name, String productCategory, double price, 
+        String brand, String description, String imageDirectory ,Survey survey, ArrayList<String> features,
+         ArrayList<Review> reviews){
 
         this.idProduct = idProduct;
         this.setName(name);
@@ -38,10 +38,11 @@ public class Product implements Serializable{
         this.reviews = reviews;
         this.imageDirectory = imageDirectory;
         this.setImage();
-    }
+    }*/ 
     
     //Constructor with the basic information to show on the main screen
-    public Product(int idProduct, String productCategory, String name,  String brand, double price, String description, String imageDirectory){
+    public Product(int idProduct, String productCategory, String name,  String brand, double price, 
+    		String description, String imageDirectory){
 
     		this.idProduct = idProduct;
             this.setName(name);
@@ -63,6 +64,20 @@ public class Product implements Serializable{
         this.setProductCategory(productCategory);
     }
 
+    
+    public void setSurvey(Survey survey){
+        this.survey=survey;
+    }
+
+    //Tanto reviews como features se rellenan una a una
+    public void addReview(Review review){
+    	reviews.add(review);
+    }
+
+    public void addFeature(String feature){
+        features.add(feature);
+    }
+    
     //setters
     private void setName(String name) {
     	if(name != null)
@@ -97,10 +112,7 @@ public class Product implements Serializable{
     private void setImage() {
     	productImage = ImageChecker.checkImage(imageDirectory);
     }
-    public void setFeatures(String feature){
-        features.add(feature);
-    }
-    
+
     
     //GETTERS
     public String getName(){

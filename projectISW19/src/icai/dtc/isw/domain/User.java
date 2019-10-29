@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class User implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
-    public final int idUser;
+    //public final int idUser;
     private String name;
     private String email;
     private String userPasword;
@@ -16,10 +16,10 @@ public class User implements Serializable{
     private String skinColor;
     private String skinCondition;
 
-    public User(int idUser,String name,String email,String userPasword,
+    public User(String name,String email,String userPasword,
                     Date birthDate,String skinColor,String skinCondition){
 
-        this.idUser=idUser;
+        //this.idUser=idUser;
         this.name=name;
         this.email=email;
         this.userPasword=userPasword;

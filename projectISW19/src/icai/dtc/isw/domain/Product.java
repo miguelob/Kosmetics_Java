@@ -19,7 +19,6 @@ public class Product implements Serializable{
     private ArrayList<String> features = new ArrayList<String>();
     private ArrayList<Review> reviews = new ArrayList<Review>();
     private String productCategory;
-    private String imageDirectory;
     private ImageIcon productImage;
 
     //Constructor with all the information-> No tiene sentido, cuando el usuario requiera ás info del producto se carga sobre el ya existente.
@@ -42,7 +41,7 @@ public class Product implements Serializable{
     
     //Constructor with the basic information to show on the main screen
     public Product(int idProduct, String productCategory, String name,  String brand, double price, 
-    		String description, String imageDirectory){
+    		String description, byte[] imageBytes){
 
     		this.idProduct = idProduct;
             this.setName(name);
@@ -50,9 +49,9 @@ public class Product implements Serializable{
             this.setBrand(brand);
             this.setDescription(description);
             this.setProductCategory(productCategory);
-            this.imageDirectory = imageDirectory;
-            this.setImage();
+            this.setImage(imageBytes);
     }
+    //===================================ESTE BORRAR===========================================================0
     //TEMPORAL CONSTRUCTOR TO CHECK PROGRESS
     public Product(int idProduct, String productCategory, String name,  String brand, double price, String description){
 
@@ -109,8 +108,8 @@ public class Product implements Serializable{
     	else
     		this.productCategory = "EMPTY_FIELD"; // to display that the category is empty
     }
-    private void setImage() {
-    	productImage = ImageChecker.checkImage(imageDirectory);
+    private void setImage(byte[] imageBytes) {
+    	productImage = new ImageIcon(imageBytes);
     }
 
     

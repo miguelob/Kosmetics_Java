@@ -1,6 +1,9 @@
 package icai.dtc.isw.domain;
 
 import java.util.Date;
+
+import javax.swing.ImageIcon;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -15,9 +18,10 @@ public class User implements Serializable{
     private Date birthDate;
     private String skinColor;
     private String skinCondition;
+    private ImageIcon userImage;
 
     public User(String name,String email,String userPasword,
-                    Date birthDate,String skinColor,String skinCondition){
+                    Date birthDate,String skinColor,String skinCondition, byte[] imageBytes){
 
         //this.idUser=idUser;
         this.name=name;
@@ -26,6 +30,10 @@ public class User implements Serializable{
         this.birthDate=birthDate;
         this.skinColor=skinColor;
         this.skinCondition=skinCondition;
+        this.setImage(imageBytes);
+    }
+    private void setImage(byte[] imageBytes) {
+    	userImage = new ImageIcon(imageBytes);
     }
 
 

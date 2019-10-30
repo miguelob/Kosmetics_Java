@@ -20,7 +20,7 @@ public class ProductDAO {
                 ResultSet rs = pst.executeQuery()) {
 
             while (rs.next()) {
-            	lista.add(new Product(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDouble(5), rs.getString(7)));
+            	lista.add(new Product(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDouble(5), rs.getString(6), rs.getBytes(7)));
             }
 
         } catch (SQLException ex) {
@@ -28,15 +28,25 @@ public class ProductDAO {
             System.out.println(ex.getMessage());
         }
 	}
-	public static void getProductFullInfo(ArrayList<Product> lista) {
+	public static void getProductFullInfo(Product product) {
 		Connection con=ConnectionDAO.getInstance().getConnection();
-		try (PreparedStatement pst = con.prepareStatement("SELECT * FROM \"Producto\"");
+		//FIRST QUERY OF CHARACTERISTICS
+		try (PreparedStatement pst = con.prepareStatement("SELECT * FROM \"CHARACTERISTICS\"");
                 ResultSet rs = pst.executeQuery()) {
 
             while (rs.next()) {
-            	lista.add(new Product(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDouble(5), rs.getString(7)));
+            	product.addFeature(rs.getString(1));
             }
 
+        } catch (SQLException ex) {
+
+            System.out.println(ex.getMessage());
+        }
+		ReviewDAO.loadProductReview(product);
+		//QUERY PARA SACAR EL ID DE ENCUESTA ASOCIADA AL PRODUCTO
+		try (PreparedStatement pst = con.prepareStatement("SELECT * FROM \"CHARACTERISTICS\"");
+                ResultSet rs = pst.executeQuery()) {
+			product.setSurvey(SurveyDAO.getSurvey(rs.getInt(6)));
         } catch (SQLException ex) {
 
             System.out.println(ex.getMessage());

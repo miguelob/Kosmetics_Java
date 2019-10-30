@@ -15,6 +15,7 @@ public class Review implements Serializable{
     private int scoreReviewParticipants; //numero de gente que ha votado    
     private String comentario;
     private String comentarioTitle;
+    private String productName;
 
     public Review(User user,int scoreProduct,int scoreProductParticipants,
 					int scoreReview,int scoreReviewParticipants,String comentario,
@@ -29,6 +30,12 @@ public class Review implements Serializable{
 		this.scoreReviewParticipants=scoreReviewParticipants;
 		this.comentario=comentario;
 		this.comentarioTitle=comentarioTitle;
+    }
+    public void setProductName(String productName) {
+    	this.productName = productName;
+    }
+    public String getProductName() {
+    	return productName;
     }
 
 

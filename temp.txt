@@ -1,127 +1,180 @@
-package icai.dtc.isw.client;
+package icai.dtc.isw.server;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.apache.log4j.Logger;
-
-import icai.dtc.isw.configuration.PropertiesISW;
+import icai.dtc.isw.controler.UserControler;
 import icai.dtc.isw.domain.User;
+import icai.dtc.isw.message.Message;
+import icai.dtc.isw.controler.ProductControler;
+import icai.dtc.isw.controler.ReviewControler;
 import icai.dtc.isw.domain.Product;
 import icai.dtc.isw.domain.Review;
-import icai.dtc.isw.message.Message;
 
-public class Client {
-	private String host;
-	private int port;
-	private HashMap<String,Object> session;
-	final static Logger logger = Logger.getLogger(Client.class);
+public class SocketServer extends Thread {
+	public static final int PORT_NUMBER = 8081;
+	protected Socket socket;
+	ProductControler productoControler = new ProductControler();
+	UserControler userControler = new UserControler();
+	ReviewControler reviewControler = new ReviewControler();
+	ArrayList<Product> basicProductList;
+	ArrayList<Product> fullProductList;
+	ArrayList<Review> reviewList;
+	ArrayList<User> userList;
+	HashMap<String,Object> session = new HashMap<String, Object>();
 
-	
-	public Client() {
-		this.host = PropertiesISW.getInstance().getProperty("host");
-		this.port = Integer.parseInt(PropertiesISW.getInstance().getProperty("port"));
-		Logger.getRootLogger().info("Host: "+host+" port"+port);
-		session=new HashMap<String, Object>();
+	private SocketServer(Socket socket) {
+		this.socket = socket;
+		System.out.println("New client connected from " + socket.getInetAddress().getHostAddress());
+		start();
 	}
-	
-	public ArrayList clientInteraction(String command) {
-		
-		Message mensajeEnvio=new Message();
-		Message mensajeVuelta=new Message();
-		mensajeEnvio.setContext(command);
-		mensajeEnvio.setSession(session);
-		this.sent(mensajeEnvio,mensajeVuelta);
-		
-		ArrayList response = new ArrayList();
-		
-		switch (mensajeVuelta.getContext()) {
-			case "/getBasicProductResponse":
-				response=(ArrayList<Product>)(mensajeVuelta.getSession().get("basicProduct"));
-			break;
-			case "/getFullProductResponse":
-				response=(ArrayList<Product>)(mensajeVuelta.getSession().get("fullProduct"));
-			break;
-			case "/getUser":
-				response=(ArrayList<User>)(mensajeVuelta.getSession().get("users"));
-			break;
-			case "/getReview":
-				response=(ArrayList<Review>)(mensajeVuelta.getSession().get("reviews"));
-			break;
-				
-			default:
-				Logger.getRootLogger().info("Option not found");
-				System.out.println("\nError a la vuelta");
-				break;
-			
-			/*case "/getCustomerResponse":
-				response = (ArrayList<Customer>)(mensajeVuelta.getSession().get("Customer"));
-				 /*for (Customer customer : response) {			
-						System.out.println("He leido el id: "+customer.getId()+" con nombre: "+customer.getName());
-					}
-				break;
-			case "/getTestResponse":
-				response = (ArrayList<Test>)(mensajeVuelta.getSession().get("Test"));
-				/* for (Test test : response) {			
-						System.out.println("He leido el id: "+test.getId()+" con nombre: "+test.getName());
-					}
-				break;*/
-		
-		}
-		//System.out.println("3.- En Main.- El valor devuelto es: "+((String)mensajeVuelta.getSession().get("Nombre")));
-		return response;
-	}
-	
 
-	public void sent(Message messageOut, Message messageIn) {
+	public void run() {
+		InputStream in = null;
+		OutputStream out = null;
 		try {
-
-			System.out.println("Connecting to host " + host + " on port " + port + ".");
-
-			Socket echoSocket = null;
-			OutputStream out = null;
-			InputStream in = null;
-
-			try {
-				echoSocket = new Socket(host, port);
-				in = echoSocket.getInputStream();
-				out = echoSocket.getOutputStream();
-				ObjectOutputStream objectOutputStream = new ObjectOutputStream(out);
-				
-				//Create the objetct to send
-				objectOutputStream.writeObject(messageOut);
-				
-				// create a DataInputStream so we can read data from it.
-		        ObjectInputStream objectInputStream = new ObjectInputStream(in);
-		        Message msg=(Message)objectInputStream.readObject();
-		        messageIn.setContext(msg.getContext());
-		        messageIn.setSession(msg.getSession());
-		        /*System.out.println("\n1.- El valor devuelto es: "+messageIn.getContext());
-		        String cadena=(String) messageIn.getSession().get("Nombre");
-		        System.out.println("\n2.- La cadena devuelta es: "+cadena);*/
-				
-			} catch (UnknownHostException e) {
-				System.err.println("Unknown host: " + host);
-				System.exit(1);
-			} catch (IOException e) {
+			in = socket.getInputStream();
+			out = socket.getOutputStream();
+			
+			//first read the object that has been sent
+			ObjectInputStream objectInputStream = new ObjectInputStream(in);
+		    Message mensajeIn= (Message)objectInputStream.readObject();
+		    //Object to return informations 
+		    ObjectOutputStream objectOutputStream = new ObjectOutputStream(out);
+		    Message mensajeOut=new Message();
+		    switch (mensajeIn.getContext()) {
+		    	case "/getProductBasicInfo":
+		    		basicProductList = new ArrayList<Product>();
+		    		productoControler.getProductBasicInfo(basicProductList);
+		    		mensajeOut.setContext("/getBasicProductResponse");
+		    		session = new HashMap<String, Object>();
+		    		session.put("basicProduct",basicProductList);
+		    		mensajeOut.setSession(session);
+		    		objectOutputStream.writeObject(mensajeOut);
+		    	break;
+		    	case "/getProductFullInfo":
+		    		fullProductList = new ArrayList<Product>();
+		    		//productoControler.getProductFullInfo(Product producto);
+		    		mensajeOut.setContext("/getFullProductResponse");
+		    		session.put("fullProduct",fullProductList);
+		    		mensajeOut.setSession(session);
+		    		objectOutputStream.writeObject(mensajeOut);
+		    	break;
+		    	case "/getUser":
+		    		userList = new ArrayList<User>();
+		    		//userControler.getUser(userList);
+		    		mensajeOut.setContext("/getUser");
+		    		session.put("users",userList);
+		    		mensajeOut.setSession(session);
+		    		objectOutputStream.writeObject(mensajeOut);
+		    	break;
+		    	case "/getReview":
+		    		reviewList = new ArrayList<Review>();
+		    		reviewControler.getReview(reviewList);
+		    		mensajeOut.setContext("/getReview");
+		    		session.put("reviews",reviewList);
+		    		mensajeOut.setSession(session);
+		    		objectOutputStream.writeObject(mensajeOut);
+		    	break;
+		    		
+		    	
+		    	
+		    	default:
+		    		System.out.println("\nParámetro no encontrado");
+		    		break;
+		    		
+		    		/*case "/getCustomer":
+		    		CustomerControler customerControler=new CustomerControler();
+		    		ArrayList<Customer> lista=new ArrayList<Customer>();
+		    		customerControler.getCustomer(lista);
+		    		mensajeOut.setContext("/getCustomerResponse");
+		    		HashMap<String,Object> session=new HashMap<String, Object>();
+		    		session.put("Customer",lista);
+		    		mensajeOut.setSession(session);
+		    		objectOutputStream.writeObject(mensajeOut);		    		
+		    	break;
+		    	case "/getTest":
+		    		TestControler testControler=new TestControler();
+		    		ArrayList<Test> lista1=new ArrayList<Test>();
+		    		testControler.getTests(lista1);
+		    		mensajeOut.setContext("/getTestResponse");
+		    		HashMap<String,Object> session1=new HashMap<String, Object>();
+		    		session1.put("Test",lista1);
+		    		mensajeOut.setSession(session1);
+		    		objectOutputStream.writeObject(mensajeOut);		    		
+		    	break;*/
+		    }
+		    
+		    //LÃ³gica del controlador 
+		    //System.out.println("\n1.- He leÃ­do: "+mensaje.getContext());
+		    //System.out.println("\n2.- He leÃ­do: "+(String)mensaje.getSession().get("Nombre"));
+		    
+		    
+		    
+		    //Prueba para esperar
+		    /*try {
+		    	System.out.println("Me duermo");
+				Thread.sleep(15000);
+				System.out.println("Me levanto");
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
-				System.err.println("Unable to get streams from server");
-				System.exit(1);
-			}		
+			}*/
+			// create an object output stream from the output stream so we can send an object through it
+			/*ObjectOutputStream objectOutputStream = new ObjectOutputStream(out);
+			
+			//Create the object to send
+			String cadena=((String)mensaje.getSession().get("Nombre"));
+			cadena+=" aÃ±ado informaciÃ³n";
+			mensaje.getSession().put("Nombre", cadena);
+			//System.out.println("\n3.- He leÃ­do: "+(String)mensaje.getSession().get("Nombre"));
+			objectOutputStream.writeObject(mensaje);*
+			*/
 
-			/** Closing all the resources */
-			out.close();
-			in.close();			
-			echoSocket.close();
-		} catch (Exception e) {
+		} catch (IOException ex) {
+			System.out.println("Unable to get streams from client");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			try {
+				in.close();
+				out.close();
+				socket.close();
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		}
+	}
+
+	public static void main(String[] args) {
+		System.out.println("Connected to Kosmetics_Server");
+		ServerSocket server = null;
+		try {
+			server = new ServerSocket(PORT_NUMBER);
+			while (true) {
+				/**
+				 * create a new {@link SocketServer} object for each connection
+				 * this will allow multiple client connections
+				 */
+				new SocketServer(server.accept());
+			}
+		} catch (IOException ex) {
+			System.out.println("Unable to start server.");
+		} finally {
+			try {
+				if (server != null)
+					server.close();
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
 		}
 	}
 }

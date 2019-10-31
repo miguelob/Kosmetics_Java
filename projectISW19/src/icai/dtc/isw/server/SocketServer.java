@@ -61,7 +61,7 @@ public class SocketServer extends Thread {
 		    	break;
 		    	case "/getProductFullInfo":
 		    		fullProductList = new ArrayList<Product>();
-		    		//productoControler.getProductFullInfo(Product producto);
+		    		productoControler.getProductFullInfo((Product) mensajeIn.getObject());
 		    		mensajeOut.setContext("/getFullProductResponse");
 		    		session.put("fullProduct",fullProductList);
 		    		mensajeOut.setSession(session);

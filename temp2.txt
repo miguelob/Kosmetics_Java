@@ -32,16 +32,15 @@ public class Client {
 		session=new HashMap<String, Object>();
 	}
 	
-	public Object clientInteraction(String command,Object obj) {
+	public ArrayList clientInteraction(String command) {
 		
 		Message mensajeEnvio=new Message();
 		Message mensajeVuelta=new Message();
 		mensajeEnvio.setContext(command);
 		mensajeEnvio.setSession(session);
-		mensajeEnvio.setObject(obj);
 		this.sent(mensajeEnvio,mensajeVuelta);
 		
-		Object response = null;
+		ArrayList response = new ArrayList();
 		
 		switch (mensajeVuelta.getContext()) {
 			case "/getBasicProductResponse":

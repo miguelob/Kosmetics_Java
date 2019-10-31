@@ -137,6 +137,7 @@ public class SocketServer extends Thread {
 			//System.out.println("\n3.- He leído: "+(String)mensaje.getSession().get("Nombre"));
 			objectOutputStream.writeObject(mensaje);*
 			*/
+		    
 		    //test prueba
 		    
 		} catch (IOException ex) {

@@ -2,11 +2,8 @@ package icai.dtc.isw.domain;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-
-import javax.swing.ImageIcon;
-
 import java.io.Serializable;
+import javax.swing.ImageIcon;
 
 public class Product implements Serializable{
 	private static final long serialVersionUID = 1L;

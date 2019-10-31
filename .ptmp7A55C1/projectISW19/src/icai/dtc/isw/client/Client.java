@@ -13,9 +13,9 @@ import java.util.HashMap;
 import org.apache.log4j.Logger;
 
 import icai.dtc.isw.configuration.PropertiesISW;
-import icai.dtc.isw.domain.User;
+import icai.dtc.isw.domain.Customer;
+import icai.dtc.isw.domain.Test;
 import icai.dtc.isw.domain.Product;
-import icai.dtc.isw.domain.Review;
 import icai.dtc.isw.message.Message;
 
 public class Client {
@@ -43,36 +43,26 @@ public class Client {
 		ArrayList response = new ArrayList();
 		
 		switch (mensajeVuelta.getContext()) {
-			case "/getBasicProductResponse":
-				response=(ArrayList<Product>)(mensajeVuelta.getSession().get("basicProduct"));
-			break;
-			case "/getFullProductResponse":
-				response=(ArrayList<Product>)(mensajeVuelta.getSession().get("fullProduct"));
-			break;
-			case "/getUser":
-				response=(ArrayList<User>)(mensajeVuelta.getSession().get("users"));
-			break;
-			case "/getReview":
-				response=(ArrayList<Review>)(mensajeVuelta.getSession().get("reviews"));
-			break;
-				
-			default:
-				Logger.getRootLogger().info("Option not found");
-				System.out.println("\nError a la vuelta");
-				break;
-			
-			/*case "/getCustomerResponse":
+			case "/getCustomerResponse":
 				response = (ArrayList<Customer>)(mensajeVuelta.getSession().get("Customer"));
 				 /*for (Customer customer : response) {			
 						System.out.println("He leido el id: "+customer.getId()+" con nombre: "+customer.getName());
-					}
+					} */
 				break;
 			case "/getTestResponse":
 				response = (ArrayList<Test>)(mensajeVuelta.getSession().get("Test"));
 				/* for (Test test : response) {			
 						System.out.println("He leido el id: "+test.getId()+" con nombre: "+test.getName());
-					}
-				break;*/
+					} */
+				break;
+			case "/getProductResponse":
+				response=(ArrayList<Product>)(mensajeVuelta.getSession().get("Product"));
+				break;
+				
+			default:
+				Logger.getRootLogger().info("Option not found");
+				System.out.println("\nError a la vuelta");
+				break;
 		
 		}
 		//System.out.println("3.- En Main.- El valor devuelto es: "+((String)mensajeVuelta.getSession().get("Nombre")));

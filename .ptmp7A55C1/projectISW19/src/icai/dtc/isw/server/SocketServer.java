@@ -10,25 +10,18 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import icai.dtc.isw.controler.UserControler;
-import icai.dtc.isw.domain.User;
+import icai.dtc.isw.controler.CustomerControler;
+import icai.dtc.isw.controler.TestControler;
+import icai.dtc.isw.domain.Customer;
+import icai.dtc.isw.domain.Test;
 import icai.dtc.isw.message.Message;
 import icai.dtc.isw.controler.ProductControler;
-import icai.dtc.isw.controler.ReviewControler;
 import icai.dtc.isw.domain.Product;
-import icai.dtc.isw.domain.Review;
 
 public class SocketServer extends Thread {
 	public static final int PORT_NUMBER = 8081;
+
 	protected Socket socket;
-	ProductControler productoControler = new ProductControler();
-	UserControler userControler = new UserControler();
-	ReviewControler reviewControler = new ReviewControler();
-	ArrayList<Product> basicProductList;
-	ArrayList<Product> fullProductList;
-	ArrayList<Review> reviewList;
-	ArrayList<User> userList;
-	HashMap<String,Object> session = new HashMap<String, Object>();
 
 	private SocketServer(Socket socket) {
 		this.socket = socket;
@@ -50,47 +43,7 @@ public class SocketServer extends Thread {
 		    ObjectOutputStream objectOutputStream = new ObjectOutputStream(out);
 		    Message mensajeOut=new Message();
 		    switch (mensajeIn.getContext()) {
-		    	case "/getProductBasicInfo":
-		    		basicProductList = new ArrayList<Product>();
-		    		productoControler.getProductBasicInfo(basicProductList);
-		    		mensajeOut.setContext("/getBasicProductResponse");
-		    		session = new HashMap<String, Object>();
-		    		session.put("basicProduct",basicProductList);
-		    		mensajeOut.setSession(session);
-		    		objectOutputStream.writeObject(mensajeOut);
-		    	break;
-		    	case "/getProductFullInfo":
-		    		fullProductList = new ArrayList<Product>();
-		    		//productoControler.getProductFullInfo(Product producto);
-		    		mensajeOut.setContext("/getFullProductResponse");
-		    		session.put("fullProduct",fullProductList);
-		    		mensajeOut.setSession(session);
-		    		objectOutputStream.writeObject(mensajeOut);
-		    	break;
-		    	case "/getUser":
-		    		userList = new ArrayList<User>();
-		    		//userControler.getUser(userList);
-		    		mensajeOut.setContext("/getUser");
-		    		session.put("users",userList);
-		    		mensajeOut.setSession(session);
-		    		objectOutputStream.writeObject(mensajeOut);
-		    	break;
-		    	case "/getReview":
-		    		reviewList = new ArrayList<Review>();
-		    		reviewControler.getReview(reviewList);
-		    		mensajeOut.setContext("/getReview");
-		    		session.put("reviews",reviewList);
-		    		mensajeOut.setSession(session);
-		    		objectOutputStream.writeObject(mensajeOut);
-		    	break;
-		    		
-		    	
-		    	
-		    	default:
-		    		System.out.println("\nParámetro no encontrado");
-		    		break;
-		    		
-		    		/*case "/getCustomer":
+		    	case "/getCustomer":
 		    		CustomerControler customerControler=new CustomerControler();
 		    		ArrayList<Customer> lista=new ArrayList<Customer>();
 		    		customerControler.getCustomer(lista);
@@ -109,7 +62,23 @@ public class SocketServer extends Thread {
 		    		session1.put("Test",lista1);
 		    		mensajeOut.setSession(session1);
 		    		objectOutputStream.writeObject(mensajeOut);		    		
-		    	break;*/
+		    	break;
+		    	case "/getProduct":
+		    		ProductControler productoControler = new ProductControler();
+		    		ArrayList<Product> lista2=new ArrayList<Product>();
+		    		productoControler.getProduct(lista2);
+		    		mensajeOut.setContext("/getProductResponse");
+		    		HashMap<String,Object> session2=new HashMap<String, Object>();
+		    		session2.put("Product",lista2);
+		    		mensajeOut.setSession(session2);
+		    		objectOutputStream.writeObject(mensajeOut);
+		    	break;
+		    		
+		    	
+		    	
+		    	default:
+		    		System.out.println("\nParámetro no encontrado");
+		    		break;
 		    }
 		    
 		    //LÃ³gica del controlador 
@@ -155,7 +124,7 @@ public class SocketServer extends Thread {
 	}
 
 	public static void main(String[] args) {
-		System.out.println("Connected to Kosmetics_Server");
+		System.out.println("SocketServer Example");
 		ServerSocket server = null;
 		try {
 			server = new ServerSocket(PORT_NUMBER);

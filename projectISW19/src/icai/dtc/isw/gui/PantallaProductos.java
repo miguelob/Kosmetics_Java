@@ -32,8 +32,6 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 import javax.swing.JFormattedTextField;
 import javax.swing.JTextPane;
 import javax.swing.JRadioButton;
@@ -49,8 +47,8 @@ import icai.dtc.isw.domain.Product;
 
 public class PantallaProductos extends JFrame {
 	private JFormattedTextField txtWhatAreYou;
-    ArrayList<Product> products; //This is where all the products from the DB are storaged and ready to display.
-    Client client; //Instance of the main client class -> connects to the server and send and recieves info.
+    ArrayList products;
+    Client client;
 
 	/**
 	 * Launch the application.
@@ -60,11 +58,6 @@ public class PantallaProductos extends JFrame {
 			public void run() {
 				try {
 					PantallaProductos frame = new PantallaProductos();
-					//UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-					SwingUtilities.updateComponentTreeUI(frame);
-					ImageIcon logo = new ImageIcon("media/icons/Main_Logo.png");
-					frame.setIconImage(logo.getImage());
-					frame.setTitle("Kosmetics");
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -331,7 +324,7 @@ public class PantallaProductos extends JFrame {
 	
 	public void initialiseProducts(){
 		client = new Client();
-		products = (ArrayList<Product>) client.clientInteraction("/getProductBasicInfo",null);
+		products = (ArrayList) client.clientInteraction("/getProductBasicInfo",null);
 	}
 
 }

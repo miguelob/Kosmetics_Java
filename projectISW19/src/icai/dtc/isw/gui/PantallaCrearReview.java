@@ -3,6 +3,7 @@ package icai.dtc.isw.gui;
 import java.awt.HeadlessException;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -59,13 +60,14 @@ public class PantallaCrearReview extends JFrame {
 		//Main panel
 		//Includes product name
 		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(Color.WHITE);
+		panel_1.setBackground(new Color(255, 204, 204));
 		getContentPane().add(panel_1, BorderLayout.CENTER);
 		panel_1.setLayout(new BorderLayout(0, 0));
 		
 		//Products name
 		
-		MyJLabel mjlblProductName = new MyJLabel("Lip Blush Bundle");
+		JLabel mjlblProductName = new JLabel("Lip Blush Bundle");
+		mjlblProductName.setBackground(new Color(255, 204, 204));
 		mjlblProductName.setHorizontalAlignment(SwingConstants.CENTER);
 		mjlblProductName.setFont(GUIConstants.FONT_BIG_TITLE);
 		panel_1.add(mjlblProductName, BorderLayout.NORTH);
@@ -73,7 +75,7 @@ public class PantallaCrearReview extends JFrame {
 		//Sub panel to the main panel
 		//Does not include the products name
 		JPanel panel_2 = new JPanel();
-		panel_2.setBorder(new MatteBorder(50, 200, 50, 100, (Color) new Color(255, 255, 255)));
+		panel_2.setBorder(new MatteBorder(20, 100, 30, 100, (Color) new Color(255, 204, 204)));
 		panel_2.setBackground(Color.WHITE);
 		panel_1.add(panel_2, BorderLayout.CENTER);
 		panel_2.setLayout(new BorderLayout(0, 0));
@@ -82,11 +84,13 @@ public class PantallaCrearReview extends JFrame {
 		//The user can choose how many stars will be given to the product
 		
 		JPanel panelStars = new JPanel();
+		panelStars.setBorder(new MatteBorder(1, 1, 15, 1, (Color) new Color(255, 255, 255)));
 		panelStars.setLayout(new BorderLayout());
 		panelStars.setBackground(new Color(255, 255, 255));
 		panel_2.add(panelStars, BorderLayout.NORTH);
 
 		JPanel panelStarsDescription = new JPanel();
+		panelStarsDescription.setBorder(new MatteBorder(1, 1, 10, 1, (Color) Color.WHITE));
 		panelStarsDescription.setBackground(Color.WHITE);
 		panelStarsDescription.add(new MyJLabel("Your overall rating of this product"));
 		panelStars.add(panelStarsDescription, BorderLayout.NORTH);
@@ -108,6 +112,7 @@ public class PantallaCrearReview extends JFrame {
 		
 		//Panel for the review's text and quick survey
 		JPanel panelShareYourExperience = new JPanel();
+		panelShareYourExperience.setBorder(new MatteBorder(1, 10, 1, 1, (Color) Color.WHITE));
 		panelShareYourExperience.setLayout(new BorderLayout());
 		panel_2.add(panelShareYourExperience, BorderLayout.CENTER);
 		JTextPane txtpnShareYourExperience = new JTextPane();
@@ -143,10 +148,6 @@ public class PantallaCrearReview extends JFrame {
 		panelAside.add(panelIndividualReview);
 		panelIndividualReview.setLayout(new BorderLayout(0, 0));
 		
-		MyJLabel mjlblUsername = new MyJLabel("maroacc");
-		mjlblUsername.setFont(GUIConstants.FONT_REGULAR);
-		panelIndividualReview.add(mjlblUsername, BorderLayout.NORTH);
-		
 		MyJLabel mjlblReviewText = new MyJLabel("<html>The lip blush formula in entirely different than the matte lip kits, <br>"
 				+ "but still has the vibrant beautiful appearance. <br>"
 				+ "It’s light weight and smooth, feels like butter. This product doesn’t get crusty or dry out. <br>"
@@ -155,7 +156,42 @@ public class PantallaCrearReview extends JFrame {
 		mjlblReviewText.setForeground(Color.LIGHT_GRAY);
 		panelIndividualReview.add(mjlblReviewText, BorderLayout.CENTER);
 		
-		MyJLabel mjlblUser = new MyJLabel("maroacc");
+		//Header of the review
+		//Includes username, title, number of stars
+		JPanel panelHeaderReview = new JPanel();
+		panelHeaderReview.setBackground(Color.WHITE);
+		panelIndividualReview.add(panelHeaderReview, BorderLayout.NORTH);
+		panelHeaderReview.setLayout(new BorderLayout());
+		
+		//User name of the individual review's author
+		MyJLabel mjlblUsername = new MyJLabel();
+		panelHeaderReview.add(mjlblUsername, BorderLayout.WEST);
+		mjlblUsername.setText("miguelob");
+		mjlblUsername.setBorder(new MatteBorder(15, 10, 15, 15, (Color) new Color(255, 255, 255)));
+		
+		//Title of the individual review
+		MyJLabel mjlblTitle = new MyJLabel();
+		panelHeaderReview.add(mjlblTitle, BorderLayout.CENTER);
+		mjlblTitle.setText("Absolutely Incredible!!");
+		mjlblTitle.setFont(GUIConstants.FONT_REGULAR_ITALICS);
+		
+		JPanel panelStarFlowIndivifualReview = new JPanel();
+		panelStarFlowIndivifualReview.setBackground(Color.WHITE);
+		panelHeaderReview.add(panelStarFlowIndivifualReview, BorderLayout.EAST);
+		
+		MyJButton2States lblStar_1a = new MyJButton2States(new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"));
+		lblStar_1.setContentAreaFilled(false);
+		panelStarFlowIndivifualReview.add(lblStar_1a);
+		MyJButton2States lblStar_2a = new MyJButton2States(new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"));
+		panelStarFlowIndivifualReview.add(lblStar_2a);
+		MyJButton2States lblStar_3a = new MyJButton2States(new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"));
+		panelStarFlowIndivifualReview.add(lblStar_3a);
+		MyJButton2States lblStar_4a = new MyJButton2States(new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"));
+		panelStarFlowIndivifualReview.add(lblStar_4a);
+		MyJButton2States lblStar_5a = new MyJButton2States(new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"));
+		panelStarFlowIndivifualReview.add(lblStar_5a);
+		
+		MyJLabel mjlblUser = new MyJLabel("maroag");
 		panelAside.add(mjlblUser);
 	}
 	

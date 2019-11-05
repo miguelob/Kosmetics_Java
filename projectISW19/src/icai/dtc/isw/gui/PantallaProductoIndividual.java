@@ -21,6 +21,7 @@ import javax.swing.border.MatteBorder;
 
 import icai.dtc.isw.client.Client;
 import icai.dtc.isw.domain.Product;
+import icai.dtc.isw.domain.Review;
 
 import javax.swing.border.LineBorder;
 import javax.swing.JButton;
@@ -79,14 +80,14 @@ public class PantallaProductoIndividual extends JFrame {
 		
 		//Products name
 		
-		MyJLabel mjlblProductName = new MyJLabel(product.getName());
+		MyJLabel mjlblProductName = new MyJLabel(fullProduct.getName());
 		mjlblProductName.setHorizontalAlignment(SwingConstants.CENTER);
 		mjlblProductName.setFont(GUIConstants.FONT_BIG_TITLE);
 		panel.add(mjlblProductName, BorderLayout.NORTH);
 		mjlblProductName.setBorder(new MatteBorder(10, 20, 30, 20, Color.WHITE));
 		
 		//Product's Photo
-		ImageIcon productImage = Images.resize(new ImageIcon("media/images/product1.jpg"), 300, 400);
+		ImageIcon productImage = Images.resize(fullProduct.getProductImage(), 300, 400);
 		JLabel lblProduct = new JLabel(productImage);
 		lblProduct.setBorder(new MatteBorder(1, 100, 1, 100, (Color) new Color(255, 255, 255)));
 		panel.add(lblProduct, BorderLayout.WEST);
@@ -114,7 +115,7 @@ public class PantallaProductoIndividual extends JFrame {
 		MyJButton2States lblStar_5a = new MyJButton2States(new ImageIcon("media/icons/star_32.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"));
 		panelStarsFlow.add(lblStar_5a);
 		
-		JLabel lblNumberOfReviews = new JLabel("    22 Reviews                            ");
+		JLabel lblNumberOfReviews = new JLabel("    "+fullProduct.getReviews().size()+" Reviews                            ");
 		lblNumberOfReviews.setFont(GUIConstants.FONT_REGULAR);
 		panelStarsFlow.add(lblNumberOfReviews);
 		
@@ -135,13 +136,11 @@ public class PantallaProductoIndividual extends JFrame {
 		//Label for the official description of the product
 		JLabel lblDescription = new JLabel();
 		panelInfo.add(lblDescription);
-		lblDescription.setText("<html>Kylie Cosmetic's new Lip Blush formula is perfect for those who want"
-				+ "a wash of matte <br> color that will last all day! The color is buildable if you're"
-				+ "looking for a bit more! <br> The bundle is only $55, valued at $64. <html>");
+		lblDescription.setText(fullProduct.getDescription());
 		lblDescription.setFont(GUIConstants.FONT_REGULAR);
 		
 		
-		JLabel lblPrice = new JLabel(Double.toString(product.getPrice()) + " $");
+		JLabel lblPrice = new JLabel(Double.toString(fullProduct.getPrice()) + " $");
 		lblPrice.setFont(GUIConstants.FONT_BIG_TITLE);
 		lblPrice.setForeground(new Color(255, 113, 113));
 		panelInfo.add(lblPrice, BorderLayout.SOUTH);
@@ -203,17 +202,15 @@ public class PantallaProductoIndividual extends JFrame {
 		panelReviews.setLayout(new GridLayout(0, 2, 50, 30));
 		panelReviews.setBorder(new MatteBorder(30, 60, 30, 60, Color.WHITE));
 		
-		for(int i=0; i<5; i++) {
+		for(int i=0; i<fullProduct.getReviews().size(); i++) {
 			//Panel for an individual review
+					ArrayList<Review> reviews = fullProduct.getReviews();
 					JPanel panelIndividualReview = new JPanel();
 					panelIndividualReview.setBackground(Color.WHITE);
 					panelReviews.add(panelIndividualReview);
 					panelIndividualReview.setLayout(new BorderLayout(0, 0));
 					
-					MyJLabel mjlblReviewText = new MyJLabel("<html>The lip blush formula in entirely different than the matte lip kits, <br>"
-							+ "but still has the vibrant beautiful appearance. <br>"
-							+ "It’s light weight and smooth, feels like butter. This product doesn’t get crusty or dry out. <br>"
-							+ "All four shades are stunning and highly pigmented. New favorite for sure!!</html>");
+					MyJLabel mjlblReviewText = new MyJLabel(reviews.get(i).getComment());
 					mjlblReviewText.setFont(GUIConstants.FONT_REGULAR);
 					mjlblReviewText.setForeground(Color.LIGHT_GRAY);
 					panelIndividualReview.add(mjlblReviewText, BorderLayout.CENTER);
@@ -228,13 +225,13 @@ public class PantallaProductoIndividual extends JFrame {
 					//User name of the individual review's author
 					MyJLabel mjlblUsername = new MyJLabel();
 					panelHeaderReview.add(mjlblUsername, BorderLayout.WEST);
-					mjlblUsername.setText("miguelob");
+					mjlblUsername.setText(reviews.get(i).getUser().getName());
 					mjlblUsername.setBorder(new MatteBorder(15, 10, 15, 15, (Color) new Color(255, 255, 255)));
 					
 					//Title of the individual review
 					MyJLabel mjlblTitle = new MyJLabel();
 					panelHeaderReview.add(mjlblTitle, BorderLayout.CENTER);
-					mjlblTitle.setText("Absolutely Incredible!!");
+					mjlblTitle.setText(reviews.get(i).getCommentTitle());
 					mjlblTitle.setFont(GUIConstants.FONT_REGULAR_ITALICS);
 					
 					JPanel panelStarFlowIndivifualReview = new JPanel();

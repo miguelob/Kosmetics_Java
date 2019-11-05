@@ -36,7 +36,10 @@ public class User implements Serializable{
     	if(imageBytes != null)
     		userImage = new ImageIcon(imageBytes);
     	else
-    		userImage = new ImageIcon("media/images/NF.png");
+    		userImage = new ImageIcon("media/images/NF.jpg");
+    }
+    public String getName() {
+    	return name;
     }
 
 

@@ -109,7 +109,7 @@ public class Product implements Serializable{
     	if(imageBytes != null)
     		productImage = new ImageIcon(imageBytes);
     	else
-    		productImage = new ImageIcon("media/images/NF.png");
+    		productImage = new ImageIcon("media/images/NF.jpg");
     }
     
     //GETTERS
@@ -139,6 +139,9 @@ public class Product implements Serializable{
     }*/
     public ImageIcon getProductImage() {
     	return productImage;
+    }
+    public ArrayList<Review> getReviews(){
+    	return reviews;
     }
     @Override
     public String toString() {

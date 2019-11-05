@@ -13,11 +13,11 @@ public class ReviewDAO {
 	public static void loadProductReview(Product product) {
 		Connection con=ConnectionDAO.getInstance().getConnection();
 		//QUERY for loading reviews. we also need the query user
-		try (PreparedStatement pst = con.prepareStatement("SELECT * FROM \"Review\"");
+		try (PreparedStatement pst = con.prepareStatement("SELECT * FROM \"Reviews\" WHERE \"ID_Product\" = " + product.getId());
                 ResultSet rs = pst.executeQuery()) {
 
             while (rs.next()) {
-            	product.addReview(new Review(UserDAO.getUser(rs.getInt(2)), rs.getInt(2), rs.getInt(3), rs.getInt(4), rs.getInt(5), rs.getString(6), rs.getString(7)));
+            	product.addReview(new Review(UserDAO.getUser(rs.getInt(3)), rs.getInt(6), rs.getInt(7), rs.getInt(8), rs.getString(5), rs.getString(4)));
             }
 
         } catch (SQLException ex) {

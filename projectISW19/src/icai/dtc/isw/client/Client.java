@@ -48,7 +48,7 @@ public class Client {
 				response=(ArrayList<Product>)(mensajeVuelta.getSession().get("basicProduct"));
 			break;
 			case "/getFullProductResponse":
-				response=(ArrayList<Product>)(mensajeVuelta.getSession().get("fullProduct"));
+				response = mensajeVuelta.getSession().get("fullProduct");
 			break;
 			case "/getUser":
 				response=(ArrayList<User>)(mensajeVuelta.getSession().get("users"));

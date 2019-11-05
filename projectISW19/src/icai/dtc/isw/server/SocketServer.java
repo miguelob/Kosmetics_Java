@@ -60,14 +60,14 @@ public class SocketServer extends Thread {
 		    		objectOutputStream.writeObject(mensajeOut);
 		    	break;
 		    	case "/getProductFullInfo":
-		    		fullProductList = new ArrayList<Product>();
-		    		productoControler.getProductFullInfo((Product) mensajeIn.getObject());
+		    		Product product = (Product) mensajeIn.getObject();
+		    		productoControler.getProductFullInfo(product);
 		    		mensajeOut.setContext("/getFullProductResponse");
-		    		session.put("fullProduct",fullProductList);
+		    		session.put("fullProduct",product);
 		    		mensajeOut.setSession(session);
 		    		objectOutputStream.writeObject(mensajeOut);
 		    	break;
-		    	case "/getUser":
+		    	/*case "/getUser":
 		    		userList = new ArrayList<User>();
 		    		//userControler.getUser(userList);
 		    		mensajeOut.setContext("/getUser");
@@ -82,7 +82,7 @@ public class SocketServer extends Thread {
 		    		session.put("reviews",reviewList);
 		    		mensajeOut.setSession(session);
 		    		objectOutputStream.writeObject(mensajeOut);
-		    	break;
+		    	break;*/
 		    		
 		    	
 		    	

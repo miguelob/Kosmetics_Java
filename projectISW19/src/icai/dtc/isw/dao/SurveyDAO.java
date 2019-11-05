@@ -13,9 +13,11 @@ public class SurveyDAO {
 		Survey survey = new Survey();
 		Connection con=ConnectionDAO.getInstance().getConnection();
 		//WE NEED QUERY FOR GET THE INFO WITH EACH ID
-		try (PreparedStatement pst = con.prepareStatement("SELECT * FROM \"Producto\"");
+		try (PreparedStatement pst = con.prepareStatement("SELECT * FROM \"Surveys\" WHERE \"ID_Survey\" = " + id);
 			ResultSet rs = pst.executeQuery()) {
+			if(rs.next()) {
 				survey.put(SurveyDAO.getQuestion(rs.getInt(1)), rs.getInt(2), rs.getInt(3), rs.getInt(4));
+			}
         } catch (SQLException ex) {
 
             System.out.println(ex.getMessage());
@@ -26,9 +28,11 @@ public class SurveyDAO {
 		Question question = null;
 		Connection con=ConnectionDAO.getInstance().getConnection();
 		//WE NEED QUERY FOR GET THE INFO WITH EACH ID
-		try (PreparedStatement pst = con.prepareStatement("SELECT * FROM \"Producto\"");
+		try (PreparedStatement pst = con.prepareStatement("SELECT * FROM \"Questions\" WHERE \"ID_Question\" = " + id);
 			ResultSet rs = pst.executeQuery()) {
-			question = new Question(rs.getInt(1), rs.getString(2));
+			if(rs.next()) {
+				question = new Question(rs.getInt(1), rs.getString(2));
+			}
         } catch (SQLException ex) {
 
             System.out.println(ex.getMessage());

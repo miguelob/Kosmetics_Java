@@ -2,6 +2,8 @@ package icai.dtc.isw.gui;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -19,6 +21,8 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import java.awt.Color;
+import java.awt.Cursor;
+
 import javax.swing.JCheckBox;
 import java.awt.GridLayout;
 import javax.swing.JSpinner;
@@ -83,6 +87,7 @@ public class PantallaProductos extends JFrame {
 		setBackground(Color.WHITE);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 797, 480);
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		getContentPane().setBackground(new Color(255, 204, 204));
 		
 		MyJPanel myJPanel = new MyJPanel();
@@ -248,8 +253,18 @@ public class PantallaProductos extends JFrame {
 	          
 	          //Button with the photo of the product
 	          //Takes you to the product's screen
-	          MyJButton mjb = new MyJButton(new ImageIcon("media/images/product0.jpg"));
-	          productPanel.add(mjb);
+	          MyJButton btnProduct = new MyJButton(new ImageIcon("media/images/product0.jpg"));
+	          btnProduct.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+	          btnProduct.addActionListener(new ActionListener() {
+	        	  @Override
+	        	  public void actionPerformed(ActionEvent e) {
+	        		  PantallaProductoIndividual frame = new PantallaProductoIndividual(product);
+	        		  frame.setVisible(true);
+	        		  PantallaProductos.this.dispose();
+	        		  
+	        	  }
+	          });
+	          productPanel.add(btnProduct);
 	          
 	          //Panel for the name, brand, category and type
 	          MyJPanel namePanel = new MyJPanel();
@@ -262,7 +277,7 @@ public class PantallaProductos extends JFrame {
 	          MyJLabel lblBrand = new MyJLabel(product.getBrand());
 	          lblBrand.setFont(GUIConstants.FONT_TITLE);
 	          namePanel.add(lblBrand);
-	          mjb.setHorizontalAlignment(SwingConstants.CENTER);
+	          btnProduct.setHorizontalAlignment(SwingConstants.CENTER);
 	          //Category of the product
 	          namePanel.add(new MyJLabel(product.getCategory()));
 	          //Price of the product
@@ -270,7 +285,7 @@ public class PantallaProductos extends JFrame {
 	          lblPrice.setFont(GUIConstants.FONT_MEDIUM_TITLE);
 	          lblPrice.setForeground(new Color(255, 113, 113));
 	          namePanel.add(lblPrice);
-//	          mjb.addActionListener(new ActionListener()
+//	          btnProduct.addActionListener(new ActionListener()
 //	            {@Override
 //	              public void actionPerformed(ActionEvent e)
 //	                {
@@ -310,7 +325,7 @@ public class PantallaProductos extends JFrame {
 	          reviewPanel.add(feature_3);
 	 
 
-	          mjb.setHorizontalAlignment(SwingConstants.CENTER);
+	          btnProduct.setHorizontalAlignment(SwingConstants.CENTER);
 	        
 	          
 	          productPanel.add(reviewPanel);

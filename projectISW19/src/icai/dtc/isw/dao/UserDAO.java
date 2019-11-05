@@ -14,9 +14,11 @@ public class UserDAO {
 		User user = null;
 		Connection con=ConnectionDAO.getInstance().getConnection();
 		//WE NEED QUERY FOR GET THE INFO WITH EACH ID
-		try (PreparedStatement pst = con.prepareStatement("SELECT * FROM \"Producto\"");
+		try (PreparedStatement pst = con.prepareStatement("SELECT * FROM \"Users\" WHERE \"ID_User\" = " + i);
 			ResultSet rs = pst.executeQuery()) {
-				user = new User(rs.getString(1), rs.getString(2), rs.getString(3), rs.getDate(4), rs.getString(5), rs.getString(6), rs.getBytes(7));
+			if(rs.next()) {
+				user = new User(rs.getString(4), rs.getString(2), rs.getString(3), rs.getDate(5), rs.getString(6), rs.getString(7),rs.getBytes(8));
+			}
         } catch (SQLException ex) {
 
             System.out.println(ex.getMessage());

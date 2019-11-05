@@ -33,7 +33,10 @@ public class User implements Serializable{
         this.setImage(imageBytes);
     }
     private void setImage(byte[] imageBytes) {
-    	userImage = new ImageIcon(imageBytes);
+    	if(imageBytes != null)
+    		userImage = new ImageIcon(imageBytes);
+    	else
+    		userImage = new ImageIcon("media/images/NF.png");
     }
 
 

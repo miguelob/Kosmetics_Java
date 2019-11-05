@@ -1,14 +1,15 @@
 package icai.dtc.isw.domain;
 
 import java.util.HashMap;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.Iterator;
 
 
-public class Survey {
-	
+public class Survey implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private HashMap<Question,int[]> survey;
     
 	public Survey(){

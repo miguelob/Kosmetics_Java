@@ -106,9 +106,11 @@ public class Product implements Serializable{
     		this.productCategory = "EMPTY_FIELD"; // to display that the category is empty
     }
     private void setImage(byte[] imageBytes) {
-    	productImage = new ImageIcon(imageBytes);
+    	if(imageBytes != null)
+    		productImage = new ImageIcon(imageBytes);
+    	else
+    		productImage = new ImageIcon("media/images/NF.png");
     }
-
     
     //GETTERS
     public String getName(){

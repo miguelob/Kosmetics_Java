@@ -1,6 +1,9 @@
 package icai.dtc.isw.domain;
 
-public class Question{
+import java.io.Serializable;
+
+public class Question implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private int idQuestion;
 	private String questionText;
 	

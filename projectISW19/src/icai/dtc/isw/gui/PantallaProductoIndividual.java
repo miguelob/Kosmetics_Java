@@ -6,6 +6,7 @@ import java.awt.GraphicsConfiguration;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
 import java.awt.Image;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -17,27 +18,34 @@ import java.awt.Color;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.border.MatteBorder;
+
+import icai.dtc.isw.client.Client;
+import icai.dtc.isw.domain.Product;
+
 import javax.swing.border.LineBorder;
 import javax.swing.JButton;
 import java.awt.Cursor;
 
 public class PantallaProductoIndividual extends JFrame {
 	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					PantallaProductoIndividual frame = new PantallaProductoIndividual();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					PantallaProductoIndividual frame = new PantallaProductoIndividual();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 
-	public PantallaProductoIndividual() throws HeadlessException {
+	public PantallaProductoIndividual(Product product) throws HeadlessException {
+		Client client = new Client();
+		Product fullProduct = (Product) client.clientInteraction("/getProductFullInfo",product);
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		getContentPane().setBackground(Color.WHITE);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -71,7 +79,7 @@ public class PantallaProductoIndividual extends JFrame {
 		
 		//Products name
 		
-		MyJLabel mjlblProductName = new MyJLabel("Lip Blush Bundle");
+		MyJLabel mjlblProductName = new MyJLabel(product.getName());
 		mjlblProductName.setHorizontalAlignment(SwingConstants.CENTER);
 		mjlblProductName.setFont(GUIConstants.FONT_BIG_TITLE);
 		panel.add(mjlblProductName, BorderLayout.NORTH);
@@ -79,7 +87,6 @@ public class PantallaProductoIndividual extends JFrame {
 		
 		//Product's Photo
 		ImageIcon productImage = Images.resize(new ImageIcon("media/images/product1.jpg"), 300, 400);
-		System.out.println(productImage.getIconHeight());
 		JLabel lblProduct = new JLabel(productImage);
 		lblProduct.setBorder(new MatteBorder(1, 100, 1, 100, (Color) new Color(255, 255, 255)));
 		panel.add(lblProduct, BorderLayout.WEST);
@@ -134,7 +141,7 @@ public class PantallaProductoIndividual extends JFrame {
 		lblDescription.setFont(GUIConstants.FONT_REGULAR);
 		
 		
-		JLabel lblPrice = new JLabel("$49");
+		JLabel lblPrice = new JLabel(Double.toString(product.getPrice()) + " $");
 		lblPrice.setFont(GUIConstants.FONT_BIG_TITLE);
 		lblPrice.setForeground(new Color(255, 113, 113));
 		panelInfo.add(lblPrice, BorderLayout.SOUTH);

@@ -16,7 +16,7 @@ public class ProductDAO {
 	
 	public static void getProductBasicInfo(ArrayList<Product> lista) {
 		Connection con=ConnectionDAO.getInstance().getConnection();
-		try (PreparedStatement pst = con.prepareStatement("SELECT * FROM \"Producto\"");
+		try (PreparedStatement pst = con.prepareStatement("SELECT * FROM \"Products\"");
                 ResultSet rs = pst.executeQuery()) {
 
             while (rs.next()) {
@@ -32,8 +32,8 @@ public class ProductDAO {
 	public static void getProductFullInfo(Product product) {
 		Connection con=ConnectionDAO.getInstance().getConnection();
 		//FIRST QUERY OF CHARACTERISTICS
-		try (PreparedStatement pst = con.prepareStatement("SELECT * FROM \"CHARACTERISTICS\"");
-                ResultSet rs = pst.executeQuery()) {
+		try (PreparedStatement pst = con.prepareStatement("SELECT \"Characteristic\" FROM public.\"Products\" as A1 inner join \"IDs_Prod_Charac\" as B1 on A1.\"ID_Product\" = B1.\"ID_Product\" inner join \"Characteristics\" AS c1 on B1.\"ID_Characteristic\" = C1.\"ID_Characteristic\" WHERE A1.\"ID_Product\" =" + product.getId());
+				ResultSet rs = pst.executeQuery()) {
 
             while (rs.next()) {
             	product.addFeature(rs.getString(1));
@@ -45,9 +45,11 @@ public class ProductDAO {
         }
 		ReviewDAO.loadProductReview(product);
 		//QUERY PARA SACAR EL ID DE ENCUESTA ASOCIADA AL PRODUCTO
-		try (PreparedStatement pst = con.prepareStatement("SELECT * FROM \"CHARACTERISTICS\"");
-                ResultSet rs = pst.executeQuery()) {
-			product.setSurvey(SurveyDAO.getSurvey(rs.getInt(6)));
+		try (PreparedStatement pst = con.prepareStatement("SELECT \"ID_Survey\" FROM  \"Products\" WHERE \"ID_Product\" = " + product.getId());
+				ResultSet rs = pst.executeQuery()) {
+			if (rs.next()) {
+				product.setSurvey(SurveyDAO.getSurvey(rs.getInt(1)));
+			}
         } catch (SQLException ex) {
 
             System.out.println(ex.getMessage());

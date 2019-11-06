@@ -33,5 +33,8 @@ public class Review implements Serializable{
     public User getUser() {
     	return user;
     }
+    public int getScore() {
+    	return scoreProduct;
+    }
 
 }

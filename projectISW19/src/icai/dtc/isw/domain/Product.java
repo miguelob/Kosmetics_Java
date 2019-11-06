@@ -17,6 +17,7 @@ public class Product implements Serializable{
     private ArrayList<Review> reviews = new ArrayList<Review>();
     private String productCategory;
     private ImageIcon productImage;
+    private int score;
 
     //Constructor with all the information-> No tiene sentido, cuando el usuario requiera ás info del producto se carga sobre el ya existente.
    /* public Product(int idProduct, String name, String productCategory, double price, 
@@ -111,6 +112,9 @@ public class Product implements Serializable{
     	else
     		productImage = new ImageIcon("media/images/NF.jpg");
     }
+    public void setScore(float fullscore) {
+    	score = (int) fullscore;
+    }
     
     //GETTERS
     public String getName(){
@@ -142,6 +146,9 @@ public class Product implements Serializable{
     }
     public ArrayList<Review> getReviews(){
     	return reviews;
+    }
+    public int getScore() {
+    	return score;
     }
     @Override
     public String toString() {

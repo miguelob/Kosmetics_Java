@@ -238,6 +238,13 @@ public class PantallaProductoIndividual extends JFrame {
 					panelStarFlowIndivifualReview.setBackground(Color.WHITE);
 					panelHeaderReview.add(panelStarFlowIndivifualReview, BorderLayout.EAST);
 					
+					JLabel lblStar = null;
+					for(int j = 1; j<=reviews.get(i).getScore(); j++) {
+						lblStar = new JLabel(new ImageIcon("media/icons/star.png"));
+						panelStarFlowIndivifualReview.add(lblStar);
+					}
+					//lblStar.setContentAreaFilled(false);
+					/*
 					MyJButton2States lblStar_1 = new MyJButton2States(new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"));
 					lblStar_1.setContentAreaFilled(false);
 					panelStarFlowIndivifualReview.add(lblStar_1);
@@ -248,7 +255,7 @@ public class PantallaProductoIndividual extends JFrame {
 					MyJButton2States lblStar_4 = new MyJButton2States(new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"));
 					panelStarFlowIndivifualReview.add(lblStar_4);
 					MyJButton2States lblStar_5 = new MyJButton2States(new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"));
-					panelStarFlowIndivifualReview.add(lblStar_5);
+					panelStarFlowIndivifualReview.add(lblStar_5);*/
 		}
 	}
 

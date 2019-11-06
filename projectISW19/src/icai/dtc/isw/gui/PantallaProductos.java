@@ -253,7 +253,7 @@ public class PantallaProductos extends JFrame {
 	          
 	          //Button with the photo of the product
 	          //Takes you to the product's screen
-	          MyJButton btnProduct = new MyJButton(new ImageIcon("media/images/product0.jpg"));
+	          MyJButton btnProduct = new MyJButton(product.getProductImage());
 	          btnProduct.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 	          btnProduct.addActionListener(new ActionListener() {
 	        	  @Override

@@ -21,13 +21,25 @@ public class ProductDAO {
 
             while (rs.next()) {
             	//this will change
-            	lista.add(new Product(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDouble(5), rs.getString(6),null));
+            	lista.add(new Product(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDouble(5), rs.getString(6),rs.getBytes(8)));
             }
 
         } catch (SQLException ex) {
 
             System.out.println(ex.getMessage());
         }
+		for(int i = 0 ; i<lista.size();i++) {
+			try (PreparedStatement pst = con.prepareStatement("SELECT AVG(\"Score_Product\") FROM public.\"Reviews\" WHERE \"ID_Product\" = " + lista.get(i).getId());
+				 ResultSet rs = pst.executeQuery()) {
+					if(rs.next()) {
+						lista.get(i).setScore(rs.getFloat(1));
+					}
+			} catch (SQLException ex) {
+	
+	            System.out.println(ex.getMessage());
+	        }
+		}
+		
 	}
 	public static void getProductFullInfo(Product product) {
 		Connection con=ConnectionDAO.getInstance().getConnection();

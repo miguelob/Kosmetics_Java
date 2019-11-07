@@ -51,7 +51,7 @@ import icai.dtc.isw.domain.Product;
 
 public class PantallaProductos extends JFrame {
 	private JFormattedTextField txtWhatAreYou;
-    ArrayList products;
+    ArrayList<Product> products;
     Client client;
 
 	/**
@@ -62,6 +62,8 @@ public class PantallaProductos extends JFrame {
 			public void run() {
 				try {
 					PantallaProductos frame = new PantallaProductos();
+					frame.setIconImage((new ImageIcon("media/icons/Main_Logo.png")).getImage());
+					frame.setTitle("Kosmetics.");
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -244,7 +246,7 @@ public class PantallaProductos extends JFrame {
 		
 		initialiseProducts();
 		
-	      Iterator it = products.iterator();
+	      Iterator<Product> it = products.iterator();
 	      while (it.hasNext())
 	      {	 //Panel for every product available. Includes name, brand, category, description, price
 	          MyJPanel productPanel = new MyJPanel();
@@ -253,7 +255,7 @@ public class PantallaProductos extends JFrame {
 	          
 	          //Button with the photo of the product
 	          //Takes you to the product's screen
-	          MyJButton btnProduct = new MyJButton(product.getProductImage());
+	          MyJButton btnProduct = new MyJButton(Images.resize(product.getProductImage(),300,200));
 	          btnProduct.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 	          btnProduct.addActionListener(new ActionListener() {
 	        	  @Override
@@ -261,6 +263,7 @@ public class PantallaProductos extends JFrame {
 	        		  PantallaProductoIndividual frame = new PantallaProductoIndividual(product);
 	        		  frame.setVisible(true);
 	        		  PantallaProductos.this.dispose();
+	        		  //System.exit(0);
 	        		  
 	        	  }
 	          });
@@ -305,12 +308,7 @@ public class PantallaProductos extends JFrame {
 	          reviewPanel.setLayout(new GridLayout(0, 1));
 	          //Panel for the stars
 	          MyJPanel starsPanel = new MyJPanel();
-	          starsPanel.add(new MyJLabel(new ImageIcon("media/icons/star.png")));
-	          starsPanel.add(new MyJLabel(new ImageIcon("media/icons/star.png")));
-	          starsPanel.add(new MyJLabel(new ImageIcon("media/icons/star.png")));
-	          starsPanel.add(new MyJLabel(new ImageIcon("media/icons/star.png")));
-	          starsPanel.add(new MyJLabel(new ImageIcon("media/icons/star.png")));
-
+	          AutoStars.setStars(starsPanel, product.getScore());
 	          reviewPanel.add(starsPanel);
 	          //Features of the product
 	          //Feature 1

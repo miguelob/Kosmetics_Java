@@ -33,7 +33,7 @@ public class Review implements Serializable{
     public User getUser() {
     	return user;
     }
-    public int getScore() {
+    public int getProductScore() {
     	return scoreProduct;
     }
 

@@ -113,7 +113,7 @@ public class Product implements Serializable{
     		productImage = new ImageIcon("media/images/NF.jpg");
     }
     public void setScore(float fullscore) {
-    	score = (int) fullscore;
+    	score = Math.round(fullscore);
     }
     
     //GETTERS

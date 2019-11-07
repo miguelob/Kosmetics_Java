@@ -6,6 +6,8 @@ import java.awt.GraphicsConfiguration;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
 import java.awt.Image;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -46,6 +48,19 @@ public class PantallaProductoIndividual extends JFrame {
 	public PantallaProductoIndividual(Product product) throws HeadlessException {
 		Client client = new Client();
 		Product fullProduct = (Product) client.clientInteraction("/getProductFullInfo",product);
+		this.setIconImage((new ImageIcon("media/icons/Main_Logo.png")).getImage());
+		this.setTitle("Kosmetics: " + fullProduct.getName());
+		this.setVisible(true);
+		//TEMPORAL CLOSE METHOD SO THAT PROGRAM DONT GET ALWAYS ON MEMORY
+		this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+            	PantallaProductoIndividual.this.setVisible(false);
+                PantallaProductoIndividual.this.dispose();
+                System.exit(0);
+            }
+        });
+		
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		getContentPane().setBackground(Color.WHITE);
 		
@@ -87,7 +102,7 @@ public class PantallaProductoIndividual extends JFrame {
 		mjlblProductName.setBorder(new MatteBorder(10, 20, 30, 20, Color.WHITE));
 		
 		//Product's Photo
-		ImageIcon productImage = Images.resize(fullProduct.getProductImage(), 300, 400);
+		ImageIcon productImage = Images.resize(fullProduct.getProductImage(), 400, 300);
 		JLabel lblProduct = new JLabel(productImage);
 		lblProduct.setBorder(new MatteBorder(1, 100, 1, 100, (Color) new Color(255, 255, 255)));
 		panel.add(lblProduct, BorderLayout.WEST);
@@ -104,16 +119,7 @@ public class PantallaProductoIndividual extends JFrame {
 		panelStarsFlow.setBackground(Color.WHITE);
 		panel_1.add(panelStarsFlow, BorderLayout.NORTH);
 		
-		MyJButton2States lblStar_1a = new MyJButton2States(new ImageIcon("media/icons/star_32.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"));
-		panelStarsFlow.add(lblStar_1a);
-		MyJButton2States lblStar_2a = new MyJButton2States(new ImageIcon("media/icons/star_32.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"));
-		panelStarsFlow.add(lblStar_2a);
-		MyJButton2States lblStar_3a = new MyJButton2States(new ImageIcon("media/icons/star_32.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"));
-		panelStarsFlow.add(lblStar_3a);
-		MyJButton2States lblStar_4a = new MyJButton2States(new ImageIcon("media/icons/star_32.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"));
-		panelStarsFlow.add(lblStar_4a);
-		MyJButton2States lblStar_5a = new MyJButton2States(new ImageIcon("media/icons/star_32.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"));
-		panelStarsFlow.add(lblStar_5a);
+		AutoStars.setStars(panelStarsFlow, fullProduct.getScore());
 		
 		JLabel lblNumberOfReviews = new JLabel("    "+fullProduct.getReviews().size()+" Reviews                            ");
 		lblNumberOfReviews.setFont(GUIConstants.FONT_REGULAR);
@@ -238,11 +244,7 @@ public class PantallaProductoIndividual extends JFrame {
 					panelStarFlowIndivifualReview.setBackground(Color.WHITE);
 					panelHeaderReview.add(panelStarFlowIndivifualReview, BorderLayout.EAST);
 					
-					JLabel lblStar = null;
-					for(int j = 1; j<=reviews.get(i).getScore(); j++) {
-						lblStar = new JLabel(new ImageIcon("media/icons/star.png"));
-						panelStarFlowIndivifualReview.add(lblStar);
-					}
+					AutoStars.setStars(panelStarFlowIndivifualReview, reviews.get(i).getProductScore());
 					//lblStar.setContentAreaFilled(false);
 					/*
 					MyJButton2States lblStar_1 = new MyJButton2States(new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"));

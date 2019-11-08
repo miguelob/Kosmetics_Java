@@ -132,7 +132,7 @@ public class Product implements Serializable{
     public String getCategory(){
         return productCategory;
     }
-    public Collection getFeatures(){
+    public ArrayList<String> getFeatures(){
         return features;
     }
     public int getId() {
@@ -149,6 +149,9 @@ public class Product implements Serializable{
     }
     public int getScore() {
     	return score;
+    }
+    public Survey getSurvey() {
+    	return survey;
     }
     @Override
     public String toString() {

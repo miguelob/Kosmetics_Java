@@ -16,6 +16,7 @@ public class SurveyDAO {
 		try (PreparedStatement pst = con.prepareStatement("SELECT * FROM \"Surveys\" WHERE \"ID_Survey\" = " + id);
 			ResultSet rs = pst.executeQuery()) {
 			if(rs.next()) {
+				//System.out.println("\nValor1: "+rs.getInt(2)+"\nValor2: "+rs.getInt(3)+"\nValor3: "+rs.getInt(4));
 				survey.put(SurveyDAO.getQuestion(rs.getInt(1)), rs.getInt(2), rs.getInt(3), rs.getInt(4));
 			}
         } catch (SQLException ex) {

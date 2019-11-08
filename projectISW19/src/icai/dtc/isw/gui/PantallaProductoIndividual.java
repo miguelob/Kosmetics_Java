@@ -9,6 +9,8 @@ import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -23,7 +25,9 @@ import javax.swing.border.MatteBorder;
 
 import icai.dtc.isw.client.Client;
 import icai.dtc.isw.domain.Product;
+import icai.dtc.isw.domain.Question;
 import icai.dtc.isw.domain.Review;
+import icai.dtc.isw.domain.Survey;
 
 import javax.swing.border.LineBorder;
 import javax.swing.JButton;
@@ -119,7 +123,7 @@ public class PantallaProductoIndividual extends JFrame {
 		panelStarsFlow.setBackground(Color.WHITE);
 		panel_1.add(panelStarsFlow, BorderLayout.NORTH);
 		
-		AutoStars.setStars(panelStarsFlow, fullProduct.getScore());
+		AutoStars.setStars(panelStarsFlow, fullProduct.getScore(),"big");
 		
 		JLabel lblNumberOfReviews = new JLabel("    "+fullProduct.getReviews().size()+" Reviews                            ");
 		lblNumberOfReviews.setFont(GUIConstants.FONT_REGULAR);
@@ -162,14 +166,29 @@ public class PantallaProductoIndividual extends JFrame {
 		//Panel for the Pros
 		JPanel panelPros = new JPanel();
 		panelPros.setBackground(Color.WHITE);
-		panelProsCons.add(panelPros, BorderLayout.CENTER);
-		panelPros.setLayout(new GridLayout(0, 1));
+		//panelProsCons.add(panelPros, BorderLayout.CENTER);
+		//panelPros.setLayout(new GridLayout(0, 1));
 		
-		JLabel lblPros = new JLabel("Pros");
-		panelPros.add(lblPros);
-		lblPros.setFont(GUIConstants.FONT_TITLE);
+		Survey survey = fullProduct.getSurvey();
+		Collection<Question> questions = survey.getQuestions();
 		
-		JLabel lblPro1 = new JLabel("<html>Long Lasting <b> (80%) <b> <html>");
+		Iterator<Question> it = questions.iterator();
+		JPanel jp = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+		jp.setBackground(Color.WHITE);
+	    while (it.hasNext()) {
+	    	Question question = (Question) it.next();
+			JLabel lbl = new JLabel(question.getQuestionText());
+			JLabel lbEmpty = new JLabel("     ");
+			jp.add(lbl);
+			jp.add(lbEmpty);
+			JLabel lblBlue = null;
+			JLabel lblRed = null;
+			JLabel lblGrey = null;
+			ImageBar.getBar(jp,lblBlue, lblRed, lblGrey, survey.getResult(question));
+		}
+	    panelProsCons.add(jp);
+
+		/*JLabel lblPro1 = new JLabel("<html>Long Lasting <b> (80%) <b> <html>");
 		panelPros.add(lblPro1);
 		lblPro1.setFont(GUIConstants.FONT_REGULAR);
 		JLabel lblPro2 = new JLabel("<html>Long Lasting <b> (80%) <b> <html>");
@@ -197,7 +216,7 @@ public class PantallaProductoIndividual extends JFrame {
 		lblCon2.setFont(GUIConstants.FONT_REGULAR);
 		JLabel lblCon3 = new JLabel("<html>Long Lasting <b> (80%) <b> <html>");
 		panelCons.add(lblCon3);
-		lblCon3.setFont(GUIConstants.FONT_REGULAR);
+		lblCon3.setFont(GUIConstants.FONT_REGULAR);*/
 		
 		
 		//Panel for all the reviews
@@ -244,7 +263,7 @@ public class PantallaProductoIndividual extends JFrame {
 					panelStarFlowIndivifualReview.setBackground(Color.WHITE);
 					panelHeaderReview.add(panelStarFlowIndivifualReview, BorderLayout.EAST);
 					
-					AutoStars.setStars(panelStarFlowIndivifualReview, reviews.get(i).getProductScore());
+					AutoStars.setStars(panelStarFlowIndivifualReview, reviews.get(i).getProductScore(),"small");
 					//lblStar.setContentAreaFilled(false);
 					/*
 					MyJButton2States lblStar_1 = new MyJButton2States(new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"));

@@ -308,10 +308,16 @@ public class PantallaProductos extends JFrame {
 	          reviewPanel.setLayout(new GridLayout(0, 1));
 	          //Panel for the stars
 	          MyJPanel starsPanel = new MyJPanel();
-	          AutoStars.setStars(starsPanel, product.getScore());
+	          AutoStars.setStars(starsPanel, product.getScore(),"big");
 	          reviewPanel.add(starsPanel);
+	          ArrayList<String> features = product.getFeatures();
+	          for(int i = 0; i<features.size();i++) {
+	        	  MyJLabel feature = new MyJLabel(features.get(i));
+	              feature.setForeground(Color.DARK_GRAY);
+	              reviewPanel.add(feature);
+	          }
 	          //Features of the product
-	          //Feature 1
+	          /*
 	          MyJLabel feature_1 = new MyJLabel("Longwear");
 	          feature_1.setForeground(Color.DARK_GRAY);
 	          reviewPanel.add(feature_1);
@@ -320,7 +326,7 @@ public class PantallaProductos extends JFrame {
 	          reviewPanel.add(feature_2);
 	          MyJLabel feature_3 = new MyJLabel("Matte");
 	          feature_2.setForeground(Color.DARK_GRAY);
-	          reviewPanel.add(feature_3);
+	          reviewPanel.add(feature_3);*/
 	 
 
 	          btnProduct.setHorizontalAlignment(SwingConstants.CENTER);

@@ -38,23 +38,23 @@ public class ProductDAO {
 	
 	            System.out.println(ex.getMessage());
 	        }
+			//FIRST QUERY OF CHARACTERISTICS
+			try (PreparedStatement pst2 = con.prepareStatement("SELECT \"Characteristic\" FROM public.\"Products\" as A1 inner join \"IDs_Prod_Charac\" as B1 on A1.\"ID_Product\" = B1.\"ID_Product\" inner join \"Characteristics\" AS c1 on B1.\"ID_Characteristic\" = C1.\"ID_Characteristic\" WHERE A1.\"ID_Product\" =" + lista.get(i).getId());
+					ResultSet rs2 = pst2.executeQuery()) {
+	
+	            while (rs2.next()) {
+	            	lista.get(i).addFeature(rs2.getString(1));
+	            }
+	
+	        } catch (SQLException ex) {
+	
+	            System.out.println(ex.getMessage());
+	        }
 		}
 		
 	}
 	public static void getProductFullInfo(Product product) {
 		Connection con=ConnectionDAO.getInstance().getConnection();
-		//FIRST QUERY OF CHARACTERISTICS
-		try (PreparedStatement pst = con.prepareStatement("SELECT \"Characteristic\" FROM public.\"Products\" as A1 inner join \"IDs_Prod_Charac\" as B1 on A1.\"ID_Product\" = B1.\"ID_Product\" inner join \"Characteristics\" AS c1 on B1.\"ID_Characteristic\" = C1.\"ID_Characteristic\" WHERE A1.\"ID_Product\" =" + product.getId());
-				ResultSet rs = pst.executeQuery()) {
-
-            while (rs.next()) {
-            	product.addFeature(rs.getString(1));
-            }
-
-        } catch (SQLException ex) {
-
-            System.out.println(ex.getMessage());
-        }
 		ReviewDAO.loadProductReview(product);
 		//QUERY PARA SACAR EL ID DE ENCUESTA ASOCIADA AL PRODUCTO
 		try (PreparedStatement pst = con.prepareStatement("SELECT \"ID_Survey\" FROM  \"Products\" WHERE \"ID_Product\" = " + product.getId());

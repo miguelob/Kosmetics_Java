@@ -35,20 +35,6 @@ import java.awt.Cursor;
 
 public class PantallaProductoIndividual extends JFrame {
 	
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					PantallaProductoIndividual frame = new PantallaProductoIndividual();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
-
-
 	public PantallaProductoIndividual(Product product) throws HeadlessException {
 		Client client = new Client();
 		Product fullProduct = (Product) client.clientInteraction("/getProductFullInfo",product);
@@ -155,69 +141,50 @@ public class PantallaProductoIndividual extends JFrame {
 		lblPrice.setForeground(new Color(255, 113, 113));
 		panelInfo.add(lblPrice, BorderLayout.SOUTH);
 		
-		//Panel for the Pros and Cons
+		Survey survey = fullProduct.getSurvey();
+		Collection<Question> questions = survey.getQuestions();
+		int size = questions.size();
+	
 		JPanel panelProsCons = new JPanel();
 		panelProsCons.setBorder(new MatteBorder(1, 1, 30, 1, (Color) Color.WHITE));
 		panelProsCons.setBackground(Color.WHITE);
 		panel_1.add(panelProsCons, BorderLayout.SOUTH);
-		panelProsCons.setLayout(new GridLayout(1, 0));
-
+		panelProsCons.setLayout(new GridLayout(size+1,2));
 		
-		//Panel for the Pros
-		JPanel panelPros = new JPanel();
-		panelPros.setBackground(Color.WHITE);
-		//panelProsCons.add(panelPros, BorderLayout.CENTER);
-		//panelPros.setLayout(new GridLayout(0, 1));
-		
-		Survey survey = fullProduct.getSurvey();
-		Collection<Question> questions = survey.getQuestions();
-		
+		panelProsCons.add(new JLabel(""));
+		JPanel ex = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+		ex.setBackground(Color.WHITE);
+		JLabel yes = new JLabel("Yes%");
+		JLabel no = new JLabel("No%");
+		JLabel yesNo = new JLabel("No Answer%");
+		yes.setForeground(new Color(255,153,153));
+		no.setForeground(new Color(191,115,115));
+		yesNo.setForeground(new Color(205,205,205));
+		yes.setBorder(new MatteBorder(1, 13, 1, 13, (Color) Color.WHITE));
+		no.setBorder(new MatteBorder(1, 13, 1, 13, (Color) Color.WHITE));
+		yesNo.setBorder(new MatteBorder(1, 13, 1, 13, (Color) Color.WHITE));
+		ex.add(yes);
+		ex.add(no);
+		ex.add(yesNo);
+		panelProsCons.add(ex);
 		Iterator<Question> it = questions.iterator();
-		JPanel jp = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
-		jp.setBackground(Color.WHITE);
 	    while (it.hasNext()) {
+	    	JPanel jp = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+	    	jp.setBackground(Color.WHITE);
+	    	jp.setBorder(new MatteBorder(1, 1, 30, 1, (Color) Color.WHITE));
 	    	Question question = (Question) it.next();
 			JLabel lbl = new JLabel(question.getQuestionText());
-			JLabel lbEmpty = new JLabel("     ");
 			jp.add(lbl);
-			jp.add(lbEmpty);
+			panelProsCons.add(jp);
+			JPanel jp2 = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+	    	jp2.setBackground(Color.WHITE);
+	    	jp2.setBorder(new MatteBorder(1, 1, 30, 1, (Color) Color.WHITE));
 			JLabel lblBlue = null;
 			JLabel lblRed = null;
 			JLabel lblGrey = null;
-			ImageBar.getBar(jp,lblBlue, lblRed, lblGrey, survey.getResult(question));
-		}
-	    panelProsCons.add(jp);
-
-		/*JLabel lblPro1 = new JLabel("<html>Long Lasting <b> (80%) <b> <html>");
-		panelPros.add(lblPro1);
-		lblPro1.setFont(GUIConstants.FONT_REGULAR);
-		JLabel lblPro2 = new JLabel("<html>Long Lasting <b> (80%) <b> <html>");
-		panelPros.add(lblPro2);
-		lblPro2.setFont(GUIConstants.FONT_REGULAR);
-		JLabel lblPro3 = new JLabel("<html>Long Lasting <b> (80%) <b> <html>");
-		panelPros.add(lblPro3);
-		lblPro3.setFont(GUIConstants.FONT_REGULAR);
-		
-		//Panel for the Cons
-		JPanel panelCons = new JPanel();
-		panelCons.setBackground(Color.WHITE);
-		panelProsCons.add(panelCons, BorderLayout.CENTER);
-		panelCons.setLayout(new GridLayout(0, 1));
-		
-		JLabel lblCons = new JLabel("Cons");
-		panelCons.add(lblCons);
-		lblCons.setFont(GUIConstants.FONT_TITLE);
-		
-		JLabel lblCon1 = new JLabel("<html>Long Lasting <b> (80%) <b> <html>");
-		panelCons.add(lblCon1);
-		lblCon1.setFont(GUIConstants.FONT_REGULAR);
-		JLabel lblCon2 = new JLabel("<html>Long Lasting <b> (80%) <b> <html>");
-		panelCons.add(lblCon2);
-		lblCon2.setFont(GUIConstants.FONT_REGULAR);
-		JLabel lblCon3 = new JLabel("<html>Long Lasting <b> (80%) <b> <html>");
-		panelCons.add(lblCon3);
-		lblCon3.setFont(GUIConstants.FONT_REGULAR);*/
-		
+			ImageBar.getBar(jp2,lblBlue, lblRed, lblGrey, survey.getResult(question));
+			panelProsCons.add(jp2);
+		}	
 		
 		//Panel for all the reviews
 		//2 columns
@@ -264,19 +231,6 @@ public class PantallaProductoIndividual extends JFrame {
 					panelHeaderReview.add(panelStarFlowIndivifualReview, BorderLayout.EAST);
 					
 					AutoStars.setStars(panelStarFlowIndivifualReview, reviews.get(i).getProductScore(),"small");
-					//lblStar.setContentAreaFilled(false);
-					/*
-					MyJButton2States lblStar_1 = new MyJButton2States(new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"));
-					lblStar_1.setContentAreaFilled(false);
-					panelStarFlowIndivifualReview.add(lblStar_1);
-					MyJButton2States lblStar_2 = new MyJButton2States(new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"));
-					panelStarFlowIndivifualReview.add(lblStar_2);
-					MyJButton2States lblStar_3 = new MyJButton2States(new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"));
-					panelStarFlowIndivifualReview.add(lblStar_3);
-					MyJButton2States lblStar_4 = new MyJButton2States(new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"));
-					panelStarFlowIndivifualReview.add(lblStar_4);
-					MyJButton2States lblStar_5 = new MyJButton2States(new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"));
-					panelStarFlowIndivifualReview.add(lblStar_5);*/
 		}
 	}
 

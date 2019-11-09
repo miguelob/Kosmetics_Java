@@ -80,4 +80,8 @@ public class Survey implements Serializable{
 		
 		return results;
 	}
+	@Override
+	public String toString() {
+		return survey.toString();
+	}
 }

@@ -22,7 +22,7 @@ public class TestDAO {
 	public static void getTests() {
 		 byte [] data = null;
 	    try {
-	    	BufferedImage bImage = ImageIO.read(new File("test.jpg"));
+	    	BufferedImage bImage = ImageIO.read(new File("2.jpg"));
 	    	ByteArrayOutputStream bos = new ByteArrayOutputStream();
 			ImageIO.write(bImage, "jpg", bos );
 			data = bos.toByteArray();
@@ -35,7 +35,7 @@ public class TestDAO {
 		try{
 			PreparedStatement pst = con.prepareStatement("UPDATE \"Products\" SET \"Image\" = ? WHERE \"ID_Product\" = ?");
 			pst.setBytes(1,data);
-			pst.setInt(2, 3);
+			pst.setInt(2, 2);
 
             int row = pst.executeUpdate();
             System.out.println(row);

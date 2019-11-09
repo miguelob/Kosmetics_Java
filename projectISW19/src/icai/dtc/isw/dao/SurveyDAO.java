@@ -13,11 +13,11 @@ public class SurveyDAO {
 		Survey survey = new Survey();
 		Connection con=ConnectionDAO.getInstance().getConnection();
 		//WE NEED QUERY FOR GET THE INFO WITH EACH ID
-		try (PreparedStatement pst = con.prepareStatement("SELECT * FROM \"Surveys\" WHERE \"ID_Survey\" = " + id);
+		try (PreparedStatement pst = con.prepareStatement("SELECT * FROM \"IDs_Surv_Quest\" WHERE \"ID_Survey\" = " + id);
 			ResultSet rs = pst.executeQuery()) {
-			if(rs.next()) {
+			while(rs.next()) {
 				//System.out.println("\nValor1: "+rs.getInt(2)+"\nValor2: "+rs.getInt(3)+"\nValor3: "+rs.getInt(4));
-				survey.put(SurveyDAO.getQuestion(rs.getInt(1)), rs.getInt(2), rs.getInt(3), rs.getInt(4));
+				survey.put(SurveyDAO.getQuestion(rs.getInt(2)), rs.getInt(3), rs.getInt(4), rs.getInt(5));
 			}
         } catch (SQLException ex) {
 

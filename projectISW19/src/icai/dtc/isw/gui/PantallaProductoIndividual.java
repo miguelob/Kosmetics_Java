@@ -40,7 +40,6 @@ public class PantallaProductoIndividual extends JFrame {
 		Product fullProduct = (Product) client.clientInteraction("/getProductFullInfo",product);
 		this.setIconImage((new ImageIcon("media/icons/Main_Logo.png")).getImage());
 		this.setTitle("Kosmetics: " + fullProduct.getName());
-		this.setVisible(true);
 		//TEMPORAL CLOSE METHOD SO THAT PROGRAM DONT GET ALWAYS ON MEMORY
 		this.addWindowListener(new WindowAdapter() {
             @Override
@@ -52,6 +51,8 @@ public class PantallaProductoIndividual extends JFrame {
         });
 		
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
+		this.setResizable(false);
+		this.setVisible(true);
 		getContentPane().setBackground(Color.WHITE);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -141,10 +142,12 @@ public class PantallaProductoIndividual extends JFrame {
 		lblPrice.setForeground(new Color(255, 113, 113));
 		panelInfo.add(lblPrice, BorderLayout.SOUTH);
 		
+		//
 		Survey survey = fullProduct.getSurvey();
 		Collection<Question> questions = survey.getQuestions();
 		int size = questions.size();
 	
+		//Panel with Survey and statistics
 		JPanel panelProsCons = new JPanel();
 		panelProsCons.setBorder(new MatteBorder(1, 1, 30, 1, (Color) Color.WHITE));
 		panelProsCons.setBackground(Color.WHITE);

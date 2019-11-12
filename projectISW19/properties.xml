@@ -2,7 +2,7 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 <comment>This is easy!</comment>
-	<entry key="ddbb.connection">jdbc:postgresql://kosmeticsrasp.ddns.net:5432/Kosmetics</entry>
+	<entry key="ddbb.connection">jdbc:postgresql://kosmeticsserver.ddns.net:5432/Kosmetics</entry>
 	<entry key="ddbb.user">pi</entry>
 	<entry key="ddbb.password">RasPiKosmetics</entry>
 	<entry key="host">127.0.0.1</entry>	

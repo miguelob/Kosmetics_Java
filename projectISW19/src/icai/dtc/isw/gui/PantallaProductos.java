@@ -76,6 +76,7 @@ public class PantallaProductos extends JFrame {
 	 * Create the frame.
 	 */
 	public PantallaProductos() {
+		initialiseProducts();
 		BorderLayout borderLayout = (BorderLayout) getContentPane().getLayout();
 		borderLayout.setVgap(20);
 		borderLayout.setHgap(25);
@@ -174,36 +175,12 @@ public class PantallaProductos extends JFrame {
 		mjlblBrand.setText("Brand");
 		myJPanel_1.add(mjlblBrand);
 		
-		Checkbox checkbox_2 = new Checkbox(" Fenty Beauty");
-		checkbox_2.setForeground(Color.WHITE);
-		checkbox_2.setFont(GUIConstants.FONT_REGULAR);
-		myJPanel_1.add(checkbox_2);
-		
-		
-		Checkbox checkbox_3 = new Checkbox(" Kylie Cosmetics");
-		checkbox_3.setForeground(Color.WHITE);
-		checkbox_3.setFont(GUIConstants.FONT_REGULAR);
-		myJPanel_1.add(checkbox_3);
-		
-		Checkbox checkbox_4 = new Checkbox(" Anastasia");
-		checkbox_4.setForeground(Color.WHITE);
-		checkbox_4.setFont(GUIConstants.FONT_REGULAR);
-		myJPanel_1.add(checkbox_4);
-		
-		Checkbox checkbox_5 = new Checkbox(" Too Faced");
-		checkbox_5.setForeground(Color.WHITE);
-		checkbox_5.setFont(GUIConstants.FONT_REGULAR);
-		myJPanel_1.add(checkbox_5);
-		
-		Checkbox checkbox = new Checkbox(" KKW Beauty");
-		checkbox.setForeground(Color.WHITE);
-		checkbox.setFont(GUIConstants.FONT_REGULAR);
-		myJPanel_1.add(checkbox);
-		
-		Checkbox checkbox_6 = new Checkbox(" Benefit");
-		checkbox_6.setForeground(Color.WHITE);
-		checkbox_6.setFont(GUIConstants.FONT_REGULAR);
-		myJPanel_1.add(checkbox_6);
+		for(int i = 0; i<products.size();i++) {
+			Checkbox checkbox = new Checkbox(products.get(i).getBrand());
+			checkbox.setForeground(Color.WHITE);
+			checkbox.setFont(GUIConstants.FONT_REGULAR);
+			myJPanel_1.add(checkbox);
+		}
 		
 		MyJLabel mjlblBrand_1 = new MyJLabel();
 		mjlblBrand_1.setText("Popularity");
@@ -242,9 +219,6 @@ public class PantallaProductos extends JFrame {
 		myJPanel_2.setBackground(new Color(255, 204, 204));
 		getContentPane().add(jsp, BorderLayout.CENTER);
 		myJPanel_2.setLayout(new GridLayout(0, 1, 5, 10));
-
-		
-		initialiseProducts();
 		
 	      Iterator<Product> it = products.iterator();
 	      while (it.hasNext())

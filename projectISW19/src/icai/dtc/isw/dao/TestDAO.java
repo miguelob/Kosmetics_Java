@@ -10,6 +10,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.sql.Date;
 
 import javax.imageio.ImageIO;
 
@@ -19,7 +21,7 @@ public class TestDAO {
 	
 	
 	
-	public static void getTests() {
+	/*public static void getTests() {
 		 byte [] data = null;
 	    try {
 	    	BufferedImage bImage = ImageIO.read(new File("2.jpg"));
@@ -45,6 +47,30 @@ public class TestDAO {
         } catch (Exception e) {
             e.printStackTrace();
         }
+	}*/
+	
+	@SuppressWarnings("deprecation")
+	public static void getTests() {
+		Connection con=ConnectionDAO.getInstance().getConnection();
+		try{
+			PreparedStatement pst = con.prepareStatement("INSERT INTO \"Users\"(\"ID_User\", \"E-mail\", \"Password\", \"Name\", \"Birth_Date\", \"Skin_Color\", \"Skin_Condition\", \"Image\") VALUES(5,?,?,?,?,?,?,?)");
+			
+			pst.setString(1,"oleoblancomiguel@gmail.com");
+			pst.setString(2,"1234");
+			pst.setString(3,"Miguel Oleo");
+			pst.setDate(4, (java.sql.Date) new Date((long) 17.5) );
+			pst.setString(5,"white");
+			pst.setString(6,"OK");
+			pst.setBytes(7,null);
+
+			int affectedRows = pst.executeUpdate();
+           System.out.println(affectedRows);
+
+       } catch (SQLException e) {
+           System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
+       } catch (Exception e) {
+           e.printStackTrace();
+       }
 	}
 	
 	public static void main(String[] args) {

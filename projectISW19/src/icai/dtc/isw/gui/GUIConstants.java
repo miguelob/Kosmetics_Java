@@ -16,5 +16,13 @@ public class GUIConstants {
 	  public static final Font FONT_BIG_TITLE = new Font("Font.SERIF_MD", Font.BOLD, 60);
 	  
 	  public static final Color DEFAULT_FONT_COLOR = new Color(80, 80, 80);
+	  
+	  //Pantallas constantes
+	  public static PantallaProductos PANTALLA_PRODUCTOS;
+	  public static PantallaProductoIndividual PANTALLA_PRODUCTO_INDIVIDUAL;
+	  public static PantallaCrearReview PANTALLA_CREAR_REVIEW;
+	  public static PantallaCrearUsuario PANTALLA_CREAR_USUARIO;
+	  public static PantallaCrearUsuario_2 PANEL_CREAR_USUARIO_2;
+	  public static ScreenViewProfile PANTALLA_VER_PERFIL;
 
 }

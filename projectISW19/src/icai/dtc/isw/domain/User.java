@@ -14,7 +14,7 @@ public class User implements Serializable{
     //public final int idUser;
     private String name;
     private String email;
-    private String userPasword;
+    private String userPassword;
     private Date birthDate;
     private String skinColor;
     private String skinCondition;
@@ -26,7 +26,7 @@ public class User implements Serializable{
         //this.idUser=idUser;
         this.name=name;
         this.email=email;
-        this.userPasword=userPasword;
+        this.userPassword=userPasword;
         this.birthDate=birthDate;
         this.skinColor=skinColor;
         this.skinCondition=skinCondition;
@@ -40,6 +40,24 @@ public class User implements Serializable{
     }
     public String getName() {
     	return name;
+    }
+    public String getEmail() {
+    	return email;
+    }
+    public String getPassword() {
+    	return userPassword;
+    }
+    public Date getBirthDate() {
+    	return birthDate;
+    }
+    public String getSkinColor() {
+    	return skinColor;
+    }
+    public String getSkinCondition() {
+    	return skinCondition;
+    }
+    public ImageIcon getProfileImage() {
+    	return userImage;
     }
 
 

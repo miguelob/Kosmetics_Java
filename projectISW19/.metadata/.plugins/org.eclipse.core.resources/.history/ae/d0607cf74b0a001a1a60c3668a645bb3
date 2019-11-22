@@ -57,7 +57,7 @@ public class TestDAO {
 			
 			pst.setString(1,"oleoblancomiguel@gmail.com");
 			pst.setString(2,"1234");
-			pst.setString(3,"Test4");
+			pst.setString(3,"Miguel Oleo");
 			pst.setDate(4, (java.sql.Date) new Date((long) 17.5) );
 			pst.setString(5,"white");
 			pst.setString(6,"OK");

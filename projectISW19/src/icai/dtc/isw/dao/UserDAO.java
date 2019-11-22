@@ -32,7 +32,8 @@ public class UserDAO {
         }
 		return user;
 	}
-	public static void uploadUser(User user) {
+	public static boolean uploadUser(User user) {
+		boolean status = false;
 		Connection con=ConnectionDAO.getInstance().getConnection();
 		try{
 			PreparedStatement pst = con.prepareStatement("INSERT INTO \"Users\"(\"ID_User\", \"E-mail\", \"Password\", \"Name\", \"Birth_Date\", \"Skin_Color\", \"Skin_Condition\", \"Image\") VALUES(5,?,?,?,?,?,?,?)");
@@ -46,14 +47,16 @@ public class UserDAO {
 			pst.setBytes(7,UserDAO.getImageBytes(user.getProfileImage()));
 
 			int affectedRows = pst.executeUpdate();
-           System.out.println(affectedRows);
+			status = true;
 
        } catch (SQLException e) {
            System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
        } catch (Exception e) {
            e.printStackTrace();
        }
-	}private static byte[] getImageBytes(ImageIcon image) {
+		return status;
+	}
+	private static byte[] getImageBytes(ImageIcon image) {
 		byte[] imgBytes = null;
 		try {
 	    	BufferedImage bImage = (BufferedImage) image.getImage();

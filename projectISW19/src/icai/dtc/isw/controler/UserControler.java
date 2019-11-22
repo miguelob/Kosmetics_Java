@@ -7,7 +7,7 @@ public class UserControler {
 	public void getUser(int idUser) {
 		UserDAO.getUser(idUser);
 	}
-	public void uploadUser(User user) {
-		UserDAO.uploadUser(user);
+	public boolean uploadUser(User user) {
+		return UserDAO.uploadUser(user);
 	}
 }

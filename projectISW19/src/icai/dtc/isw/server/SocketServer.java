@@ -69,9 +69,9 @@ public class SocketServer extends Thread {
 		    	break;
 		    	case "/uploadUser":
 		    		User user = (User) mensajeIn.getObject();
-		    		userControler.uploadUser(user);
-		    		mensajeOut.setContext("/getFullProductResponse");
-		    		session.put("fullProduct",product);
+		    		boolean status = userControler.uploadUser(user);
+		    		mensajeOut.setContext("/getUserUploadResponse");
+		    		session.put("uploadUser",status);
 		    		mensajeOut.setSession(session);
 		    		objectOutputStream.writeObject(mensajeOut);
 		    	break;

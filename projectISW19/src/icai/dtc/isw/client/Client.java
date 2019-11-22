@@ -57,7 +57,10 @@ public class Client {
 				response=(ArrayList<Review>)(mensajeVuelta.getSession().get("reviews"));
 			break;
 			case "/getUserUploadResponse":
-				response = mensajeVuelta.getSession().get("uploadUser");
+				response = (boolean) mensajeVuelta.getSession().get("uploadUser");
+			case "/getSessionStatus":
+				response = (boolean) mensajeVuelta.getSession().get("sessionStatus");
+			break;
 			default:
 				Logger.getRootLogger().info("Option not found");
 				System.out.println("\nError a la vuelta");

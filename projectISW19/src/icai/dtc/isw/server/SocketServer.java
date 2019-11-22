@@ -75,6 +75,15 @@ public class SocketServer extends Thread {
 		    		mensajeOut.setSession(session);
 		    		objectOutputStream.writeObject(mensajeOut);
 		    	break;
+		    	case "/setSessionStatus":
+		    		boolean sessionStatus = (boolean) mensajeIn.getObject();
+		    		session.put("sessionStatus", sessionStatus);
+		    	break;
+		    	case "/getSessionStatus":
+		    		mensajeOut.setContext("/getSessionStatus");
+		    		mensajeOut.setSession(session);
+		    		objectOutputStream.writeObject(mensajeOut);
+		    	break;
 		    	/*case "/getUser":
 		    		userList = new ArrayList<User>();
 		    		//userControler.getUser(userList);

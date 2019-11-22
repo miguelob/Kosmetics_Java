@@ -67,6 +67,23 @@ public class SocketServer extends Thread {
 		    		mensajeOut.setSession(session);
 		    		objectOutputStream.writeObject(mensajeOut);
 		    	break;
+		    	case "/uploadUser":
+		    		User user = (User) mensajeIn.getObject();
+		    		boolean status = userControler.uploadUser(user);
+		    		mensajeOut.setContext("/getUserUploadResponse");
+		    		session.put("uploadUser",status);
+		    		mensajeOut.setSession(session);
+		    		objectOutputStream.writeObject(mensajeOut);
+		    	break;
+		    	case "/setSessionStatus":
+		    		boolean sessionStatus = (boolean) mensajeIn.getObject();
+		    		session.put("sessionStatus", sessionStatus);
+		    	break;
+		    	case "/getSessionStatus":
+		    		mensajeOut.setContext("/getSessionStatus");
+		    		mensajeOut.setSession(session);
+		    		objectOutputStream.writeObject(mensajeOut);
+		    	break;
 		    	/*case "/getUser":
 		    		userList = new ArrayList<User>();
 		    		//userControler.getUser(userList);
@@ -87,7 +104,7 @@ public class SocketServer extends Thread {
 		    	
 		    	
 		    	default:
-		    		System.out.println("\nParámetro no encontrado");
+		    		System.out.println("\nParï¿½metro no encontrado");
 		    		break;
 		    		
 		    		/*case "/getCustomer":

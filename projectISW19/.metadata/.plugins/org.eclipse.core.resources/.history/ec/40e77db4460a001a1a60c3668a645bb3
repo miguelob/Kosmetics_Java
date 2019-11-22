@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.sql.Date;
+import java.util.Date;
 
 import javax.imageio.ImageIO;
 
@@ -53,12 +53,12 @@ public class TestDAO {
 	public static void getTests() {
 		Connection con=ConnectionDAO.getInstance().getConnection();
 		try{
-			PreparedStatement pst = con.prepareStatement("INSERT INTO \"Users\"(\"E-mail\", \"Password\", \"Name\", \"Birth_Date\", \"Skin_Color\", \"Skin_Condition\", \"Image\") VALUES(?,?,?,?,?,?,?)");
+			PreparedStatement pst = con.prepareStatement("INSERT INTO \"Users\"(E-mail, Password, Name, Birth_Date, Skin_color, Skin_Condition, Image)");
 			
 			pst.setString(1,"oleoblancomiguel@gmail.com");
 			pst.setString(2,"1234");
-			pst.setString(3,"Test4");
-			pst.setDate(4, (java.sql.Date) new Date((long) 17.5) );
+			pst.setString(3,"Miguel Oleo");
+			pst.setDate(4,(java.sql.Date) new Date(22,04,1999));
 			pst.setString(5,"white");
 			pst.setString(6,"OK");
 			pst.setBytes(7,null);

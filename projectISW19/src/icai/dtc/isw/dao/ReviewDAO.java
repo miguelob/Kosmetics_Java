@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import icai.dtc.isw.domain.Product;
 import icai.dtc.isw.domain.Review;
@@ -25,7 +24,30 @@ public class ReviewDAO {
             System.out.println(ex.getMessage());
         }
 	}
-	
+	public static boolean uploadReview(Review review, int idProduct) {
+		boolean status = false;
+		Connection con=ConnectionDAO.getInstance().getConnection();
+		try{
+			PreparedStatement pst = con.prepareStatement("INSERT INTO \"Reviews\"(\"ID_Product\", \"ID_User\", \"Title_Comment\", \"Comment\", \"Score_Product\", \"Score_Review\", \"Score_Review_Participants\",) VALUES(?,?,?,?,?,?,?)");
+			
+			pst.setInt(1, idProduct);
+			pst.setInt(2,UserDAO.getUserID(review.getUser()));
+			pst.setString(3,review.getCommentTitle());
+			pst.setString(4, review.getComment());
+			pst.setInt(5, review.getProductScore());
+			pst.setInt(6, 0);
+			pst.setInt(7, 0);
+
+			pst.executeUpdate();
+			status = true;
+
+       } catch (SQLException e) {
+           System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
+       } catch (Exception e) {
+           e.printStackTrace();
+       }
+		return status;
+	}	
 	public static void main(String[] args) {
 		
 		Product product = null;

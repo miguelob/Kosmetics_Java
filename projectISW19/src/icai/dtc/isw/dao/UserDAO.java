@@ -14,6 +14,7 @@ import java.util.Date;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
+import icai.dtc.isw.domain.Product;
 import icai.dtc.isw.domain.User;
 
 public class UserDAO {
@@ -36,7 +37,7 @@ public class UserDAO {
 		boolean status = false;
 		Connection con=ConnectionDAO.getInstance().getConnection();
 		try{
-			PreparedStatement pst = con.prepareStatement("INSERT INTO \"Users\"(\"ID_User\", \"E-mail\", \"Password\", \"Name\", \"Birth_Date\", \"Skin_Color\", \"Skin_Condition\", \"Image\") VALUES(5,?,?,?,?,?,?,?)");
+			PreparedStatement pst = con.prepareStatement("INSERT INTO \"Users\"(\"E-mail\", \"Password\", \"Name\", \"Birth_Date\", \"Skin_Color\", \"Skin_Condition\", \"Image\") VALUES(?,?,?,?,?,?,?)");
 			
 			pst.setString(1,user.getEmail());
 			pst.setString(2,user.getPassword());
@@ -46,7 +47,7 @@ public class UserDAO {
 			pst.setString(6,user.getSkinCondition());
 			pst.setBytes(7,UserDAO.getImageBytes(user.getProfileImage()));
 
-			int affectedRows = pst.executeUpdate();
+			pst.executeUpdate();
 			status = true;
 
        } catch (SQLException e) {
@@ -55,6 +56,21 @@ public class UserDAO {
            e.printStackTrace();
        }
 		return status;
+	}
+	public static int getUserID(User user) {
+		int id = -1;
+		Connection con=ConnectionDAO.getInstance().getConnection();
+		try (PreparedStatement pst = con.prepareStatement("SELECT \"ID_User\" FROM  \"Products\" WHERE \"Name\" = " + user.getName());
+				ResultSet rs = pst.executeQuery()) {
+			if (rs.next()) {
+				id = rs.getInt(1);
+			}
+        } catch (SQLException ex) {
+
+            System.out.println(ex.getMessage());
+        
+        }
+		return id;
 	}
 	private static byte[] getImageBytes(ImageIcon image) {
 		byte[] imgBytes = null;

@@ -31,7 +31,13 @@
 	</section>
 	<section name="GitCommitMessageComponent">
 		<list key="C:\Users\oleob\OneDrive\Documents\ISW\Kosmetics_Team\.git">
-			<item value="empty"/>
+			<item value="false"/>
+			<item value=""/>
+			<item value="done"/>
+			<item value=""/>
+			<item value="b96789e8c8be3480631aadff49a00537f8497470"/>
+			<item value="0"/>
+			<item value="false"/>
 		</list>
 	</section>
 	<section name="org.eclipse.egit.ui.internal.push.PushResultDialog.dialogBounds">

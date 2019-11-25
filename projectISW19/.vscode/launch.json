@@ -1,0 +1,18 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - PantallaProductos",
+            "request": "launch",
+            "mainClass": "icai.dtc.isw.gui.PantallaProductos",
+            "projectName": "projectISW19"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - SocketServer",
+            "request": "launch",
+            "mainClass": "icai.dtc.isw.server.SocketServer",
+            "projectName": "projectISW19"
+        }
+    ]
+}

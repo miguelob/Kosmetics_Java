@@ -58,8 +58,12 @@ public class Client {
 			break;
 			case "/getUserUploadResponse":
 				response = (boolean) mensajeVuelta.getSession().get("uploadUser");
+			break;
 			case "/getSessionStatus":
 				response = (boolean) mensajeVuelta.getSession().get("sessionStatus");
+			break;
+			case "/getReviewUploadResponse":
+				response = (boolean) mensajeVuelta.getSession().get("reviewUpload");
 			break;
 			default:
 				Logger.getRootLogger().info("Option not found");

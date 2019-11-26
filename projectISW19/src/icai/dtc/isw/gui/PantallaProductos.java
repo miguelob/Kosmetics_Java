@@ -105,15 +105,19 @@ public class PantallaProductos extends JFrame {
 		jbtnProfile.setContentAreaFilled(false);
 		jbtnProfile.setFont(GUIConstants.FONT_TITLE);
 
-		jbtnProfile.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e)
-				{ 	JFrame pantallaActual = new PantallaCrearUsuario();
-					GUIConstants.PANTALLA_ACTUAL = pantallaActual;
-					pantallaActual.setVisible(true);
+		if((boolean) (client.clientInteraction("/getSessionStatus", null))){
+			jbtnProfile.addActionListener(new ActionListener(){
+				@Override
+				public void actionPerformed(ActionEvent e)
+					{ 	JFrame pantallaActual = new PantallaCrearUsuario();
+						GUIConstants.PANTALLA_ACTUAL = pantallaActual;
+						pantallaActual.setVisible(true);
 
-				}
-		});
+					}
+			});
+		}else{
+
+		}
 		jpanel.add(jbtnProfile, BorderLayout.EAST);
 		
 		MyJPanel myJPanel_3 = new MyJPanel();

@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - ScreenViewProfile",
+            "request": "launch",
+            "mainClass": "icai.dtc.isw.gui.ScreenViewProfile",
+            "projectName": "projectISW19"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - PantallaProductos",
             "request": "launch",
             "mainClass": "icai.dtc.isw.gui.PantallaProductos",

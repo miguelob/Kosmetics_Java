@@ -47,7 +47,6 @@ public class TestDAO {
         }
 	}*/
 	
-	@SuppressWarnings("deprecation")
 	public static void getTests() {
 		Connection con=ConnectionDAO.getInstance().getConnection();
 		try{

@@ -23,6 +23,11 @@ import java.awt.Cursor;
 public class PantallaCrearUsuario_2 extends JFrame {
 	
 
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {

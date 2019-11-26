@@ -26,6 +26,11 @@ import java.awt.FlowLayout;
 
 public class PantallaCrearUsuario extends JFrame {
 
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public PantallaCrearUsuario() throws HeadlessException {
 		this.setSize(500,600);
 		this.setLocationRelativeTo(null);

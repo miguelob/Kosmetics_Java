@@ -13,6 +13,11 @@ import java.awt.event.MouseAdapter;
 public class MyJButton extends JButton {
 	
 
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public MyJButton() {
 		this.changeBackgroundColor();
 	}

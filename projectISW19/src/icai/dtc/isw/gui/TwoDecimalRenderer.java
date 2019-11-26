@@ -10,7 +10,11 @@ import javax.swing.ListCellRenderer;
 
 public class TwoDecimalRenderer extends DefaultListCellRenderer {
 
-	  private ListCellRenderer defaultRenderer;
+	  /**
+	*
+	*/
+	private static final long serialVersionUID = 1L;
+	private ListCellRenderer defaultRenderer;
 
 	  public TwoDecimalRenderer(ListCellRenderer defaultRenderer) {
 	    this.defaultRenderer = defaultRenderer;

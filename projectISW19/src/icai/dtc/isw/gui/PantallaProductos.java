@@ -34,6 +34,10 @@ import icai.dtc.isw.domain.Product;
 
 
 public class PantallaProductos extends JFrame {
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
 	private JFormattedTextField txtWhatAreYou;
     ArrayList<Product> products;
     Client client;

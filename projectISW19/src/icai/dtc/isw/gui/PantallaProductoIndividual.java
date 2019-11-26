@@ -37,6 +37,11 @@ import java.awt.Cursor;
 
 public class PantallaProductoIndividual extends JFrame {
 	
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public PantallaProductoIndividual(Product product) throws HeadlessException {
 		Client client = new Client();
 		Product fullProduct = (Product) client.clientInteraction("/getProductFullInfo",product);

@@ -21,6 +21,11 @@ import java.awt.Color;
 
 public class ScreenViewProfile extends JFrame {
 
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public ScreenViewProfile() throws HeadlessException {
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		

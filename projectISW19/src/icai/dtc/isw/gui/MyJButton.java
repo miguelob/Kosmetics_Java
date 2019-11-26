@@ -6,7 +6,6 @@ import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.BorderFactory;
 
-import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseAdapter;
 

@@ -1,7 +1,6 @@
 package icai.dtc.isw.gui;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -15,33 +14,18 @@ import java.awt.Dimension;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import java.awt.Panel;
 import javax.swing.JLabel;
 import javax.swing.JButton;
-import javax.swing.JTextField;
 import java.awt.Color;
 import java.awt.Cursor;
-
-import javax.swing.JCheckBox;
 import java.awt.GridLayout;
-import javax.swing.JSpinner;
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import java.awt.FlowLayout;
 import java.awt.Checkbox;
-import java.awt.Label;
 import javax.swing.JSlider;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
 import javax.swing.SwingConstants;
 import javax.swing.JFormattedTextField;
-import javax.swing.JTextPane;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
-import javax.swing.JList;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 
@@ -116,6 +100,16 @@ public class PantallaProductos extends JFrame {
 		jbtnProfile.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		jbtnProfile.setContentAreaFilled(false);
 		jbtnProfile.setFont(GUIConstants.FONT_TITLE);
+
+		jbtnProfile.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e)
+				{ 	JFrame pantallaActual = new PantallaCrearUsuario();
+					GUIConstants.PANTALLA_ACTUAL = pantallaActual;
+					pantallaActual.setVisible(true);
+
+				}
+		});
 		jpanel.add(jbtnProfile, BorderLayout.EAST);
 		
 		MyJPanel myJPanel_3 = new MyJPanel();

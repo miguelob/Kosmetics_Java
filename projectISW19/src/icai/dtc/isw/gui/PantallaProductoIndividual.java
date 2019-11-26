@@ -6,6 +6,8 @@ import java.awt.GraphicsConfiguration;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
 import java.awt.Image;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
@@ -121,6 +123,16 @@ public class PantallaProductoIndividual extends JFrame {
 		btnWriteanopinion.setBorder(new LineBorder(new Color(255, 175, 175), 6, true));
 		btnWriteanopinion.setFont(GUIConstants.FONT_REGULAR);
 		btnWriteanopinion.setBackground(Color.PINK);
+		btnWriteanopinion.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				PantallaCrearReview frame = new PantallaCrearReview();
+				frame.setVisible(true);
+				PantallaProductoIndividual.this.dispose();
+				//System.exit(0);
+				
+			}
+		});
 		panelStarsFlow.add(btnWriteanopinion);
 		
 		//Panel containing the info about the product

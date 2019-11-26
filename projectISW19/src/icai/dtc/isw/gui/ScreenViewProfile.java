@@ -4,17 +4,24 @@ import java.awt.EventQueue;
 import java.awt.GraphicsConfiguration;
 import java.awt.HeadlessException;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.MatteBorder;
 
+import java.awt.Cursor;
+
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.Color;
 
 public class ScreenViewProfile extends JFrame {
 
 	public ScreenViewProfile() throws HeadlessException {
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		getContentPane().add(scrollPane, BorderLayout.CENTER);
@@ -45,6 +52,60 @@ public class ScreenViewProfile extends JFrame {
 		scrollPane.setViewportView(panel);
 		panel.setLayout(new BorderLayout(0, 0));
 		
+		// Contains:
+		// - picture
+		// - username
+		// - button for editting the profile 
+		// - email 
+		// - characteristics 
+
+		JPanel panelUser = new JPanel();
+		panel.add(panelUser, BorderLayout.NORTH);
+		panelUser.setBorder(new MatteBorder(1, 65, 1, 45, (Color) new Color(255, 255, 255)));
+		panelUser.setBackground(new Color(255, 255, 255));
+		panelUser.setLayout(new BorderLayout(0, 0));
+
+		JLabel lblUserImage = new JLabel(Images.resize(new ImageIcon("media/images/user1.png"),150,150));
+		panelUser.add(lblUserImage, BorderLayout.WEST);
+
+		// Contains:
+		// - username
+		// - button for editting the profile 
+		// - email 
+		// - characteristics 
+
+		JPanel panelUserInfo = new JPanel();
+		panelUserInfo.setLayout(new BorderLayout());
+		panelUserInfo.setBorder(new MatteBorder(1, 65, 1, 45, (Color) new Color(255, 255, 255)));
+		panelUserInfo.setBackground(new Color(255, 255, 255));
+		panelUser.add(panelUserInfo, BorderLayout.CENTER);
+
+		// Contains:
+		// - username
+		// - button for editting the profile 
+
+		JPanel panelTop = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		panelTop.setBorder(new MatteBorder(1, 65, 1, 45, (Color) new Color(255, 255, 255)));
+		panelTop.setBackground(new Color(255, 255, 255));
+		panelUserInfo.add(panelTop, BorderLayout.NORTH);
+
+		JLabel lblUsername = new JLabel("kyliejenner  ");
+		panelTop.add(lblUsername);
+		lblUsername.setFont(GUIConstants.FONT_MEDIUM_TITLE);
+
+		JButton btnEditProfile = new JButton(new ImageIcon("media/icons/settings-gears.png"));
+		btnEditProfile.setBorder(null);
+		btnEditProfile.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnEditProfile.setContentAreaFilled(false);
+		panelTop.add(btnEditProfile);
+
+		JLabel lblEmail = new JLabel("kyliejenner@gmail.com");
+		panelUserInfo.add(lblEmail, BorderLayout.CENTER);
+		lblUsername.setFont(GUIConstants.FONT_TITLE);
+
+		// Contains:
+		// - characteristics
+
 		
 	}
 

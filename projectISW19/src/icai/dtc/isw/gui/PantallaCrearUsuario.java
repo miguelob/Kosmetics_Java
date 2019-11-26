@@ -16,6 +16,8 @@ import javax.swing.SwingConstants;
 import java.awt.GridLayout;
 import javax.swing.JTextField;
 import java.awt.SystemColor;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 import java.awt.Cursor;
 import javax.swing.border.MatteBorder;
 import java.awt.Rectangle;
@@ -26,6 +28,7 @@ public class PantallaCrearUsuario extends JFrame {
 
 	public PantallaCrearUsuario() throws HeadlessException {
 		this.setSize(500,600);
+		this.setLocationRelativeTo(null);
 		getContentPane().setBackground(Color.WHITE);
 		
 		JPanel panel = new JPanel();
@@ -142,6 +145,15 @@ public class PantallaCrearUsuario extends JFrame {
 		btnJoin.setForeground(Color.WHITE);
 		btnJoin.setBackground(new Color(255, 153, 153));
 		btnJoin.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnJoin.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e){
+				PantallaCrearUsuario.this.dispose();
+				JFrame pantallaActual = new PantallaCrearUsuario_2();
+				GUIConstants.PANTALLA_ACTUAL = pantallaActual;
+				pantallaActual.setVisible(true);
+			}
+		});
 		panelJoin.add(btnJoin, BorderLayout.NORTH);
 		
 		//Subpanel to join if you already have an account

@@ -1,7 +1,6 @@
 package icai.dtc.isw.gui;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -15,33 +14,18 @@ import java.awt.Dimension;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import java.awt.Panel;
 import javax.swing.JLabel;
 import javax.swing.JButton;
-import javax.swing.JTextField;
 import java.awt.Color;
 import java.awt.Cursor;
-
-import javax.swing.JCheckBox;
 import java.awt.GridLayout;
-import javax.swing.JSpinner;
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import java.awt.FlowLayout;
 import java.awt.Checkbox;
-import java.awt.Label;
 import javax.swing.JSlider;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
 import javax.swing.SwingConstants;
 import javax.swing.JFormattedTextField;
-import javax.swing.JTextPane;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
-import javax.swing.JList;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 
@@ -77,70 +61,111 @@ public class PantallaProductos extends JFrame {
 	 */
 	public PantallaProductos() {
 		initialiseProducts();
+		GUIConstants.PANTALLA_PRODUCTOS = this;
 		BorderLayout borderLayout = (BorderLayout) getContentPane().getLayout();
 		borderLayout.setVgap(20);
 		borderLayout.setHgap(25);
-//      EN TEORIA PONE EN PANTALLA COMPLETA PERO NO SE AJUSTA
-		Toolkit tk = Toolkit.getDefaultToolkit();
-		int xSize = ((int) tk.getScreenSize().getWidth());
-		int ySize = ((int) tk.getScreenSize().getHeight());
-		//this.setSize(617,479);
 		
 		
 		setBackground(Color.WHITE);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 797, 480);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
-		getContentPane().setBackground(new Color(255, 204, 204));
+		getContentPane().setBackground(Color.WHITE);
 		
-		MyJPanel myJPanel = new MyJPanel();
-		myJPanel.setBorder(new MatteBorder(15, 10, 15, 15, (Color) new Color(255, 153, 153)));
-		myJPanel.setBackground(new Color(255, 153, 153));
-		getContentPane().add(myJPanel, BorderLayout.NORTH);
-		myJPanel.setLayout(new BorderLayout(1, 1));
+		JPanel jpanel = new JPanel();
+		jpanel.setBorder(new MatteBorder(0, 0, 15, 0, (Color) new Color(255, 153, 153)));
+		jpanel.setBackground(new Color(255, 153, 153));
+		getContentPane().add(jpanel, BorderLayout.NORTH);
+		jpanel.setLayout(new BorderLayout(1, 1));
 		
-		MyJButton mjbtnProfile = new MyJButton();
-		mjbtnProfile.setBackground(new Color(255, 204, 255));
-		mjbtnProfile.setText("Profile");
-		mjbtnProfile.setIcon( new ImageIcon("media/icons/user.png"));
-		myJPanel.add(mjbtnProfile, BorderLayout.EAST);
+		//Panel with an arrow button to go back to the previous page
+		JPanel jpanelGoBack = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		jpanelGoBack.setBackground(Color.WHITE);
+		jpanel.add(jpanelGoBack, BorderLayout.NORTH);
+		JButton btnGoBack = new JButton(new ImageIcon("media/icons/left-arrow_16.png"));
+		btnGoBack.setBorder(null);
+		btnGoBack.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnGoBack.setContentAreaFilled(false);
+		btnGoBack.setDisabledIcon(new ImageIcon("media/icons/left-arrow_grey_16.png"));
+		btnGoBack.setEnabled(false);
+		jpanelGoBack.add(btnGoBack);
+
+		
+		JButton jbtnProfile = new JButton();
+		jbtnProfile.setBorder(new MatteBorder(1, 1, 1, 15, (Color) new Color(255, 153, 153)));
+		jbtnProfile.setBackground(new Color(255, 204, 255));
+		jbtnProfile.setText("Profile");
+		jbtnProfile.setIcon( new ImageIcon("media/icons/user.png"));
+		jbtnProfile.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		jbtnProfile.setContentAreaFilled(false);
+		jbtnProfile.setFont(GUIConstants.FONT_TITLE);
+
+		jbtnProfile.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e)
+				{ 	JFrame pantallaActual = new PantallaCrearUsuario();
+					GUIConstants.PANTALLA_ACTUAL = pantallaActual;
+					pantallaActual.setVisible(true);
+
+				}
+		});
+		jpanel.add(jbtnProfile, BorderLayout.EAST);
 		
 		MyJPanel myJPanel_3 = new MyJPanel();
 		myJPanel_3.setLayout(new FlowLayout(FlowLayout.CENTER, 50, 0));
 		myJPanel_3.setBackground(new Color(255, 153, 153));
-		myJPanel.add(myJPanel_3, BorderLayout.SOUTH);
+		jpanel.add(myJPanel_3, BorderLayout.SOUTH);
 		
-		MyJButton mjbtnFoundation = new MyJButton(); 
+		JButton mjbtnFoundation = new JButton(); 
+		mjbtnFoundation.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		mjbtnFoundation.setText("FOUNDATION");
+		mjbtnFoundation.setContentAreaFilled(false);
+		mjbtnFoundation.setBorder(BorderFactory.createEmptyBorder());
+		mjbtnFoundation.setFont(GUIConstants.FONT_TITLE);
 		myJPanel_3.add(mjbtnFoundation);
 		
-		MyJButton mjbtnMascara = new MyJButton();
+		JButton mjbtnMascara = new JButton();
+		mjbtnMascara.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		mjbtnMascara.setText("MASCARA");
+		mjbtnMascara.setContentAreaFilled(false);
+		mjbtnMascara.setBorder(BorderFactory.createEmptyBorder());
+		mjbtnMascara.setFont(GUIConstants.FONT_TITLE);
 		myJPanel_3.add(mjbtnMascara);
 		
-		MyJButton mjbtnEyeshadow = new MyJButton();
+		JButton mjbtnEyeshadow = new JButton();
+		mjbtnEyeshadow.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		mjbtnEyeshadow.setText("EYESHADOW");
+		mjbtnEyeshadow.setContentAreaFilled(false);
+		mjbtnEyeshadow.setBorder(BorderFactory.createEmptyBorder());
+		mjbtnEyeshadow.setFont(GUIConstants.FONT_TITLE);
 		myJPanel_3.add(mjbtnEyeshadow);
 		
-		MyJButton mjbtnLipstick = new MyJButton();
+		JButton mjbtnLipstick = new JButton();
+		mjbtnLipstick.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		mjbtnLipstick.setText("LIPSTICK");
+		mjbtnLipstick.setContentAreaFilled(false);
+		mjbtnLipstick.setBorder(BorderFactory.createEmptyBorder());
+		mjbtnLipstick.setFont(GUIConstants.FONT_TITLE);
 		myJPanel_3.add(mjbtnLipstick);
 		
-		MyJLabel mjlblKosmetics = new MyJLabel();
-		myJPanel.add(mjlblKosmetics, BorderLayout.WEST);
-		mjlblKosmetics.setText("Kosmetics.");
+		JLabel jlblKosmetics = new JLabel();
+		jlblKosmetics.setBorder(new MatteBorder(10, 15, 1, 1, (Color) new Color(255, 153, 153)));
+		jpanel.add(jlblKosmetics, BorderLayout.WEST);
+		jlblKosmetics.setText("Kosmetics.");
 		
-		MyJPanel myJPanel_8 = new MyJPanel();
-		myJPanel_8.setBackground(new Color(255, 153, 153));
-		myJPanel.add(myJPanel_8, BorderLayout.CENTER);
+		JPanel JPanel_8 = new JPanel();
+		JPanel_8.setBorder(new MatteBorder(10, 1, 1, 1, new Color(255, 153, 153)));
+		JPanel_8.setBackground(new Color(255, 153, 153));
+		jpanel.add(JPanel_8, BorderLayout.CENTER);
 		
 		MyJLabel myJLabel_1 = new MyJLabel(new ImageIcon("media/icons/magnifying-glass.png"));
-		myJPanel_8.add(myJLabel_1);
+		JPanel_8.add(myJLabel_1);
 		
 		txtWhatAreYou = new JFormattedTextField();
 		txtWhatAreYou.setCaretColor(Color.BLACK);
 		txtWhatAreYou.setForeground(Color.GRAY);
-		txtWhatAreYou.setText("What are you looking for?");
+		txtWhatAreYou.setText(" What are you looking for?");
 		txtWhatAreYou.setBorder(BorderFactory.createEmptyBorder());
 		txtWhatAreYou.setFont(GUIConstants.FONT_REGULAR);
 		txtWhatAreYou.addMouseListener(new MouseAdapter()
@@ -151,11 +176,11 @@ public class PantallaProductos extends JFrame {
 	             }
 	         });
 		
-		myJPanel_8.add(txtWhatAreYou);
+		JPanel_8.add(txtWhatAreYou);
 		
 		MyJPanel myJPanel_1 = new MyJPanel();
-		myJPanel_1.setBorder(new LineBorder(new Color(250, 180, 180), 50));
-		myJPanel_1.setBackground(new Color(250, 180, 180));
+		myJPanel_1.setBorder(new LineBorder(Color.WHITE, 50));
+		myJPanel_1.setBackground(Color.WHITE);
 		getContentPane().add(myJPanel_1, BorderLayout.WEST);
 		myJPanel_1.setLayout(new GridLayout(0, 1, 0, 0));
 		myJPanel_1.setSize(new Dimension(100, 100));
@@ -165,10 +190,11 @@ public class PantallaProductos extends JFrame {
 		myJPanel_1.add(mjlblPrice);
 		
 		JSlider slider = new JSlider();
+		slider.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		slider.setForeground(Color.LIGHT_GRAY);
 		slider.setValue(25);
 		slider.setPaintLabels(true);
-		slider.setBackground(new Color(250, 180, 180));
+		slider.setBackground(Color.WHITE);
 		myJPanel_1.add(slider);
 		
 		MyJLabel mjlblBrand = new MyJLabel();
@@ -177,7 +203,7 @@ public class PantallaProductos extends JFrame {
 		
 		for(int i = 0; i<products.size();i++) {
 			Checkbox checkbox = new Checkbox(products.get(i).getBrand());
-			checkbox.setForeground(Color.WHITE);
+			checkbox.setForeground(Color.GRAY);
 			checkbox.setFont(GUIConstants.FONT_REGULAR);
 			myJPanel_1.add(checkbox);
 		}
@@ -187,27 +213,27 @@ public class PantallaProductos extends JFrame {
 		myJPanel_1.add(mjlblBrand_1);
 		
 		Checkbox checkbox_7 = new Checkbox(" 5 stars");
-		checkbox_7.setForeground(Color.WHITE);
+		checkbox_7.setForeground(new Color(128, 128, 128));
 		checkbox_7.setFont(GUIConstants.FONT_REGULAR);
 		myJPanel_1.add(checkbox_7);
 		
 		Checkbox checkbox_8 = new Checkbox(" 4 stars");
-		checkbox_8.setForeground(Color.WHITE);
+		checkbox_8.setForeground(Color.GRAY);
 		checkbox_8.setFont(GUIConstants.FONT_REGULAR);
 		myJPanel_1.add(checkbox_8);
 		
 		Checkbox checkbox_11 = new Checkbox(" 3 stars");
-		checkbox_11.setForeground(Color.WHITE);
+		checkbox_11.setForeground(Color.GRAY);
 		checkbox_11.setFont(GUIConstants.FONT_REGULAR);
 		myJPanel_1.add(checkbox_11);
 		
 		Checkbox checkbox_9 = new Checkbox(" 2 stars");
-		checkbox_9.setForeground(Color.WHITE);
+		checkbox_9.setForeground(Color.GRAY);
 		checkbox_9.setFont(GUIConstants.FONT_REGULAR);
 		myJPanel_1.add(checkbox_9);
 		
 		Checkbox checkbox_10 = new Checkbox(" 1 star");
-		checkbox_10.setForeground(Color.WHITE);
+		checkbox_10.setForeground(Color.GRAY);
 		checkbox_10.setFont(GUIConstants.FONT_REGULAR);
 		myJPanel_1.add(checkbox_10);
 		
@@ -215,8 +241,8 @@ public class PantallaProductos extends JFrame {
 		MyJPanel myJPanel_2 = new MyJPanel();
 		JScrollPane jsp = new JScrollPane(myJPanel_2);
 		jsp.setBorder(BorderFactory.createEmptyBorder());
-		myJPanel_2.setBorder(new MatteBorder(1, 1, 1, 100, (Color) new Color(255, 204, 204)));
-		myJPanel_2.setBackground(new Color(255, 204, 204));
+		myJPanel_2.setBorder(new MatteBorder(1, 1, 1, 100, (Color) Color.WHITE));
+		myJPanel_2.setBackground(Color.WHITE);
 		getContentPane().add(jsp, BorderLayout.CENTER);
 		myJPanel_2.setLayout(new GridLayout(0, 1, 5, 10));
 		
@@ -262,19 +288,6 @@ public class PantallaProductos extends JFrame {
 	          lblPrice.setFont(GUIConstants.FONT_MEDIUM_TITLE);
 	          lblPrice.setForeground(new Color(255, 113, 113));
 	          namePanel.add(lblPrice);
-//	          btnProduct.addActionListener(new ActionListener()
-//	            {@Override
-//	              public void actionPerformed(ActionEvent e)
-//	                {
-//	                  jventana.remove(jventana.getVentanaActual());
-//	                  JScrollPaneCanciones jventanaCancionesDeArtista = new JScrollPaneCanciones(jventana, album, jventana.COLOR_SECUNDARIO);
-//	                  jventana.add(jventanaCancionesDeArtista, BorderLayout.CENTER);
-//	                  jventana.setVentanaActual(jventanaCancionesDeArtista);
-//	                  jventana.repaint();
-//	                  jventana.setVisible(true);
-//	                }
-//
-//	            });
 	          productPanel.add(namePanel);
 	          
 	          //Panel for the review of the product

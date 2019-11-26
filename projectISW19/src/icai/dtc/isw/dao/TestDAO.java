@@ -15,8 +15,6 @@ import java.sql.Date;
 
 import javax.imageio.ImageIO;
 
-import icai.dtc.isw.domain.Test;
-
 public class TestDAO {
 	
 	

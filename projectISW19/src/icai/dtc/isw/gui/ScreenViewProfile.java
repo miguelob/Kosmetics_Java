@@ -15,6 +15,7 @@ import javax.swing.border.MatteBorder;
 import java.awt.Cursor;
 
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.FlowLayout;
 import java.awt.Color;
 
@@ -101,11 +102,29 @@ public class ScreenViewProfile extends JFrame {
 
 		JLabel lblEmail = new JLabel("kyliejenner@gmail.com");
 		panelUserInfo.add(lblEmail, BorderLayout.CENTER);
-		lblUsername.setFont(GUIConstants.FONT_TITLE);
+		lblEmail.setFont(GUIConstants.FONT_TITLE);
 
 		// Contains:
 		// - characteristics
+		JPanel panelCharacteristics = new JPanel();
+		panelCharacteristics.setLayout(new GridLayout(0,1));
+		panelCharacteristics.setBorder(new MatteBorder(1, 65, 1, 45, (Color) new Color(255, 255, 255)));
+		panelCharacteristics.setBackground(new Color(255, 255, 255));
+		panelUserInfo.add(panelCharacteristics, BorderLayout.SOUTH);
 
+		ImageIcon imgSkinTone = Images.resize(new ImageIcon("media/images/medium2.png"), 24, 24);
+		JLabel lblCharacteristic1 = new JLabel("Skin tone: ");
+		lblCharacteristic1.setIcon(imgSkinTone);
+		panelCharacteristics.add(lblCharacteristic1, BorderLayout.CENTER);
+		lblCharacteristic1.setFont(GUIConstants.FONT_TITLE);
+
+		JLabel lblCharacteristic2 = new JLabel("Skin condition: Dry");
+		panelCharacteristics.add(lblCharacteristic2, BorderLayout.CENTER);
+		lblCharacteristic2.setFont(GUIConstants.FONT_TITLE);
+
+		JLabel lblCharacteristic3 = new JLabel("Birthdate: 08/10/1997");
+		panelCharacteristics.add(lblCharacteristic3, BorderLayout.CENTER);
+		lblCharacteristic3.setFont(GUIConstants.FONT_TITLE);
 		
 	}
 

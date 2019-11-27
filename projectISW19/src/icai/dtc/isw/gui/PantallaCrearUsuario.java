@@ -9,6 +9,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.JLabel;
@@ -18,6 +20,8 @@ import javax.swing.JTextField;
 import java.awt.SystemColor;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.Cursor;
 import javax.swing.border.MatteBorder;
 import java.awt.Rectangle;
@@ -79,6 +83,13 @@ public class PantallaCrearUsuario extends JFrame {
 		JTextField txtEmail = new JTextField("  someone@example.com");
 		txtEmail.setMinimumSize(new Dimension(7, 25));
 		txtEmail.setForeground(Color.GRAY);
+		txtEmail.addMouseListener(new MouseAdapter()
+        { @Override
+	           public void mouseClicked(MouseEvent me)
+	             { txtEmail.setText("");
+
+	             }
+	         });
 		panelEmail.add(txtEmail, BorderLayout.SOUTH);
 		
 		//Panel to repeat the password
@@ -97,6 +108,13 @@ public class PantallaCrearUsuario extends JFrame {
 		JTextField txtUsername = new JTextField("  @ e.g MissContour123");
 		txtUsername.setForeground(Color.GRAY);
 		txtUsername.setMinimumSize(new Dimension(7, 30));
+		txtUsername.addMouseListener(new MouseAdapter()
+        { @Override
+	           public void mouseClicked(MouseEvent me)
+	             { txtUsername.setText("");
+
+	             }
+	         });
 		panelUsername.add(txtUsername, BorderLayout.SOUTH);
 		
 		//Panel with a text field to write down the password
@@ -111,7 +129,7 @@ public class PantallaCrearUsuario extends JFrame {
 		panelPassword.add(lblPassword, BorderLayout.NORTH);
 				
 				
-		JTextField txtPassword = new JTextField();
+		JPasswordField txtPassword = new JPasswordField();
 		panelPassword.add(txtPassword, BorderLayout.SOUTH);
 		
 		//Panel to repeat the password
@@ -126,7 +144,7 @@ public class PantallaCrearUsuario extends JFrame {
 		panelPassword_2.add(lblPassword_2, BorderLayout.NORTH);
 				
 				
-		JTextField txtPassword_2 = new JTextField();
+		JPasswordField txtPassword_2 = new JPasswordField();
 		txtPassword_2.setMinimumSize(new Dimension(7, 30));
 		panelPassword_2.add(txtPassword_2, BorderLayout.SOUTH);
 		

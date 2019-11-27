@@ -16,6 +16,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.MatteBorder;
 
+import com.toedter.calendar.JCalendar;
+
 import icai.dtc.isw.domain.User;
 
 import java.awt.BorderLayout;
@@ -298,19 +300,22 @@ public class PantallaCrearUsuario_2 extends JFrame {
 		panelUsername.add(cbSkinConditions, BorderLayout.SOUTH);
 		
 		//Panel with a text field to write down the password
-		JPanel panelPassword = new JPanel();
-		panelPassword.setBorder(new MatteBorder(10, 10, 10, 10, (Color) new Color(255, 255, 255)));
-		panelPassword.setBackground(Color.WHITE);
-		panel_2.add(panelPassword);
-		panelPassword.setLayout(new BorderLayout(0, 0));
+		JPanel panelBirthDay = new JPanel();
+		panelBirthDay.setBorder(new MatteBorder(10, 10, 10, 10, (Color) new Color(255, 255, 255)));
+		panelBirthDay.setBackground(Color.WHITE);
+		panel_2.add(panelBirthDay);
+		panelBirthDay.setLayout(new BorderLayout(0, 0));
 			
-		JLabel lblPassword = new JLabel("And finaly, what is your date of birth?");
-		lblPassword.setFont(GUIConstants.FONT_REGULAR_BOLD);
-		panelPassword.add(lblPassword, BorderLayout.NORTH);
+		JLabel lblBirthDay = new JLabel("And finaly, what is your date of birth?");
+		lblBirthDay.setFont(GUIConstants.FONT_REGULAR_BOLD);
+		lblBirthDay.add(lblBirthDay, BorderLayout.NORTH);
 				
 				
-		JTextField txtPassword = new JTextField();
-		panelPassword.add(txtPassword, BorderLayout.SOUTH);
+		//JTextField txtPassword = new JTextField();
+		//panelPassword.add(txtPassword, BorderLayout.SOUTH);
+
+		JCalendar calendar = new JCalendar();
+		panelBirthDay.add(calendar, BorderLayout.SOUTH);
 		
 		
 		//Panel to go join or login if you already have an account
@@ -332,7 +337,7 @@ public class PantallaCrearUsuario_2 extends JFrame {
 			public void actionPerformed(ActionEvent e){
 				user.setSkinTone(skinTone);
 				user.setSkinCondition(cbSkinConditions.getSelectedItem().toString());
-				user.setBirthDay(Dat
+				//user.setBirthDay(Dat
 				PantallaCrearUsuario_2.this.dispose();
 				JFrame pantallaActual = new ScreenViewProfile();
 				GUIConstants.PANTALLA_ACTUAL = pantallaActual;

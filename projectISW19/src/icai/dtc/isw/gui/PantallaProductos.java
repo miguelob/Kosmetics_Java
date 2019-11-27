@@ -241,7 +241,8 @@ public class PantallaProductos extends JFrame {
 		MyJPanel myJPanel_2 = new MyJPanel();
 		JScrollPane jsp = new JScrollPane(myJPanel_2);
 		jsp.setBorder(BorderFactory.createEmptyBorder());
-		myJPanel_2.setBorder(new MatteBorder(1, 1, 1, 100, (Color) Color.WHITE));
+		jsp.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		myJPanel_2.setBorder(new MatteBorder(1, 1, 1, 0, (Color) Color.WHITE));
 		myJPanel_2.setBackground(Color.WHITE);
 		getContentPane().add(jsp, BorderLayout.CENTER);
 		myJPanel_2.setLayout(new GridLayout(0, 1, 5, 10));
@@ -250,7 +251,9 @@ public class PantallaProductos extends JFrame {
 	      while (it.hasNext())
 	      {	 //Panel for every product available. Includes name, brand, category, description, price
 	          MyJPanel productPanel = new MyJPanel();
-	          productPanel.setLayout(new GridLayout(1, 0));
+			  productPanel.setLayout(new BorderLayout(50, 0));
+			  productPanel.setBackground(new Color(248, 249, 249));
+			  productPanel.setBorder(new MatteBorder(5, 10, 5, 10, new Color(248, 249, 249)));
 	          Product product = (Product) it.next();
 	          
 	          //Button with the photo of the product
@@ -267,11 +270,12 @@ public class PantallaProductos extends JFrame {
 	        		  
 	        	  }
 	          });
-	          productPanel.add(btnProduct);
+	          productPanel.add(btnProduct, BorderLayout.WEST);
 	          
 	          //Panel for the name, brand, category and type
 	          MyJPanel namePanel = new MyJPanel();
-	          namePanel.setLayout(new GridLayout(0, 1));
+			  namePanel.setLayout(new GridLayout(0, 1));
+		
 	          //Name of the product
 	          MyJLabel lblName = new MyJLabel(product.getName());
 	          lblName.setFont(GUIConstants.FONT_MEDIUM_TITLE);
@@ -292,7 +296,8 @@ public class PantallaProductos extends JFrame {
 	          
 	          //Panel for the review of the product
 	          MyJPanel reviewPanel = new MyJPanel();
-	          reviewPanel.setLayout(new GridLayout(0, 1));
+			  reviewPanel.setLayout(new GridLayout(0, 1));
+			  //reviewPanel.setBorder(new MatteBorder(1, 1, 1, 50, Color.BLACK));
 	          //Panel for the stars
 	          MyJPanel starsPanel = new MyJPanel();
 	          AutoStars.setStars(starsPanel, product.getScore(),"big");
@@ -319,7 +324,7 @@ public class PantallaProductos extends JFrame {
 	          btnProduct.setHorizontalAlignment(SwingConstants.CENTER);
 	        
 	          
-	          productPanel.add(reviewPanel);
+	          productPanel.add(reviewPanel, BorderLayout.EAST);
 	          myJPanel_2.add(productPanel);
 
 	      }

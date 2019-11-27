@@ -1,10 +1,13 @@
 package icai.dtc.isw.gui;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -12,7 +15,6 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.MatteBorder;
 
@@ -20,11 +22,11 @@ import com.toedter.calendar.JCalendar;
 
 import icai.dtc.isw.domain.User;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Cursor;
-
 public class PantallaCrearUsuario_2 extends JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public String skinTone;
 
 	public static void main(String[] args) {

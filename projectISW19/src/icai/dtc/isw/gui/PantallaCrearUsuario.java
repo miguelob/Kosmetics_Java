@@ -163,7 +163,7 @@ public class PantallaCrearUsuario extends JFrame {
 		btnJoin.setForeground(Color.WHITE);
 		btnJoin.setBackground(new Color(255, 153, 153));
 		btnJoin.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		if(txtPassword.getPassword().equals(txtPassword_2.getPassword())){
+		if(true){//txtPassword.getPassword().equals(txtPassword_2.getPassword())){
 			btnJoin.addActionListener(new ActionListener(){
 				@Override
 				public void actionPerformed(ActionEvent e){

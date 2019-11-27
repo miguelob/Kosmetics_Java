@@ -14,13 +14,13 @@ public class User implements Serializable{
     //public final int idUser;
     private String name;
     private String email;
-    private String userPassword;
+    private char[] userPassword;
     private Date birthDate;
     private String skinColor;
     private String skinCondition;
     private ImageIcon userImage;
 
-    public User(String name,String email,String userPasword,
+    public User(String name,String email,char[] userPasword,
                     Date birthDate,String skinColor,String skinCondition, byte[] imageBytes){
 
         //this.idUser=idUser;
@@ -32,7 +32,7 @@ public class User implements Serializable{
         this.skinCondition=skinCondition;
         this.setImage(imageBytes);
     }
-    public User(String name, String email, String userPassword){
+    public User(String name, String email, char[] userPassword){
         this.name=name;
         this.email=email;
         this.userPassword=userPassword;

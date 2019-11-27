@@ -49,7 +49,7 @@ public class User implements Serializable{
     public String getEmail() {
     	return email;
     }
-    public String getPassword() {
+    public char[] getPassword() {
     	return userPassword;
     }
     public Date getBirthDate() {
@@ -64,6 +64,12 @@ public class User implements Serializable{
     public ImageIcon getProfileImage() {
     	return userImage;
     }
+	public void setSkinTone(String skinTone) {
+        this.skinColor=skinTone;
+	}
+	public void setSkinCondition(String skinCondition) {
+        this.skinCondition = skinCondition;
+	}
 
 
 }

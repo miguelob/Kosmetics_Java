@@ -34,10 +34,6 @@ import icai.dtc.isw.domain.Product;
 
 
 public class PantallaProductos extends JFrame {
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = 1L;
 	private JFormattedTextField txtWhatAreYou;
     ArrayList<Product> products;
     Client client;
@@ -105,21 +101,19 @@ public class PantallaProductos extends JFrame {
 		jbtnProfile.setContentAreaFilled(false);
 		jbtnProfile.setFont(GUIConstants.FONT_TITLE);
 
-		if((boolean) (client.clientInteraction("/getSessionStatus", null))){
-			jbtnProfile.addActionListener(new ActionListener(){
-				@Override
-				public void actionPerformed(ActionEvent e)
-					{ 	JFrame pantallaActual = new PantallaCrearUsuario();
-						GUIConstants.PANTALLA_ACTUAL = pantallaActual;
-						pantallaActual.setVisible(true);
+		jbtnProfile.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e)
+				{ 	JFrame pantallaActual = new PantallaCrearUsuario();
+					GUIConstants.PANTALLA_ACTUAL = pantallaActual;
+					pantallaActual.setVisible(true);
 
-					}
-			});
-		}else{
-
-		}
+				}
+		});
 		jpanel.add(jbtnProfile, BorderLayout.EAST);
 		
+		// Contains
+		// - Navigator bar (Foundation, Mascara, Eyeshadow, Lipstick)
 		MyJPanel myJPanel_3 = new MyJPanel();
 		myJPanel_3.setLayout(new FlowLayout(FlowLayout.CENTER, 50, 0));
 		myJPanel_3.setBackground(new Color(255, 153, 153));
@@ -162,13 +156,15 @@ public class PantallaProductos extends JFrame {
 		jpanel.add(jlblKosmetics, BorderLayout.WEST);
 		jlblKosmetics.setText("Kosmetics.");
 		
-		JPanel JPanel_8 = new JPanel();
-		JPanel_8.setBorder(new MatteBorder(10, 1, 1, 1, new Color(255, 153, 153)));
-		JPanel_8.setBackground(new Color(255, 153, 153));
-		jpanel.add(JPanel_8, BorderLayout.CENTER);
+		// Contains
+		// -searchbar
+		JPanel panelSearchBar = new JPanel();
+		panelSearchBar.setBorder(new MatteBorder(10, 1, 1, 1, new Color(255, 153, 153)));
+		panelSearchBar.setBackground(new Color(255, 153, 153));
+		jpanel.add(panelSearchBar, BorderLayout.CENTER);
 		
 		MyJLabel myJLabel_1 = new MyJLabel(new ImageIcon("media/icons/magnifying-glass.png"));
-		JPanel_8.add(myJLabel_1);
+		panelSearchBar.add(myJLabel_1);
 		
 		txtWhatAreYou = new JFormattedTextField();
 		txtWhatAreYou.setCaretColor(Color.BLACK);
@@ -184,18 +180,21 @@ public class PantallaProductos extends JFrame {
 	             }
 	         });
 		
-		JPanel_8.add(txtWhatAreYou);
+		panelSearchBar.add(txtWhatAreYou);
 		
-		MyJPanel myJPanel_1 = new MyJPanel();
-		myJPanel_1.setBorder(new LineBorder(Color.WHITE, 50));
-		myJPanel_1.setBackground(Color.WHITE);
-		getContentPane().add(myJPanel_1, BorderLayout.WEST);
-		myJPanel_1.setLayout(new GridLayout(0, 1, 0, 0));
-		myJPanel_1.setSize(new Dimension(100, 100));
+		// Contains:
+		// - Filters
+
+		MyJPanel panelFilters = new MyJPanel();
+		panelFilters.setBorder(new MatteBorder(50, 50, 50, 1, Color.WHITE));
+		panelFilters.setBackground(Color.WHITE);
+		getContentPane().add(panelFilters, BorderLayout.WEST);
+		panelFilters.setLayout(new GridLayout(0, 1, 0, 0));
+		panelFilters.setSize(new Dimension(100, 100));
 		
 		MyJLabel mjlblPrice = new MyJLabel();
 		mjlblPrice.setText("Price");
-		myJPanel_1.add(mjlblPrice);
+		panelFilters.add(mjlblPrice);
 		
 		JSlider slider = new JSlider();
 		slider.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -203,53 +202,54 @@ public class PantallaProductos extends JFrame {
 		slider.setValue(25);
 		slider.setPaintLabels(true);
 		slider.setBackground(Color.WHITE);
-		myJPanel_1.add(slider);
+		panelFilters.add(slider);
 		
 		MyJLabel mjlblBrand = new MyJLabel();
 		mjlblBrand.setText("Brand");
-		myJPanel_1.add(mjlblBrand);
+		panelFilters.add(mjlblBrand);
 		
 		for(int i = 0; i<products.size();i++) {
 			Checkbox checkbox = new Checkbox(products.get(i).getBrand());
 			checkbox.setForeground(Color.GRAY);
 			checkbox.setFont(GUIConstants.FONT_REGULAR);
-			myJPanel_1.add(checkbox);
+			panelFilters.add(checkbox);
 		}
 		
 		MyJLabel mjlblBrand_1 = new MyJLabel();
 		mjlblBrand_1.setText("Popularity");
-		myJPanel_1.add(mjlblBrand_1);
+		panelFilters.add(mjlblBrand_1);
 		
 		Checkbox checkbox_7 = new Checkbox(" 5 stars");
 		checkbox_7.setForeground(new Color(128, 128, 128));
 		checkbox_7.setFont(GUIConstants.FONT_REGULAR);
-		myJPanel_1.add(checkbox_7);
+		panelFilters.add(checkbox_7);
 		
 		Checkbox checkbox_8 = new Checkbox(" 4 stars");
 		checkbox_8.setForeground(Color.GRAY);
 		checkbox_8.setFont(GUIConstants.FONT_REGULAR);
-		myJPanel_1.add(checkbox_8);
+		panelFilters.add(checkbox_8);
 		
 		Checkbox checkbox_11 = new Checkbox(" 3 stars");
 		checkbox_11.setForeground(Color.GRAY);
 		checkbox_11.setFont(GUIConstants.FONT_REGULAR);
-		myJPanel_1.add(checkbox_11);
+		panelFilters.add(checkbox_11);
 		
 		Checkbox checkbox_9 = new Checkbox(" 2 stars");
 		checkbox_9.setForeground(Color.GRAY);
 		checkbox_9.setFont(GUIConstants.FONT_REGULAR);
-		myJPanel_1.add(checkbox_9);
+		panelFilters.add(checkbox_9);
 		
 		Checkbox checkbox_10 = new Checkbox(" 1 star");
 		checkbox_10.setForeground(Color.GRAY);
 		checkbox_10.setFont(GUIConstants.FONT_REGULAR);
-		myJPanel_1.add(checkbox_10);
+		panelFilters.add(checkbox_10);
 		
 		//Panel for the list of products in out database
 		MyJPanel myJPanel_2 = new MyJPanel();
 		JScrollPane jsp = new JScrollPane(myJPanel_2);
 		jsp.setBorder(BorderFactory.createEmptyBorder());
-		myJPanel_2.setBorder(new MatteBorder(1, 1, 1, 100, (Color) Color.WHITE));
+		jsp.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		myJPanel_2.setBorder(new MatteBorder(0, 0, 0, 70, Color.WHITE));
 		myJPanel_2.setBackground(Color.WHITE);
 		getContentPane().add(jsp, BorderLayout.CENTER);
 		myJPanel_2.setLayout(new GridLayout(0, 1, 5, 10));
@@ -258,7 +258,9 @@ public class PantallaProductos extends JFrame {
 	      while (it.hasNext())
 	      {	 //Panel for every product available. Includes name, brand, category, description, price
 	          MyJPanel productPanel = new MyJPanel();
-	          productPanel.setLayout(new GridLayout(1, 0));
+			  productPanel.setLayout(new BorderLayout(0, 0));
+			  productPanel.setBackground(Color.WHITE);
+			  productPanel.setBorder(new MatteBorder(0, 0, 2, 0, new Color(234, 237, 237)));
 	          Product product = (Product) it.next();
 	          
 	          //Button with the photo of the product
@@ -275,18 +277,21 @@ public class PantallaProductos extends JFrame {
 	        		  
 	        	  }
 	          });
-	          productPanel.add(btnProduct);
+	          productPanel.add(btnProduct, BorderLayout.WEST);
 	          
 	          //Panel for the name, brand, category and type
 	          MyJPanel namePanel = new MyJPanel();
-	          namePanel.setLayout(new GridLayout(0, 1));
+			  namePanel.setLayout(new GridLayout(0, 1));
+			  namePanel.setBackground(Color.WHITE);
+			  namePanel.setBorder(new MatteBorder(1, 30, 1, 1, Color.WHITE));
+		
 	          //Name of the product
 	          MyJLabel lblName = new MyJLabel(product.getName());
-	          lblName.setFont(GUIConstants.FONT_MEDIUM_TITLE);
+			  lblName.setFont(GUIConstants.FONT_MEDIUM_TITLE);
 	          namePanel.add(lblName);
 	          //Brand of the product
 	          MyJLabel lblBrand = new MyJLabel(product.getBrand());
-	          lblBrand.setFont(GUIConstants.FONT_TITLE);
+			  lblBrand.setFont(GUIConstants.FONT_TITLE);
 	          namePanel.add(lblBrand);
 	          btnProduct.setHorizontalAlignment(SwingConstants.CENTER);
 	          //Category of the product
@@ -294,15 +299,19 @@ public class PantallaProductos extends JFrame {
 	          //Price of the product
 	          MyJLabel lblPrice = new MyJLabel(String.valueOf(product.getPrice()) + " $");
 	          lblPrice.setFont(GUIConstants.FONT_MEDIUM_TITLE);
-	          lblPrice.setForeground(new Color(255, 113, 113));
+			  lblPrice.setForeground(new Color(255, 113, 113));
 	          namePanel.add(lblPrice);
 	          productPanel.add(namePanel);
 	          
 	          //Panel for the review of the product
 	          MyJPanel reviewPanel = new MyJPanel();
-	          reviewPanel.setLayout(new GridLayout(0, 1));
+			  reviewPanel.setLayout(new GridLayout(0, 1));
+			  reviewPanel.setBorder(new MatteBorder(0, 0, 0, 20, Color.WHITE));
+			  reviewPanel.setBackground(Color.WHITE);
+			  //reviewPanel.setBorder(new MatteBorder(1, 1, 1, 50, Color.BLACK));
 	          //Panel for the stars
-	          MyJPanel starsPanel = new MyJPanel();
+			  MyJPanel starsPanel = new MyJPanel();
+			  starsPanel.setBackground(Color.WHITE);
 	          AutoStars.setStars(starsPanel, product.getScore(),"big");
 	          reviewPanel.add(starsPanel);
 	          ArrayList<String> features = product.getFeatures();
@@ -311,23 +320,12 @@ public class PantallaProductos extends JFrame {
 	              feature.setForeground(Color.DARK_GRAY);
 	              reviewPanel.add(feature);
 	          }
-	          //Features of the product
-	          /*
-	          MyJLabel feature_1 = new MyJLabel("Longwear");
-	          feature_1.setForeground(Color.DARK_GRAY);
-	          reviewPanel.add(feature_1);
-	          MyJLabel feature_2 = new MyJLabel("High Coverage");
-	          feature_2.setForeground(Color.DARK_GRAY);
-	          reviewPanel.add(feature_2);
-	          MyJLabel feature_3 = new MyJLabel("Matte");
-	          feature_2.setForeground(Color.DARK_GRAY);
-	          reviewPanel.add(feature_3);*/
 	 
 
 	          btnProduct.setHorizontalAlignment(SwingConstants.CENTER);
 	        
 	          
-	          productPanel.add(reviewPanel);
+	          productPanel.add(reviewPanel, BorderLayout.EAST);
 	          myJPanel_2.add(productPanel);
 
 	      }

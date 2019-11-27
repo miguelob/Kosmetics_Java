@@ -1,6 +1,5 @@
 package icai.dtc.isw.gui;
 
-import icai.dtc.isw.domain.User;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
@@ -17,23 +16,20 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.MatteBorder;
 
+import icai.dtc.isw.domain.User;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 
 public class PantallaCrearUsuario_2 extends JFrame {
-	
-
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = 1L;
+	public String skinTone;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					PantallaCrearUsuario_2 frame = new PantallaCrearUsuario_2();
+					PantallaCrearUsuario_2 frame = new PantallaCrearUsuario_2(new User(null,null,null));
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -136,50 +132,135 @@ public class PantallaCrearUsuario_2 extends JFrame {
 		btnLight1.setBorder(null);
 		btnLight1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnLight1.setContentAreaFilled(false);
+		btnLight1.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				skinTone = "LIGHT1";
+			}
+		});
+		
 
 		btnLight2.setBorder(null);
 		btnLight2.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnLight2.setContentAreaFilled(false);
+		btnLight2.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				skinTone = "LIGHT2";
+			}
+		});
 
 		btnLight3.setBorder(null);
 		btnLight3.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnLight3.setContentAreaFilled(false);
+		btnLight3.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				skinTone = "LIGHT3";
+			}
+		});
 
 		btnMedium1.setBorder(null);
 		btnMedium1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnMedium1.setContentAreaFilled(false);
+		btnMedium1.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				skinTone = "MEDIUM1";
+			}
+		});
 
 		btnMedium2.setBorder(null);
 		btnMedium2.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnMedium2.setContentAreaFilled(false);
+		btnMedium2.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				skinTone = "MEDIUM2";
+			}
+		});
 
 		btnMedium3.setBorder(null);
 		btnMedium3.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnMedium3.setContentAreaFilled(false);
+		btnMedium3.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				skinTone = "MEDIUM3";
+			}
+		});
 
 		btnTan1.setBorder(null);
 		btnTan1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnTan1.setContentAreaFilled(false);
+		btnTan1.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				skinTone = "TAN1";
+			}
+		});
 
 		btnTan2.setBorder(null);
 		btnTan2.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnTan2.setContentAreaFilled(false);
+		btnTan2.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				skinTone = "TAN2";
+			}
+		});
 
 		btnTan3.setBorder(null);
 		btnTan3.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnTan3.setContentAreaFilled(false);
+		btnTan3.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				skinTone = "TAN3";
+			}
+		});
 
 		btnDeep1.setBorder(null);
 		btnDeep1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnDeep1.setContentAreaFilled(false);
+		btnDeep1.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				skinTone = "DEEP1";
+			}
+		});
 
 		btnDeep2.setBorder(null);
 		btnDeep2.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnDeep2.setContentAreaFilled(false);
+		btnDeep2.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				skinTone = "DEEP2";
+			}
+		});
 
 		btnDeep3.setBorder(null);
 		btnDeep3.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnDeep3.setContentAreaFilled(false);
+		btnDeep3.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				skinTone = "DEEP3";
+			}
+		});
 
 		panelSkinTones.add(btnLight1);
 		panelSkinTones.add(btnLight2);
@@ -249,6 +330,9 @@ public class PantallaCrearUsuario_2 extends JFrame {
 		btnJoin.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e){
+				user.setSkinTone(skinTone);
+				user.setSkinCondition(cbSkinConditions.getSelectedItem().toString());
+				user.setBirthDay(Dat
 				PantallaCrearUsuario_2.this.dispose();
 				JFrame pantallaActual = new ScreenViewProfile();
 				GUIConstants.PANTALLA_ACTUAL = pantallaActual;

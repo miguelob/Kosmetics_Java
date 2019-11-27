@@ -1,5 +1,6 @@
 package icai.dtc.isw.gui;
 
+import icai.dtc.isw.domain.User;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
@@ -42,7 +43,7 @@ public class PantallaCrearUsuario_2 extends JFrame {
 
 	}
 
-	public PantallaCrearUsuario_2() throws HeadlessException {
+	public PantallaCrearUsuario_2(User user) throws HeadlessException {
 		this.setSize(500,600);
 		this.setLocationRelativeTo(null);
 		getContentPane().setBackground(Color.WHITE);

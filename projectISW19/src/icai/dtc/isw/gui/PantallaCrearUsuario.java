@@ -150,15 +150,20 @@ public class PantallaCrearUsuario extends JFrame {
 		btnJoin.setForeground(Color.WHITE);
 		btnJoin.setBackground(new Color(255, 153, 153));
 		btnJoin.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnJoin.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e){
-				PantallaCrearUsuario.this.dispose();
-				JFrame pantallaActual = new PantallaCrearUsuario_2();
-				GUIConstants.PANTALLA_ACTUAL = pantallaActual;
-				pantallaActual.setVisible(true);
-			}
-		});
+		if(txtPassword.getText().equals(txtPassword_2.getText())){
+			btnJoin.addActionListener(new ActionListener(){
+				@Override
+				public void actionPerformed(ActionEvent e){
+					icai.dtc.isw.domain.User user = new icai.dtc.isw.domain.User(txtUsername.getText(),txtEmail.getText(),txtPassword.getText());
+					PantallaCrearUsuario.this.dispose();
+					JFrame pantallaActual = new PantallaCrearUsuario_2(user);
+					GUIConstants.PANTALLA_ACTUAL = pantallaActual;
+					pantallaActual.setVisible(true);
+				}
+			});
+		}else{
+
+		}
 		panelJoin.add(btnJoin, BorderLayout.NORTH);
 		
 		//Subpanel to join if you already have an account

@@ -32,6 +32,11 @@ public class User implements Serializable{
         this.skinCondition=skinCondition;
         this.setImage(imageBytes);
     }
+    public User(String name, String email, String userPassword){
+        this.name=name;
+        this.email=email;
+        this.userPassword=userPassword;
+    }
     private void setImage(byte[] imageBytes) {
     	if(imageBytes != null)
     		userImage = new ImageIcon(imageBytes);

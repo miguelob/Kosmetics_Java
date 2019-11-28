@@ -168,14 +168,12 @@ public class PantallaCrearUsuario extends JFrame {
 				@Override
 				public void actionPerformed(ActionEvent e){
 					icai.dtc.isw.domain.User user = new icai.dtc.isw.domain.User(txtUsername.getText(),txtEmail.getText(),txtPassword.getPassword());
-					PantallaCrearUsuario.this.dispose();
 					JFrame pantallaActual = new PantallaCrearUsuario_2(user);
 					GUIConstants.PANTALLA_ACTUAL = pantallaActual;
 					pantallaActual.setVisible(true);
+					PantallaCrearUsuario.this.dispose();
 				}
 			});
-		}else{
-
 		}
 		panelJoin.add(btnJoin, BorderLayout.NORTH);
 		

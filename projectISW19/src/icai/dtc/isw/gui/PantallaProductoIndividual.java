@@ -252,6 +252,10 @@ public class PantallaProductoIndividual extends JFrame {
 					
 					AutoStars.setStars(panelStarFlowIndivifualReview, reviews.get(i).getProductScore(),"small");
 		}
+		this.setResizable(true);
+		this.pack();
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		this.setVisible(true);
 	}
 
 

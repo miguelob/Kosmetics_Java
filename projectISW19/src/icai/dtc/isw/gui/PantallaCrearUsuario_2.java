@@ -15,6 +15,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.MatteBorder;
 
@@ -310,14 +311,14 @@ public class PantallaCrearUsuario_2 extends JFrame {
 			
 		JLabel lblBirthDay = new JLabel("And finaly, what is your date of birth?");
 		lblBirthDay.setFont(GUIConstants.FONT_REGULAR_BOLD);
-		lblBirthDay.add(lblBirthDay, BorderLayout.NORTH);
+		panelBirthDay.add(lblBirthDay, BorderLayout.NORTH);
 				
 				
-		//JTextField txtPassword = new JTextField();
-		//panelPassword.add(txtPassword, BorderLayout.SOUTH);
+		JTextField txtBday = new JTextField();
+		panelBirthDay.add(txtBday, BorderLayout.SOUTH);
 
-		JCalendar calendar = new JCalendar();
-		panelBirthDay.add(calendar, BorderLayout.SOUTH);
+		//JCalendar calendar = new JCalendar();
+	//	panelBirthDay.add(calendar, BorderLayout.SOUTH);
 		
 		
 		//Panel to go join or login if you already have an account

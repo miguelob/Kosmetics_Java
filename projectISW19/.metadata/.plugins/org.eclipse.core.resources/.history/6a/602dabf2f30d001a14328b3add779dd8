@@ -1,0 +1,13 @@
+package icai.dtc.isw.controler;
+
+import java.util.ArrayList;
+
+import icai.dtc.isw.dao.ReviewDAO;
+import icai.dtc.isw.domain.Review;
+
+
+public class ReviewControler {
+	public boolean uploadReview(Review review) {
+		return ReviewDAO.uploadReview(review);
+	}
+}

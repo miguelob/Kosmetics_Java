@@ -21,7 +21,7 @@ import icai.dtc.isw.domain.Review;
 public class SocketServer extends Thread {
 	public static final int PORT_NUMBER = 8081;
 	protected Socket socket;
-	ProductControler productoControler = new ProductControler();
+	ProductControler productControler = new ProductControler();
 	UserControler userControler = new UserControler();
 	ReviewControler reviewControler = new ReviewControler();
 	ArrayList<Product> basicProductList;
@@ -52,7 +52,7 @@ public class SocketServer extends Thread {
 		    switch (mensajeIn.getContext()) {
 		    	case "/getProductBasicInfo":
 		    		basicProductList = new ArrayList<Product>();
-		    		productoControler.getProductBasicInfo(basicProductList);
+		    		productControler.getProductBasicInfo(basicProductList);
 		    		mensajeOut.setContext("/getBasicProductResponse");
 		    		session = new HashMap<String, Object>();
 		    		session.put("basicProduct",basicProductList);
@@ -61,7 +61,7 @@ public class SocketServer extends Thread {
 		    	break;
 		    	case "/getProductFullInfo":
 		    		Product product = (Product) mensajeIn.getObject();
-		    		productoControler.getProductFullInfo(product);
+		    		productControler.getProductFullInfo(product);
 		    		mensajeOut.setContext("/getFullProductResponse");
 		    		session.put("fullProduct",product);
 		    		mensajeOut.setSession(session);
@@ -69,9 +69,9 @@ public class SocketServer extends Thread {
 		    	break;
 		    	case "/uploadUser":
 		    		User user = (User) mensajeIn.getObject();
-		    		boolean status = userControler.uploadUser(user);
+		    		boolean userUploadStatus = userControler.uploadUser(user);
 		    		mensajeOut.setContext("/getUserUploadResponse");
-		    		session.put("uploadUser",status);
+		    		session.put("uploadUser",userUploadStatus);
 		    		mensajeOut.setSession(session);
 		    		objectOutputStream.writeObject(mensajeOut);
 		    	break;
@@ -81,6 +81,16 @@ public class SocketServer extends Thread {
 		    	break;
 		    	case "/getSessionStatus":
 		    		mensajeOut.setContext("/getSessionStatus");
+		    		mensajeOut.setSession(session);
+		    		objectOutputStream.writeObject(mensajeOut);
+		    	break;
+		    	case "/uploadReview":
+		    		HashMap<String,Object> data = (HashMap<String,Object>) mensajeIn.getObject();
+		    		Review review = (Review) data.get("review");
+		    		int idProduct = productControler.getProductID((Product) data.get("product"));
+		    		boolean reviewUploadStatus = reviewControler.uploadReview(review,idProduct);
+		    		mensajeOut.setContext("/getReviewUploadResponse");
+		    		session.put("uploadReview",reviewUploadStatus);
 		    		mensajeOut.setSession(session);
 		    		objectOutputStream.writeObject(mensajeOut);
 		    	break;

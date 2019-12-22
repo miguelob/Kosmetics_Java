@@ -14,13 +14,14 @@ public class User implements Serializable{
     //public final int idUser;
     private String name;
     private String email;
-    private String userPassword;
+    private char[] userPassword;
+    private String password;
     private Date birthDate;
     private String skinColor;
     private String skinCondition;
     private ImageIcon userImage;
 
-    public User(String name,String email,String userPasword,
+    public User(String name,String email,char[] userPasword,
                     Date birthDate,String skinColor,String skinCondition, byte[] imageBytes){
 
         //this.idUser=idUser;
@@ -31,6 +32,24 @@ public class User implements Serializable{
         this.skinColor=skinColor;
         this.skinCondition=skinCondition;
         this.setImage(imageBytes);
+    }
+    public User(String name,String email,String userPasword,
+            Date birthDate,String skinColor,String skinCondition, byte[] imageBytes){
+
+			//this.idUser=idUser;
+			this.name=name;
+			this.email=email;
+			this.password=userPasword;
+			this.birthDate=birthDate;
+			this.skinColor=skinColor;
+			this.skinCondition=skinCondition;
+			this.setImage(imageBytes);
+	}
+
+    public User(String name, String email, char[] userPassword){
+        this.name=name;
+        this.email=email;
+        this.userPassword=userPassword;
     }
     private void setImage(byte[] imageBytes) {
     	if(imageBytes != null)
@@ -45,7 +64,7 @@ public class User implements Serializable{
     	return email;
     }
     public String getPassword() {
-    	return userPassword;
+    	return password;
     }
     public Date getBirthDate() {
     	return birthDate;
@@ -59,6 +78,12 @@ public class User implements Serializable{
     public ImageIcon getProfileImage() {
     	return userImage;
     }
+	public void setSkinTone(String skinTone) {
+        this.skinColor=skinTone;
+	}
+	public void setSkinCondition(String skinCondition) {
+        this.skinCondition = skinCondition;
+	}
 
 
 }

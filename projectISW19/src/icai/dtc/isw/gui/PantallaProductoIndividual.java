@@ -6,6 +6,8 @@ import java.awt.GraphicsConfiguration;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
 import java.awt.Image;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
@@ -35,8 +37,13 @@ import java.awt.Cursor;
 
 public class PantallaProductoIndividual extends JFrame {
 	
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public PantallaProductoIndividual(Product product) throws HeadlessException {
-		Client client = new Client();
+		Client client = Client.getInstance();
 		Product fullProduct = (Product) client.clientInteraction("/getProductFullInfo",product);
 		this.setIconImage((new ImageIcon("media/icons/Main_Logo.png")).getImage());
 		this.setTitle("Kosmetics: " + fullProduct.getName());
@@ -121,6 +128,16 @@ public class PantallaProductoIndividual extends JFrame {
 		btnWriteanopinion.setBorder(new LineBorder(new Color(255, 175, 175), 6, true));
 		btnWriteanopinion.setFont(GUIConstants.FONT_REGULAR);
 		btnWriteanopinion.setBackground(Color.PINK);
+		btnWriteanopinion.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				PantallaCrearReview frame = new PantallaCrearReview();
+				frame.setVisible(true);
+				PantallaProductoIndividual.this.dispose();
+				//System.exit(0);
+				
+			}
+		});
 		panelStarsFlow.add(btnWriteanopinion);
 		
 		//Panel containing the info about the product
@@ -235,6 +252,10 @@ public class PantallaProductoIndividual extends JFrame {
 					
 					AutoStars.setStars(panelStarFlowIndivifualReview, reviews.get(i).getProductScore(),"small");
 		}
+		this.setResizable(true);
+		this.pack();
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		this.setVisible(true);
 	}
 
 

@@ -19,19 +19,25 @@ import icai.dtc.isw.domain.Review;
 import icai.dtc.isw.message.Message;
 
 public class Client {
+	private static Client instance;
 	private String host;
 	private int port;
 	private HashMap<String,Object> session;
 	final static Logger logger = Logger.getLogger(Client.class);
 
 	
-	public Client() {
+	private Client() {
 		this.host = PropertiesISW.getInstance().getProperty("host");
 		this.port = Integer.parseInt(PropertiesISW.getInstance().getProperty("port"));
 		Logger.getRootLogger().info("Host: "+host+" port"+port);
 		session=new HashMap<String, Object>();
 	}
-	
+	public static Client getInstance() {
+		if(instance == null)
+			instance = new Client();
+		return instance;
+		
+	}
 	public Object clientInteraction(String command,Object obj) {
 		
 		Message mensajeEnvio=new Message();
@@ -58,8 +64,12 @@ public class Client {
 			break;
 			case "/getUserUploadResponse":
 				response = (boolean) mensajeVuelta.getSession().get("uploadUser");
+			break;
 			case "/getSessionStatus":
 				response = (boolean) mensajeVuelta.getSession().get("sessionStatus");
+			break;
+			case "/getReviewUploadResponse":
+				response = (boolean) mensajeVuelta.getSession().get("reviewUpload");
 			break;
 			default:
 				Logger.getRootLogger().info("Option not found");

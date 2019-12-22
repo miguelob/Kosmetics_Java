@@ -7,6 +7,11 @@ import java.awt.Color;
 
 public class MyJCheckBox extends JCheckBox {
 
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public MyJCheckBox() {
 		this.changeBackgroundColor();
 	}

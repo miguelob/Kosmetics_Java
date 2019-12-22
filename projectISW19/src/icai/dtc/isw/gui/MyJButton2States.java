@@ -9,7 +9,11 @@ import javax.swing.Icon;
 
 public class MyJButton2States extends JButton {
 	
-	 public static final int STATE_1 = 1;
+	 /**
+	*
+	*/
+	private static final long serialVersionUID = 1L;
+	public static final int STATE_1 = 1;
 	    public static final int STATE_2 = 2;
 	    private Icon icon1Default;
 	    private Icon icon2Default;

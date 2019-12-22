@@ -21,6 +21,11 @@ import javax.swing.JRadioButton;
 
 public class PantallaCrearReview extends JFrame {
 	
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -150,7 +155,7 @@ public class PantallaCrearReview extends JFrame {
 		
 		MyJLabel mjlblReviewText = new MyJLabel("<html>The lip blush formula in entirely different than the matte lip kits, <br>"
 				+ "but still has the vibrant beautiful appearance. <br>"
-				+ "It’s light weight and smooth, feels like butter. This product doesn’t get crusty or dry out. <br>"
+				+ "Itï¿½s light weight and smooth, feels like butter. This product doesnï¿½t get crusty or dry out. <br>"
 				+ "All four shades are stunning and highly pigmented. New favorite for sure!!</html>");
 		mjlblReviewText.setFont(GUIConstants.FONT_REGULAR);
 		mjlblReviewText.setForeground(Color.LIGHT_GRAY);

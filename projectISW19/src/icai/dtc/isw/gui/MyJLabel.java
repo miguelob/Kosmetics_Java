@@ -5,6 +5,11 @@ import javax.swing.JLabel;
 
 public class MyJLabel extends JLabel {
 
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public MyJLabel() {
 		this.changeBackgroundColor();
 	}

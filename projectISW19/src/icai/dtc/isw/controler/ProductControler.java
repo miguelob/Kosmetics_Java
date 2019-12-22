@@ -13,4 +13,7 @@ public class ProductControler{
 	public void getProductFullInfo(Product product) {
 			ProductDAO.getProductFullInfo(product);
 	}	
+	public int getProductID(Product product) {
+			return ProductDAO.getProductID(product);
+	}
 }

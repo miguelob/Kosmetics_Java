@@ -15,8 +15,6 @@ import java.sql.Date;
 
 import javax.imageio.ImageIO;
 
-import icai.dtc.isw.domain.Test;
-
 public class TestDAO {
 	
 	
@@ -49,7 +47,6 @@ public class TestDAO {
         }
 	}*/
 	
-	@SuppressWarnings("deprecation")
 	public static void getTests() {
 		Connection con=ConnectionDAO.getInstance().getConnection();
 		try{

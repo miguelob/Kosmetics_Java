@@ -1,0 +1,32 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - ScreenViewProfile",
+            "request": "launch",
+            "mainClass": "icai.dtc.isw.gui.ScreenViewProfile",
+            "projectName": "projectISW19"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - PantallaCrearUsuario_2",
+            "request": "launch",
+            "mainClass": "icai.dtc.isw.gui.PantallaCrearUsuario_2",
+            "projectName": "projectISW19"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - PantallaProductos",
+            "request": "launch",
+            "mainClass": "icai.dtc.isw.gui.PantallaProductos",
+            "projectName": "projectISW19"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - SocketServer",
+            "request": "launch",
+            "mainClass": "icai.dtc.isw.server.SocketServer",
+            "projectName": "projectISW19"
+        }
+    ]
+}

@@ -252,7 +252,7 @@ public class ScreenViewProfile extends JFrame {
 		
 	}
 	public void initialiseProducts(){
-		client = new Client();
+		client = Client.getInstance();
 		products = (ArrayList) client.clientInteraction("/getProductBasicInfo",null);
 	}
 

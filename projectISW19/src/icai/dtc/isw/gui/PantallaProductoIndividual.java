@@ -43,7 +43,7 @@ public class PantallaProductoIndividual extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	public PantallaProductoIndividual(Product product) throws HeadlessException {
-		Client client = new Client();
+		Client client = Client.getInstance();
 		Product fullProduct = (Product) client.clientInteraction("/getProductFullInfo",product);
 		this.setIconImage((new ImageIcon("media/icons/Main_Logo.png")).getImage());
 		this.setTitle("Kosmetics: " + fullProduct.getName());

@@ -42,10 +42,10 @@ public class UserDAO {
 			pst.setString(1,user.getEmail());
 			pst.setString(2,user.getPassword());
 			pst.setString(3,user.getName());
-			pst.setDate(4, (java.sql.Date) user.getBirthDate());
+			pst.setDate(4, new java.sql.Date(user.getBirthDate().getTime()));
 			pst.setString(5,user.getSkinColor());
 			pst.setString(6,user.getSkinCondition());
-			pst.setBytes(7,UserDAO.getImageBytes(user.getProfileImage()));
+			pst.setBytes(7,null);//UserDAO.getImageBytes(user.getProfileImage()));
 
 			pst.executeUpdate();
 			status = true;

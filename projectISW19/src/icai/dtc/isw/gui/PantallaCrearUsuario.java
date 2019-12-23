@@ -22,6 +22,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Arrays;
 import java.awt.Cursor;
 import javax.swing.border.MatteBorder;
 import java.awt.Rectangle;
@@ -85,9 +86,8 @@ public class PantallaCrearUsuario extends JFrame {
 		txtEmail.setForeground(Color.GRAY);
 		txtEmail.addMouseListener(new MouseAdapter()
         { @Override
-	           public void mouseClicked(MouseEvent me)
-	             { txtEmail.setText("");
-
+	           public void mouseClicked(MouseEvent me){
+        			txtEmail.setText("");
 	             }
 	         });
 		panelEmail.add(txtEmail, BorderLayout.SOUTH);
@@ -110,9 +110,8 @@ public class PantallaCrearUsuario extends JFrame {
 		txtUsername.setMinimumSize(new Dimension(7, 30));
 		txtUsername.addMouseListener(new MouseAdapter()
         { @Override
-	           public void mouseClicked(MouseEvent me)
-	             { txtUsername.setText("");
-
+	           public void mouseClicked(MouseEvent me){ 
+        			txtUsername.setText("");
 	             }
 	         });
 		panelUsername.add(txtUsername, BorderLayout.SOUTH);
@@ -163,18 +162,18 @@ public class PantallaCrearUsuario extends JFrame {
 		btnJoin.setForeground(Color.WHITE);
 		btnJoin.setBackground(new Color(255, 153, 153));
 		btnJoin.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		if(true){//txtPassword.getPassword().equals(txtPassword_2.getPassword())){
-			btnJoin.addActionListener(new ActionListener(){
-				@Override
-				public void actionPerformed(ActionEvent e){
+		btnJoin.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e){
+				if(GestorErrores.newUser1(txtEmail.getText(), txtUsername.getText(), txtPassword, txtPassword_2,PantallaCrearUsuario.this)){
 					icai.dtc.isw.domain.User user = new icai.dtc.isw.domain.User(txtUsername.getText(),txtEmail.getText(),txtPassword.getPassword());
 					JFrame pantallaActual = new PantallaCrearUsuario_2(user);
 					GUIConstants.PANTALLA_ACTUAL = pantallaActual;
 					pantallaActual.setVisible(true);
 					PantallaCrearUsuario.this.dispose();
 				}
-			});
-		}
+			}
+		});
 		panelJoin.add(btnJoin, BorderLayout.NORTH);
 		
 		//Subpanel to join if you already have an account

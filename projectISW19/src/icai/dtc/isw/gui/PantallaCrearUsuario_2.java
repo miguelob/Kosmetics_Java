@@ -8,6 +8,9 @@ import java.awt.GridLayout;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.text.ParseException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -21,6 +24,7 @@ import javax.swing.border.MatteBorder;
 
 import com.toedter.calendar.JCalendar;
 
+import icai.dtc.isw.client.Client;
 import icai.dtc.isw.domain.User;
 
 public class PantallaCrearUsuario_2 extends JFrame {
@@ -314,7 +318,14 @@ public class PantallaCrearUsuario_2 extends JFrame {
 		panelBirthDay.add(lblBirthDay, BorderLayout.NORTH);
 				
 				
-		JTextField txtBday = new JTextField();
+		JTextField txtBday = new JTextField(" DD/MM/YYYY");
+		txtBday.setForeground(Color.GRAY);
+		txtBday.addMouseListener(new MouseAdapter()
+        { @Override
+	           public void mouseClicked(MouseEvent me){
+        	txtBday.setText("");
+	             }
+	         });
 		panelBirthDay.add(txtBday, BorderLayout.SOUTH);
 
 		//JCalendar calendar = new JCalendar();
@@ -338,13 +349,23 @@ public class PantallaCrearUsuario_2 extends JFrame {
 		btnJoin.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e){
-				user.setSkinTone(skinTone);
-				user.setSkinCondition(cbSkinConditions.getSelectedItem().toString());
-				//user.setBirthDay(Dat
-				PantallaCrearUsuario_2.this.dispose();
-				JFrame pantallaActual = new ScreenViewProfile();
-				GUIConstants.PANTALLA_ACTUAL = pantallaActual;
-				pantallaActual.setVisible(true);
+				if(GestorErrores.newUser2(txtBday.getText(), PantallaCrearUsuario_2.this)) {
+					user.setSkinTone(skinTone);
+					user.setSkinCondition(cbSkinConditions.getSelectedItem().toString());
+					try {
+						user.setBirthDate(txtBday.getText());
+					} catch (ParseException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					Client client = Client.getInstance();
+					client.clientInteraction("/uploadUser", user);
+					client.clientInteraction("/setSessionStatus", true);
+					PantallaCrearUsuario_2.this.dispose();
+					JFrame pantallaActual = new ScreenViewProfile();
+					GUIConstants.PANTALLA_ACTUAL = pantallaActual;
+					pantallaActual.setVisible(true);
+				}
 			}
 		});
 		panelJoin.add(btnJoin, BorderLayout.NORTH);

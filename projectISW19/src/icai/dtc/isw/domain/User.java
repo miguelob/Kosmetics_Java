@@ -5,6 +5,8 @@ import java.util.Date;
 import javax.swing.ImageIcon;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 
@@ -14,14 +16,13 @@ public class User implements Serializable{
     //public final int idUser;
     private String name;
     private String email;
-    private char[] userPassword;
-    private String password;
+    private String userPassword;
     private Date birthDate;
     private String skinColor;
     private String skinCondition;
     private ImageIcon userImage;
 
-    public User(String name,String email,char[] userPasword,
+    public User(String name,String email,String userPasword,
                     Date birthDate,String skinColor,String skinCondition, byte[] imageBytes){
 
         //this.idUser=idUser;
@@ -33,7 +34,7 @@ public class User implements Serializable{
         this.skinCondition=skinCondition;
         this.setImage(imageBytes);
     }
-    public User(String name,String email,String userPasword,
+    /*public User(String name,String email,String userPasword,
             Date birthDate,String skinColor,String skinCondition, byte[] imageBytes){
 
 			//this.idUser=idUser;
@@ -44,12 +45,12 @@ public class User implements Serializable{
 			this.skinColor=skinColor;
 			this.skinCondition=skinCondition;
 			this.setImage(imageBytes);
-	}
+	}*/
 
     public User(String name, String email, char[] userPassword){
         this.name=name;
         this.email=email;
-        this.userPassword=userPassword;
+        this.userPassword=String.valueOf(userPassword);
     }
     private void setImage(byte[] imageBytes) {
     	if(imageBytes != null)
@@ -64,7 +65,7 @@ public class User implements Serializable{
     	return email;
     }
     public String getPassword() {
-    	return password;
+    	return userPassword;
     }
     public Date getBirthDate() {
     	return birthDate;
@@ -83,6 +84,10 @@ public class User implements Serializable{
 	}
 	public void setSkinCondition(String skinCondition) {
         this.skinCondition = skinCondition;
+	}
+	public void setBirthDate(String date) throws ParseException { 
+	    birthDate = new SimpleDateFormat("dd/MM/yyyy").parse(date);
+		//this.birthDate = date;
 	}
 
 

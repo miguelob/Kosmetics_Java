@@ -60,14 +60,14 @@ public class PantallaCrearReview extends JFrame {
 		//Main panel
 		//Includes product name
 		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(255, 204, 204));
+		panel_1.setBackground(Color.WHITE);
 		getContentPane().add(panel_1, BorderLayout.CENTER);
 		panel_1.setLayout(new BorderLayout(0, 0));
 		
 		//Products name
 		
 		JLabel mjlblProductName = new JLabel("Lip Blush Bundle");
-		mjlblProductName.setBackground(new Color(255, 204, 204));
+		mjlblProductName.setBackground(Color.WHITE);
 		mjlblProductName.setHorizontalAlignment(SwingConstants.CENTER);
 		mjlblProductName.setFont(GUIConstants.FONT_BIG_TITLE);
 		panel_1.add(mjlblProductName, BorderLayout.NORTH);
@@ -75,7 +75,7 @@ public class PantallaCrearReview extends JFrame {
 		//Sub panel to the main panel
 		//Does not include the products name
 		JPanel panel_2 = new JPanel();
-		panel_2.setBorder(new MatteBorder(20, 100, 30, 100, (Color) new Color(255, 204, 204)));
+		panel_2.setBorder(new MatteBorder(20, 100, 30, 100, (Color) Color.WHITE));
 		panel_2.setBackground(Color.WHITE);
 		panel_1.add(panel_2, BorderLayout.CENTER);
 		panel_2.setLayout(new BorderLayout(0, 0));
@@ -150,7 +150,7 @@ public class PantallaCrearReview extends JFrame {
 		
 		MyJLabel mjlblReviewText = new MyJLabel("<html>The lip blush formula in entirely different than the matte lip kits, <br>"
 				+ "but still has the vibrant beautiful appearance. <br>"
-				+ "It’s light weight and smooth, feels like butter. This product doesn’t get crusty or dry out. <br>"
+				+ "Itï¿½s light weight and smooth, feels like butter. This product doesnï¿½t get crusty or dry out. <br>"
 				+ "All four shades are stunning and highly pigmented. New favorite for sure!!</html>");
 		mjlblReviewText.setFont(GUIConstants.FONT_REGULAR);
 		mjlblReviewText.setForeground(Color.LIGHT_GRAY);

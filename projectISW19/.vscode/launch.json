@@ -2,6 +2,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - PantallaCrearReview",
+            "request": "launch",
+            "mainClass": "icai.dtc.isw.gui.PantallaCrearReview",
+            "projectName": "projectISW19"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - PantallaLogin",
+            "request": "launch",
+            "mainClass": "icai.dtc.isw.gui.PantallaLogin",
+            "projectName": "projectISW19"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - PantallaCrearUsuario",
             "request": "launch",
             "mainClass": "icai.dtc.isw.gui.PantallaCrearUsuario",

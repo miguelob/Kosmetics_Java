@@ -1,7 +1,6 @@
 package icai.dtc.isw.gui;
 
 import java.awt.EventQueue;
-import java.awt.GraphicsConfiguration;
 import java.awt.HeadlessException;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -30,8 +29,11 @@ import java.awt.Color;
 public class ScreenViewProfile extends JFrame {
 	ArrayList<Product> products;
 	Client client;
+	JPanel panel;
+	JPanel currentPanel;
 
 	public ScreenViewProfile() throws HeadlessException {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		initialiseProducts();
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
@@ -58,8 +60,10 @@ public class ScreenViewProfile extends JFrame {
 		MyJButton mjbtnProfile = new MyJButton("Profile");
 		header.add(mjbtnProfile, BorderLayout.EAST);
 		
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		panel.setBorder(new MatteBorder(1, 65, 1, 45, (Color) new Color(255, 255, 255)));
+		panel.setBorder(new MatteBorder(1, 1, 1, 45, Color.WHITE));
+
 		panel.setBackground(new Color(255, 255, 255));
 		scrollPane.setViewportView(panel);
 		panel.setLayout(new BorderLayout(0, 0));
@@ -73,7 +77,7 @@ public class ScreenViewProfile extends JFrame {
 
 		JPanel panelUser = new JPanel();
 		panel.add(panelUser, BorderLayout.NORTH);
-		panelUser.setBorder(new MatteBorder(50, 200, 1, 45, (Color) new Color(255, 255, 255)));
+		panelUser.setBorder(new MatteBorder(50, 200, 50, 45, (Color) new Color(255, 255, 255)));
 		panelUser.setBackground(new Color(255, 255, 255));
 		panelUser.setLayout(new BorderLayout(0, 0));
 
@@ -161,14 +165,58 @@ public class ScreenViewProfile extends JFrame {
 		btnReviews.setContentAreaFilled(false);
 		panelButtons.add(btnReviews);
 
+		btnFavourites.addActionListener(new ActionListener(){
+			@Override 
+			public void actionPerformed(ActionEvent e){
+				ScreenViewProfile.this.setCurrentPanel(ScreenViewProfile.this.getPanelFavourites());
+
+			}
+		});
+
+		btnReviews.addActionListener(new ActionListener(){
+			@Override 
+			public void actionPerformed(ActionEvent e){
+				ScreenViewProfile.this.setCurrentPanel(ScreenViewProfile.this.getPanelReviews());
+
+			}
+		});
+
+		currentPanel = this.getPanelFavourites();
+		panel.add(currentPanel, BorderLayout.SOUTH);
+	      }
+	
+	
+		
+	
+		
+	public void initialiseProducts(){
+		client = new Client();
+		products = (ArrayList) client.clientInteraction("/getProductBasicInfo",null);
+	}
+
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					ScreenViewProfile frame = new ScreenViewProfile();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+
+	}
+
+	public JPanel getPanelFavourites(){
 		// Contains:
 		// - list of favourites
 
 		JPanel panelFavourites = new JPanel();
 		panelFavourites.setLayout(new GridLayout(0,1));
-		panelFavourites.setBorder(new MatteBorder(1, 1, 1, 45, (Color) new Color(255, 255, 255)));
+		panelFavourites.setBorder(new MatteBorder(20, 1, 1, 45, (Color) new Color(255, 255, 255)));
 		panelFavourites.setBackground(new Color(255, 255, 255));
-		panel.add(panelFavourites, BorderLayout.SOUTH);
+		
 
 		Iterator<Product> it = products.iterator();
 	      while (it.hasNext())
@@ -214,19 +262,7 @@ public class ScreenViewProfile extends JFrame {
 	          namePanel.add(lblPrice);
 	          productPanel.add(namePanel);
 	          
-	          //Panel for the review of the product
-	          MyJPanel reviewPanel = new MyJPanel();
-	          reviewPanel.setLayout(new GridLayout(0, 1));
-	          //Panel for the stars
-	          MyJPanel starsPanel = new MyJPanel();
-	          AutoStars.setStars(starsPanel, product.getScore(),"big");
-	          reviewPanel.add(starsPanel);
-	          ArrayList<String> features = product.getFeatures();
-	          for(int i = 0; i<features.size();i++) {
-	        	  MyJLabel feature = new MyJLabel(features.get(i));
-	              feature.setForeground(Color.DARK_GRAY);
-	              reviewPanel.add(feature);
-	          }
+	          
 	          //Features of the product
 	          /*
 	          MyJLabel feature_1 = new MyJLabel("Longwear");
@@ -242,31 +278,87 @@ public class ScreenViewProfile extends JFrame {
 
 	          btnProduct.setHorizontalAlignment(SwingConstants.CENTER);
 	        
-	          
-	          productPanel.add(reviewPanel);
 	          panelFavourites.add(productPanel);
+			  
+	}
+	return panelFavourites;
+}
 
-	      }
-	
-	
+public JPanel getPanelReviews(){
+	// Contains:
+	// - list of reviews by the user
+
+	JPanel panelReviews = new JPanel();
+	panelReviews.setLayout(new GridLayout(0,1));
+	panelReviews.setBorder(new MatteBorder(45, 200, 1, 200, (Color) new Color(255, 255, 255)));
+	panelReviews.setBackground(new Color(255, 255, 255));
+
+	for(int i = 0; i<5; i++){
+		//Panel for an indivifual review from a different user
+		JPanel panelIndividualReview = new JPanel();
+		panelIndividualReview.setBackground(Color.WHITE);
+		panelReviews.add(panelIndividualReview);
+		panelIndividualReview.setLayout(new BorderLayout(0, 0));
 		
-	}
-	public void initialiseProducts(){
-		client = new Client();
-		products = (ArrayList) client.clientInteraction("/getProductBasicInfo",null);
-	}
+		MyJLabel mjlblReviewText = new MyJLabel("<html>The lip blush formula in entirely different than the matte lip kits, <br>"
+				+ "but still has the vibrant beautiful appearance. <br>"
+				+ "It�s light weight and smooth, feels like butter. This product doesn�t get crusty or dry out. <br>"
+				+ "All four shades are stunning and highly pigmented. New favorite for sure!!</html>");
+		mjlblReviewText.setFont(GUIConstants.FONT_REGULAR);
+		mjlblReviewText.setForeground(Color.LIGHT_GRAY);
+		panelIndividualReview.add(mjlblReviewText, BorderLayout.CENTER);
+		
+		//Header of the review
+		//Includes username, title, number of stars
+		JPanel panelHeaderReview = new JPanel();
+		panelHeaderReview.setBackground(Color.WHITE);
+		panelIndividualReview.add(panelHeaderReview, BorderLayout.NORTH);
+		panelHeaderReview.setLayout(new BorderLayout());
+		
+		//User name of the individual review's author
+		MyJLabel mjlblUsername = new MyJLabel();
+		panelHeaderReview.add(mjlblUsername, BorderLayout.WEST);
+		mjlblUsername.setText("miguelob");
+		mjlblUsername.setBorder(new MatteBorder(15, 10, 15, 15, (Color) new Color(255, 255, 255)));
+		
+		//Title of the individual review
+		MyJLabel mjlblTitle = new MyJLabel();
+		panelHeaderReview.add(mjlblTitle, BorderLayout.CENTER);
+		mjlblTitle.setText("Absolutely Incredible!!");
+		mjlblTitle.setFont(GUIConstants.FONT_REGULAR_ITALICS);
+		
+		JPanel panelStarFlowIndivifualReview = new JPanel();
+		panelStarFlowIndivifualReview.setBackground(Color.WHITE);
+		panelHeaderReview.add(panelStarFlowIndivifualReview, BorderLayout.EAST);
+		
+		MyJButton2States lblStar_1a = new MyJButton2States(new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"));
+		lblStar_1a.setContentAreaFilled(false);
+		panelStarFlowIndivifualReview.add(lblStar_1a);
+		MyJButton2States lblStar_2a = new MyJButton2States(new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"));
+		panelStarFlowIndivifualReview.add(lblStar_2a);
+		MyJButton2States lblStar_3a = new MyJButton2States(new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"));
+		panelStarFlowIndivifualReview.add(lblStar_3a);
+		MyJButton2States lblStar_4a = new MyJButton2States(new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"));
+		panelStarFlowIndivifualReview.add(lblStar_4a);
+		MyJButton2States lblStar_5a = new MyJButton2States(new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"));
+		panelStarFlowIndivifualReview.add(lblStar_5a);
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ScreenViewProfile frame = new ScreenViewProfile();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
 
-	}
+		panelReviews.add(panelIndividualReview);
+	}	
+
+		  
+
+return panelReviews;
+}
+
+public void setCurrentPanel(JPanel newPanel)
+{ panel.remove(currentPanel);
+  panel.add(newPanel, BorderLayout.SOUTH);
+  this.repaint();
+  this.setVisible(true);
+  currentPanel = newPanel;
+
+}
+
 }

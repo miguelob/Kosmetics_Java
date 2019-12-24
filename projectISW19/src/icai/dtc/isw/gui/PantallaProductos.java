@@ -31,6 +31,7 @@ import javax.swing.border.MatteBorder;
 
 import icai.dtc.isw.client.Client;
 import icai.dtc.isw.domain.Product;
+import icai.dtc.isw.domain.User;
 
 
 public class PantallaProductos extends JFrame {
@@ -104,9 +105,18 @@ public class PantallaProductos extends JFrame {
 		jbtnProfile.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e)
-				{ 	JFrame pantallaActual = new PantallaCrearUsuario();
-					GUIConstants.PANTALLA_ACTUAL = pantallaActual;
-					pantallaActual.setVisible(true);
+				{ 	
+					User user = (User) client.clientInteraction("/getSessionStatus", null);
+					if(user == null) {
+						JFrame pantallaActual = new PantallaCrearUsuario();
+						GUIConstants.PANTALLA_ACTUAL = pantallaActual;
+						pantallaActual.setVisible(true);
+					}else {
+						JFrame pantallaActual = new ScreenViewProfile();
+						GUIConstants.PANTALLA_ACTUAL = pantallaActual;
+						PantallaProductos.this.setVisible(false);
+						pantallaActual.setVisible(true);
+					}
 
 				}
 		});

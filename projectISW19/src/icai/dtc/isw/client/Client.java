@@ -10,6 +10,8 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.lang.model.util.ElementScanner6;
+
 import org.apache.log4j.Logger;
 
 import icai.dtc.isw.configuration.PropertiesISW;
@@ -66,10 +68,14 @@ public class Client {
 				response = (boolean) mensajeVuelta.getSession().get("uploadUser");
 			break;
 			case "/getSessionStatus":
-				response = (boolean) mensajeVuelta.getSession().get("sessionStatus");
+				if(response != null)
+					response = (User) mensajeVuelta.getSession().get("sessionStatus");
 			break;
 			case "/getReviewUploadResponse":
 				response = (boolean) mensajeVuelta.getSession().get("reviewUpload");
+			break;
+			case "/setSessionResponse":
+				response = true;
 			break;
 			default:
 				Logger.getRootLogger().info("Option not found");

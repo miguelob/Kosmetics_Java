@@ -22,8 +22,6 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.MatteBorder;
 
-import com.toedter.calendar.JCalendar;
-
 import icai.dtc.isw.client.Client;
 import icai.dtc.isw.domain.User;
 
@@ -32,7 +30,7 @@ public class PantallaCrearUsuario_2 extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public String skinTone;
+	public String skinTone = "LIGHT1";;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -359,12 +357,18 @@ public class PantallaCrearUsuario_2 extends JFrame {
 						e1.printStackTrace();
 					}
 					Client client = Client.getInstance();
-					client.clientInteraction("/uploadUser", user);
-					client.clientInteraction("/setSessionStatus", true);
-					PantallaCrearUsuario_2.this.dispose();
-					JFrame pantallaActual = new ScreenViewProfile();
-					GUIConstants.PANTALLA_ACTUAL = pantallaActual;
-					pantallaActual.setVisible(true);
+					boolean status = (boolean) client.clientInteraction("/uploadUser", (Object) user);
+					if(status) { //Validates correct upload
+						status = (boolean) client.clientInteraction("/setSessionStatus", user);
+						if(status){ //validates correct status of the session
+							PantallaCrearUsuario_2.this.dispose();
+							JFrame pantallaActual = new ScreenViewProfile();
+							GUIConstants.PANTALLA_ACTUAL = pantallaActual;
+							pantallaActual.setVisible(true);
+						}
+					}else {
+						System.out.println("ERROR");
+					}
 				}
 			}
 		});

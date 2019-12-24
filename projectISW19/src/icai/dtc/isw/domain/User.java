@@ -7,7 +7,6 @@ import javax.swing.ImageIcon;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 
 
 public class User implements Serializable{

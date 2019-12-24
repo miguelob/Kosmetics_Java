@@ -26,7 +26,6 @@ import javax.swing.JSlider;
 import javax.swing.SwingConstants;
 import javax.swing.JFormattedTextField;
 import javax.swing.JScrollPane;
-import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 
 import icai.dtc.isw.client.Client;
@@ -61,7 +60,7 @@ public class PantallaProductos extends JFrame {
 	 */
 	public PantallaProductos() {
 		initialiseProducts();
-		GUIConstants.PANTALLA_PRODUCTOS = this;
+		GUIConstants.PANTALLA_PRINCIPAL = this;
 		BorderLayout borderLayout = (BorderLayout) getContentPane().getLayout();
 		borderLayout.setVgap(20);
 		borderLayout.setHgap(25);
@@ -78,18 +77,6 @@ public class PantallaProductos extends JFrame {
 		jpanel.setBackground(new Color(255, 153, 153));
 		getContentPane().add(jpanel, BorderLayout.NORTH);
 		jpanel.setLayout(new BorderLayout(1, 1));
-		
-		//Panel with an arrow button to go back to the previous page
-		JPanel jpanelGoBack = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		jpanelGoBack.setBackground(Color.WHITE);
-		jpanel.add(jpanelGoBack, BorderLayout.NORTH);
-		JButton btnGoBack = new JButton(new ImageIcon("media/icons/left-arrow_16.png"));
-		btnGoBack.setBorder(null);
-		btnGoBack.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnGoBack.setContentAreaFilled(false);
-		btnGoBack.setDisabledIcon(new ImageIcon("media/icons/left-arrow_grey_16.png"));
-		btnGoBack.setEnabled(false);
-		jpanelGoBack.add(btnGoBack);
 
 		
 		JButton jbtnProfile = new JButton();
@@ -151,10 +138,41 @@ public class PantallaProductos extends JFrame {
 		mjbtnLipstick.setFont(GUIConstants.FONT_TITLE);
 		myJPanel_3.add(mjbtnLipstick);
 		
-		JLabel jlblKosmetics = new JLabel();
-		jlblKosmetics.setBorder(new MatteBorder(10, 15, 1, 1, (Color) new Color(255, 153, 153)));
-		jpanel.add(jlblKosmetics, BorderLayout.WEST);
-		jlblKosmetics.setText("Kosmetics.");
+		// Contains
+		// Arrow to previous page
+		// Kosmetics logo
+
+		JPanel panelKosmetics = new JPanel();
+		panelKosmetics.setBackground((Color) new Color(255, 153, 153));
+		panelKosmetics.setBorder(new MatteBorder(1, 15, 1, 1, (Color) new Color(255, 153, 153)));
+		jpanel.add(panelKosmetics, BorderLayout.WEST);
+
+		JButton btnGoBack = new JButton(new ImageIcon("media/icons/left-arrow_16.png"));
+		btnGoBack.setBorder(null);
+		btnGoBack.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnGoBack.setContentAreaFilled(false);
+		btnGoBack.setDisabledIcon(new ImageIcon("media/icons/left-arrow_grey_16.png"));
+		btnGoBack.setEnabled(true);
+		panelKosmetics.add(btnGoBack);
+
+		btnGoBack.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e){
+				if (GUIConstants.PANTALLA_ANTERIOR != null)
+					 {  GUIConstants.PANTALLA_ANTERIOR.setVisible(true);
+						GUIConstants.PANTALLA_ANTERIOR = PantallaProductos.this;
+						PantallaProductos.this.dispose();
+
+					 }
+
+			}
+		});
+
+		MyJButton bntKosmetics = new MyJButton();
+		bntKosmetics.setBorder(new MatteBorder(10, 15, 1, 1, (Color) new Color(255, 153, 153)));
+		panelKosmetics.add(bntKosmetics);
+		bntKosmetics.setText("Kosmetics.");
+		bntKosmetics.setFont(GUIConstants.FONT_TITLE);
 		
 		// Contains
 		// -searchbar
@@ -271,7 +289,8 @@ public class PantallaProductos extends JFrame {
 	        	  @Override
 	        	  public void actionPerformed(ActionEvent e) {
 	        		  PantallaProductoIndividual frame = new PantallaProductoIndividual(product);
-	        		  frame.setVisible(true);
+					  frame.setVisible(true);
+					  GUIConstants.PANTALLA_ANTERIOR = PantallaProductos.this;
 	        		  PantallaProductos.this.dispose();
 	        		  //System.exit(0);
 	        		  

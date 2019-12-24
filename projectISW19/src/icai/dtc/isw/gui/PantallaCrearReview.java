@@ -8,11 +8,16 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
-
+import java.awt.Cursor;
 import javax.swing.SwingConstants;
 import javax.swing.border.MatteBorder;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JTextPane;
 import java.awt.GridLayout;
 import javax.swing.border.LineBorder;
@@ -35,6 +40,9 @@ public class PantallaCrearReview extends JFrame {
 	}
 
 	public PantallaCrearReview() throws HeadlessException {
+
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 		//Header
 		//Brand name to the left
@@ -47,10 +55,51 @@ public class PantallaCrearReview extends JFrame {
 		getContentPane().add(header, BorderLayout.NORTH);
 		header.setLayout(new BorderLayout(0, 0));
 		
-		//Brand name
-		//Button that takes the user to the main page
-		MyJButton mjbtnKosmetics = new MyJButton("Kosmetics.");
-		header.add(mjbtnKosmetics, BorderLayout.WEST);
+			// Contains
+		// Arrow to previous page
+		// Kosmetics logo
+
+		JPanel panelKosmetics = new JPanel();
+		panelKosmetics.setBackground((Color) new Color(255, 153, 153));
+		panelKosmetics.setBorder(new MatteBorder(1, 15, 1, 1, (Color) new Color(255, 153, 153)));
+		header.add(panelKosmetics, BorderLayout.WEST);
+
+		JButton btnGoBack = new JButton(new ImageIcon("media/icons/left-arrow_16.png"));
+		btnGoBack.setBorder(null);
+		btnGoBack.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnGoBack.setContentAreaFilled(false);
+		btnGoBack.setDisabledIcon(new ImageIcon("media/icons/left-arrow_grey_16.png"));
+		btnGoBack.setEnabled(true);
+		panelKosmetics.add(btnGoBack);
+
+		btnGoBack.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e){
+				if (GUIConstants.PANTALLA_ANTERIOR != null)
+					 {  GUIConstants.PANTALLA_ANTERIOR.setVisible(true);
+						GUIConstants.PANTALLA_ANTERIOR = PantallaCrearReview.this;
+						PantallaCrearReview.this.dispose();
+
+					 }
+
+			}
+		});
+
+		MyJButton bntKosmetics = new MyJButton();
+		bntKosmetics.setBorder(new MatteBorder(10, 15, 1, 1, (Color) new Color(255, 153, 153)));
+		panelKosmetics.add(bntKosmetics);
+		bntKosmetics.setText("Kosmetics.");
+		bntKosmetics.setFont(GUIConstants.FONT_TITLE);
+		bntKosmetics.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		bntKosmetics.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e){
+					    GUIConstants.PANTALLA_PRINCIPAL.setVisible(true);
+						GUIConstants.PANTALLA_ANTERIOR = PantallaCrearReview.this;
+						PantallaCrearReview.this.dispose();
+
+			}
+		});
 		
 		//Profile button
 		//Takes the user to his profile

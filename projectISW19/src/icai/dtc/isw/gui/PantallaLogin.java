@@ -171,6 +171,16 @@ public class PantallaLogin extends JFrame {
 		btnRegister.setForeground(new Color(255, 153, 153));
 		btnRegister.setContentAreaFilled(false);
 		btnRegister.setBorder(BorderFactory.createEmptyBorder());
+		btnRegister.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e)
+				{ 	JFrame pantallaActual = new PantallaCrearUsuario();
+					GUIConstants.PANTALLA_ACTUAL = pantallaActual;
+					PantallaLogin.this.dispose();
+					pantallaActual.setVisible(true);
+
+				}
+		});
 		panelRegister.add(btnRegister);
 
 		

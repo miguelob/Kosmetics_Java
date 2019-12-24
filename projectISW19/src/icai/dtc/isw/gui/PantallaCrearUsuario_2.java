@@ -319,13 +319,13 @@ public class PantallaCrearUsuario_2 extends JFrame {
 		panel_2.add(panelJoin);		
 		panelJoin.setLayout(new BorderLayout(0,10));
 		
-		JButton btnJoin = new JButton("<html> Start! <html>");
-		btnJoin.setBorder(new MatteBorder(2, 1, 2, 1, (Color) new Color(255, 153, 153)));
-		btnJoin.setFont(GUIConstants.FONT_REGULAR_BOLD);
-		btnJoin.setForeground(Color.WHITE);
-		btnJoin.setBackground(new Color(255, 153, 153));
-		btnJoin.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnJoin.addActionListener(new ActionListener(){
+		JButton btnStart = new JButton("<html> Start! <html>");
+		btnStart.setBorder(new MatteBorder(2, 1, 2, 1, (Color) new Color(255, 153, 153)));
+		btnStart.setFont(GUIConstants.FONT_REGULAR_BOLD);
+		btnStart.setForeground(Color.WHITE);
+		btnStart.setBackground(new Color(255, 153, 153));
+		btnStart.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnStart.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e){
 				PantallaCrearUsuario_2.this.dispose();
@@ -334,7 +334,7 @@ public class PantallaCrearUsuario_2 extends JFrame {
 				pantallaActual.setVisible(true);
 			}
 		});
-		panelJoin.add(btnJoin, BorderLayout.NORTH);
+		panelJoin.add(btnStart, BorderLayout.NORTH);
 		
 
 

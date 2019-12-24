@@ -29,7 +29,8 @@ public class GUIConstants {
 	  public static ScreenViewProfile PANTALLA_VER_PERFIL;
 
 	  //Pantallas dinámicas
-
+	
+	  public static JFrame PANTALLA_PRINCIPAL;
 	  public static JFrame PANTALLA_ACTUAL;
 	  public static JFrame PANTALLA_ANTERIOR;
 

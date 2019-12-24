@@ -8,6 +8,9 @@ import java.awt.GridLayout;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.text.ParseException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -19,8 +22,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.MatteBorder;
 
-import com.toedter.calendar.JCalendar;
-
+import icai.dtc.isw.client.Client;
 import icai.dtc.isw.domain.User;
 
 public class PantallaCrearUsuario_2 extends JFrame {
@@ -28,7 +30,7 @@ public class PantallaCrearUsuario_2 extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public String skinTone;
+	public String skinTone = "LIGHT1";;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -314,7 +316,14 @@ public class PantallaCrearUsuario_2 extends JFrame {
 		panelBirthDay.add(lblBirthDay, BorderLayout.NORTH);
 				
 				
-		JTextField txtBday = new JTextField();
+		JTextField txtBday = new JTextField(" DD/MM/YYYY");
+		txtBday.setForeground(Color.GRAY);
+		txtBday.addMouseListener(new MouseAdapter()
+        { @Override
+	           public void mouseClicked(MouseEvent me){
+        	txtBday.setText("");
+	             }
+	         });
 		panelBirthDay.add(txtBday, BorderLayout.SOUTH);
 
 		//JCalendar calendar = new JCalendar();
@@ -338,13 +347,29 @@ public class PantallaCrearUsuario_2 extends JFrame {
 		btnJoin.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e){
-				user.setSkinTone(skinTone);
-				user.setSkinCondition(cbSkinConditions.getSelectedItem().toString());
-				//user.setBirthDay(Dat
-				PantallaCrearUsuario_2.this.dispose();
-				JFrame pantallaActual = new ScreenViewProfile();
-				GUIConstants.PANTALLA_ACTUAL = pantallaActual;
-				pantallaActual.setVisible(true);
+				if(GestorErrores.newUser2(txtBday.getText(), PantallaCrearUsuario_2.this)) {
+					user.setSkinTone(skinTone);
+					user.setSkinCondition(cbSkinConditions.getSelectedItem().toString());
+					try {
+						user.setBirthDate(txtBday.getText());
+					} catch (ParseException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					Client client = Client.getInstance();
+					boolean status = (boolean) client.clientInteraction("/uploadUser", (Object) user);
+					if(status) { //Validates correct upload
+						status = (boolean) client.clientInteraction("/setSessionStatus", user);
+						if(status){ //validates correct status of the session
+							PantallaCrearUsuario_2.this.dispose();
+							JFrame pantallaActual = new ScreenViewProfile();
+							GUIConstants.PANTALLA_ACTUAL = pantallaActual;
+							pantallaActual.setVisible(true);
+						}
+					}else {
+						System.out.println("ERROR");
+					}
+				}
 			}
 		});
 		panelJoin.add(btnJoin, BorderLayout.NORTH);

@@ -71,13 +71,17 @@ public class SocketServer extends Thread {
 		    		User user = (User) mensajeIn.getObject();
 		    		boolean userUploadStatus = userControler.uploadUser(user);
 		    		mensajeOut.setContext("/getUserUploadResponse");
-		    		session.put("uploadUser",userUploadStatus);
+		    		session.put("uploadUser", userUploadStatus);
 		    		mensajeOut.setSession(session);
 		    		objectOutputStream.writeObject(mensajeOut);
 		    	break;
-		    	case "/setSessionStatus":
-		    		boolean sessionStatus = (boolean) mensajeIn.getObject();
-		    		session.put("sessionStatus", sessionStatus);
+				case "/setSessionStatus":
+					User userLoggedIn = (User) mensajeIn.getObject();
+					session.put("sessionStatus", userLoggedIn);
+					mensajeOut.setContext("/setSessionResponse");
+					mensajeOut.setSession(session);
+					objectOutputStream.writeObject(mensajeOut);
+
 		    	break;
 		    	case "/getSessionStatus":
 		    		mensajeOut.setContext("/getSessionStatus");

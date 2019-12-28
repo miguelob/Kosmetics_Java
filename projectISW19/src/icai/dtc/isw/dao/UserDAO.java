@@ -33,6 +33,39 @@ public class UserDAO {
         }
 		return user;
 	}
+	//LOGIN-> el metodo funciona tanto si el campo name es el nombre de usuario o es el correo
+		//COMPROBAR QUE FUNCIONA
+
+		/*public static boolean chicPermision(String name, String password) {
+			boolean permision = false;
+			Connection con=ConnectionDAO.getInstance().getConnection();
+			//WE NEED QUERY FOR GET THE INFO WITH EACH ID
+			try (PreparedStatement pst = con.prepareStatement("SELECT EXISTS(	SELECT * FROM \"Users\" WHERE ( \"Name\" = " + name + "or \"E-mail\" = " + name + " ) and \"Password\" = " + password + ")");
+				ResultSet rs = pst.executeQuery()) {
+				permision=Boolean.parseBoolean(rs.getString(1));//si no es ni true ni false por defecto es false
+				
+	        } catch (SQLException ex) {
+	            System.out.println(ex.getMessage());
+	        }
+			return permision;
+		}*/
+	public static User login(String name, String password) {
+		User user = null;
+		Connection con=ConnectionDAO.getInstance().getConnection();
+		//WE NEED QUERY FOR GET THE INFO WITH EACH ID
+		try (PreparedStatement pst = con.prepareStatement("SELECT * FROM \"Users\" WHERE ( \"Name\" = " + name + "or \"E-mail\" = " + name + " ) and \"Password\" = " + password);
+			ResultSet rs = pst.executeQuery()) {
+
+			if(rs.next()) {
+				user = new User(rs.getString(4), rs.getString(2), rs.getString(3), rs.getDate(5), rs.getString(6), rs.getString(7),null);
+			}
+        } catch (SQLException ex) {
+
+            System.out.println(ex.getMessage());
+        }
+		
+		return user;
+	}
 	public static boolean uploadUser(User user) {
 		boolean status = false;
 		Connection con=ConnectionDAO.getInstance().getConnection();

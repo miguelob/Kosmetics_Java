@@ -98,6 +98,16 @@ public class SocketServer extends Thread {
 		    		mensajeOut.setSession(session);
 		    		objectOutputStream.writeObject(mensajeOut);
 		    	break;
+		    	case "/login":
+		    		HashMap<String,String> loginData = (HashMap<String,String>) mensajeIn.getObject();
+		    		String password = loginData.get("password").toString();
+		    		String nameEmail = loginData.get("nameEmail").toString();
+		    		User loginUser = userControler.login(nameEmail, password);
+		    		mensajeOut.setContext("/getLoginResponse");
+		    		session.put("loginUser", loginUser);
+		    		mensajeOut.setSession(session);
+		    		objectOutputStream.writeObject(mensajeOut);
+		    	break;
 		    	/*case "/getUser":
 		    		userList = new ArrayList<User>();
 		    		//userControler.getUser(userList);

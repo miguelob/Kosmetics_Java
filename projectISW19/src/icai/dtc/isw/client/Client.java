@@ -77,10 +77,13 @@ public class Client {
 			case "/setSessionResponse":
 				response = true;
 			break;
+			case "/getLoginResponse":
+				response = (User) mensajeVuelta.getSession().get("loginUser");
+			break;
 			default:
 				Logger.getRootLogger().info("Option not found");
 				System.out.println("\nError a la vuelta");
-				break;
+			break;
 			
 			/*case "/getCustomerResponse":
 				response = (ArrayList<Customer>)(mensajeVuelta.getSession().get("Customer"));

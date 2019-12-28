@@ -50,10 +50,67 @@ public class ScreenViewProfile extends JFrame {
 		scrollPane.setColumnHeaderView(header);
 		header.setLayout(new BorderLayout(0, 0));
 		
-		//Brand name
-		//Button that takes the user to the main page
-		MyJButton mjbtnKosmetics = new MyJButton("Kosmetics.");
-		header.add(mjbtnKosmetics, BorderLayout.WEST);
+				// Contains
+		// Arrow to previous page
+		// Kosmetics logo
+
+		JPanel panelKosmetics = new JPanel();
+		panelKosmetics.setBackground((Color) new Color(255, 153, 153));
+		panelKosmetics.setBorder(new MatteBorder(1, 15, 1, 1, (Color) new Color(255, 153, 153)));
+		header.add(panelKosmetics, BorderLayout.WEST);
+
+		JButton btnGoBack = new JButton(new ImageIcon("media/icons/left-arrow_16.png"));
+		btnGoBack.setBorder(null);
+		btnGoBack.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnGoBack.setContentAreaFilled(false);
+		btnGoBack.setDisabledIcon(new ImageIcon("media/icons/left-arrow_grey_16.png"));
+		btnGoBack.setEnabled(true);
+		panelKosmetics.add(btnGoBack);
+
+		btnGoBack.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e){
+						if(GUIConstants.PANTALLA_PRINCIPAL == null){
+							JFrame frame = new PantallaProductos();
+							frame.setVisible(true);
+							
+						}
+						else{
+							GUIConstants.PANTALLA_PRINCIPAL.setVisible(true);						
+
+						}
+						GUIConstants.PANTALLA_ANTERIOR = ScreenViewProfile.this;
+						ScreenViewProfile.this.dispose();
+						
+
+			}
+		});
+
+
+		MyJButton bntKosmetics = new MyJButton();
+		bntKosmetics.setBorder(new MatteBorder(1, 15, 1, 1, (Color) new Color(255, 153, 153)));
+		panelKosmetics.add(bntKosmetics);
+		bntKosmetics.setText("Kosmetics.");
+		bntKosmetics.setFont(GUIConstants.FONT_TITLE);
+		bntKosmetics.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		bntKosmetics.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e){
+						if(GUIConstants.PANTALLA_PRINCIPAL == null){
+							JFrame frame = new PantallaProductos();
+							frame.setVisible(true);
+							
+						}
+						else{
+							GUIConstants.PANTALLA_PRINCIPAL.setVisible(true);						
+
+						}
+						GUIConstants.PANTALLA_ANTERIOR = ScreenViewProfile.this;
+						ScreenViewProfile.this.dispose();
+						
+
+			}
+		});
 		
 		//Profile button
 		//Takes the user to his profile

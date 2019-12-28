@@ -64,8 +64,27 @@ public class ScreenViewProfile extends JFrame {
 		btnGoBack.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnGoBack.setContentAreaFilled(false);
 		btnGoBack.setDisabledIcon(new ImageIcon("media/icons/left-arrow_grey_16.png"));
-		btnGoBack.setEnabled(false);
+		btnGoBack.setEnabled(true);
 		panelKosmetics.add(btnGoBack);
+
+		btnGoBack.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e){
+						if(GUIConstants.PANTALLA_PRINCIPAL == null){
+							JFrame frame = new PantallaProductos();
+							frame.setVisible(true);
+							
+						}
+						else{
+							GUIConstants.PANTALLA_PRINCIPAL.setVisible(true);						
+
+						}
+						GUIConstants.PANTALLA_ANTERIOR = ScreenViewProfile.this;
+						ScreenViewProfile.this.dispose();
+						
+
+			}
+		});
 
 
 		MyJButton bntKosmetics = new MyJButton();
@@ -77,9 +96,18 @@ public class ScreenViewProfile extends JFrame {
 		bntKosmetics.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e){
-					    GUIConstants.PANTALLA_PRINCIPAL.setVisible(true);
+						if(GUIConstants.PANTALLA_PRINCIPAL == null){
+							JFrame frame = new PantallaProductos();
+							frame.setVisible(true);
+							
+						}
+						else{
+							GUIConstants.PANTALLA_PRINCIPAL.setVisible(true);						
+
+						}
 						GUIConstants.PANTALLA_ANTERIOR = ScreenViewProfile.this;
 						ScreenViewProfile.this.dispose();
+						
 
 			}
 		});

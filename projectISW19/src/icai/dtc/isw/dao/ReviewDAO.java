@@ -25,11 +25,30 @@ public class ReviewDAO {
             System.out.println(ex.getMessage());
         }
 	}
-	
+
+		
+	public static Collection userReviews(String email) {
+		User user = null;
+		Connection con=ConnectionDAO.getInstance().getConnection();
+		//WE NEED QUERY FOR GET THE INFO WITH EACH ID
+		try (PreparedStatement pst = con.prepareStatement("SELECT * FROM \"Review\" WHERE \"Users.E-mail\" = "+ email +" INNER JOIN \"Users\" ON \"Users.ID_User\" = \"Review.ID_User\"");
+			ResultSet rs = pst.executeQuery()) {
+
+			while(rs.next()) {
+				//no se en que orden van a ir los campos
+				//user = new User(rs.getString(4), rs.getString(2), rs.getString(3), rs.getDate(5), rs.getString(6), rs.getString(7),null);
+			}
+		} catch (SQLException ex) {
+
+			System.out.println(ex.getMessage());
+		}
+		
+		return user;
+	}
+
 	public static void main(String[] args) {
 		
 		Product product = null;
 		ReviewDAO.loadProductReview(product);
 	}
 }
-	

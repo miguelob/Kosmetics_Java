@@ -8,7 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 
 import javax.imageio.ImageIO;
@@ -70,6 +70,7 @@ public class UserDAO {
 		return user;
 	}
 
+	
 	public static boolean uploadUser(User user) {
 		boolean status = false;
 		Connection con=ConnectionDAO.getInstance().getConnection();

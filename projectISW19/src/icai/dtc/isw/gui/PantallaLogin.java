@@ -19,6 +19,8 @@ import java.awt.GridLayout;
 import javax.swing.JTextField;
 import java.awt.SystemColor;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -89,7 +91,8 @@ public class PantallaLogin extends JFrame {
 	             { txtEmail.setText("");
 
 	             }
-	         });
+			 });
+
 		panelEmail.add(txtEmail, BorderLayout.SOUTH);
 		
 		// //Panel to write the username
@@ -130,6 +133,16 @@ public class PantallaLogin extends JFrame {
 				
 		JPasswordField txtPassword = new JPasswordField();
 		panelPassword.add(txtPassword, BorderLayout.SOUTH);
+
+		txtEmail.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent ke){
+			if (e.getKeyCode() == KeyEvent.VK_TAB){
+				txtPassword.setText("");
+			}
+		}
+			
+		});
 		
 		
 		//Panel to go join or login if you already have an account

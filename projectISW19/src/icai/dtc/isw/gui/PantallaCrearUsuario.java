@@ -1,4 +1,6 @@
 package icai.dtc.isw.gui;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import java.awt.EventQueue;
 import java.awt.GraphicsConfiguration;
@@ -18,6 +20,8 @@ import javax.swing.JTextField;
 import java.awt.SystemColor;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.Cursor;
 import javax.swing.border.MatteBorder;
 import java.awt.Rectangle;
@@ -81,6 +85,7 @@ public class PantallaCrearUsuario extends JFrame {
 		txtEmail.setForeground(Color.GRAY);
 		panelEmail.add(txtEmail, BorderLayout.SOUTH);
 		
+		
 		//Panel to repeat the password
 		//It also contains a button to join
 		JPanel panelUsername = new JPanel();
@@ -113,6 +118,31 @@ public class PantallaCrearUsuario extends JFrame {
 				
 		JTextField txtPassword = new JTextField();
 		panelPassword.add(txtPassword, BorderLayout.SOUTH);
+
+		txtEmail.addMouseListener(new MouseAdapter()
+        { @Override
+	           public void mouseClicked(MouseEvent me)
+	             { txtEmail.setText("");
+
+	             }
+			 });
+		txtUsername.addMouseListener(new MouseAdapter()
+		{ @Override
+			public void mouseClicked(MouseEvent me)
+				{ txtUsername.setText("");
+
+				}
+			});
+		txtEmail.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent ke){
+			if (ke.getKeyCode() == KeyEvent.VK_TAB){
+				System.out.println("yes");
+				txtUsername.setText("");
+			}
+		}
+			
+		});
 		
 		//Panel to repeat the password
 		JPanel panelPassword_2 = new JPanel();

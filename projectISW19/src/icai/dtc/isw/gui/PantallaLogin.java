@@ -169,8 +169,7 @@ public class PantallaLogin extends JFrame {
 			public void actionPerformed(ActionEvent e){
 				Client client = Client.getInstance();
 				HashMap<String,String> data = new HashMap<String,String>();
-				System.out.println(txtPassword.getPassword());
-				data.put("password", lblPassword.getText());
+				data.put("password", String.valueOf(txtPassword.getPassword()));
 				data.put("nameEmail", txtEmail.getText());
 				User loginUser = (User) client.clientInteraction("/login", data);
 				if(loginUser != null) {

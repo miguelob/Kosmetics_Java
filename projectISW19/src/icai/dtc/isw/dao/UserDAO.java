@@ -53,8 +53,8 @@ public class UserDAO {
 		User user = null;
 		Connection con=ConnectionDAO.getInstance().getConnection();
 		//WE NEED QUERY FOR GET THE INFO WITH EACH ID
-		try (PreparedStatement pst = con.prepareStatement("SELECT * FROM \"Users\" WHERE (\"Name\" = " + name + " OR \"E-mail\" = " + name + ") AND \"Password\" = " + password);
-			ResultSet rs = pst.executeQuery()) {
+		try (PreparedStatement pst = con.prepareStatement("SELECT * FROM \"Users\" WHERE (\"E-mail\" = '"+name+"' OR \"Name\" = '"+name+"') AND \"Password\" = '"+password+"'");
+			ResultSet rs = pst.executeQuery()){
 
 			if(rs.next()) {
 				user = new User(rs.getString(4), rs.getString(2), rs.getString(3), rs.getDate(5), rs.getString(6), rs.getString(7),null);

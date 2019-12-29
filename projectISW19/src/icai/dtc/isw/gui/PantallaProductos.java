@@ -106,7 +106,7 @@ public class PantallaProductos extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e)
 				{ 	
-					User user = (User) client.clientInteraction("/getSessionStatus", null);
+					User user = null;//(User) client.clientInteraction("/getSessionStatus", null);
 					if(user == null) {
 						JFrame pantallaActual = new PantallaLogin();
 						GUIConstants.PANTALLA_ACTUAL = pantallaActual;

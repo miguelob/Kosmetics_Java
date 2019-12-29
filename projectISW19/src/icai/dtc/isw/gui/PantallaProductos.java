@@ -108,7 +108,7 @@ public class PantallaProductos extends JFrame {
 				{ 	
 					User user = (User) client.clientInteraction("/getSessionStatus", null);
 					if(user == null) {
-						JFrame pantallaActual = new PantallaCrearUsuario();
+						JFrame pantallaActual = new PantallaLogin();
 						GUIConstants.PANTALLA_ACTUAL = pantallaActual;
 						pantallaActual.setVisible(true);
 					}else {

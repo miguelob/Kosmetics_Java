@@ -10,4 +10,7 @@ public class UserControler {
 	public boolean uploadUser(User user) {
 		return UserDAO.uploadUser(user);
 	}
+	public User login(String email, String password) {
+		return UserDAO.login(email,password);
+	}
 }

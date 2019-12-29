@@ -190,6 +190,16 @@ public class PantallaCrearUsuario extends JFrame {
 		btnLogin.setForeground(new Color(255, 153, 153));
 		btnLogin.setContentAreaFilled(false);
 		btnLogin.setBorder(BorderFactory.createEmptyBorder());
+		btnLogin.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e)
+				{ 	JFrame pantallaActual = new PantallaLogin();
+					GUIConstants.PANTALLA_ACTUAL = pantallaActual;
+					PantallaCrearUsuario.this.dispose();
+					pantallaActual.setVisible(true);
+
+				}
+		});
 		panelLogin.add(btnLogin);
 
 		

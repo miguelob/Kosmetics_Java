@@ -26,6 +26,7 @@ public class Client {
 	private int port;
 	private HashMap<String,Object> session;
 	final static Logger logger = Logger.getLogger(Client.class);
+	private User userStatus;
 
 	
 	private Client() {
@@ -67,20 +68,20 @@ public class Client {
 			case "/getUserUploadResponse":
 				response = (boolean) mensajeVuelta.getSession().get("uploadUser");
 			break;
-			case "/getSessionStatus":
-				if(response != null)
-					response = (User) mensajeVuelta.getSession().get("sessionStatus");
-			break;
 			case "/getReviewUploadResponse":
 				response = (boolean) mensajeVuelta.getSession().get("reviewUpload");
 			break;
 			case "/setSessionResponse":
 				response = true;
 			break;
+			case "/getLoginResponse":
+				userStatus = (User) mensajeVuelta.getSession().get("loginUser");
+				response = userStatus;
+			break;
 			default:
 				Logger.getRootLogger().info("Option not found");
 				System.out.println("\nError a la vuelta");
-				break;
+			break;
 			
 			/*case "/getCustomerResponse":
 				response = (ArrayList<Customer>)(mensajeVuelta.getSession().get("Customer"));
@@ -98,6 +99,9 @@ public class Client {
 		}
 		//System.out.println("3.- En Main.- El valor devuelto es: "+((String)mensajeVuelta.getSession().get("Nombre")));
 		return response;
+	}
+	public User getSessionStatus() {
+		return userStatus;
 	}
 	
 

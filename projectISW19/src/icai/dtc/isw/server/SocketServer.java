@@ -21,14 +21,13 @@ import icai.dtc.isw.domain.Review;
 public class SocketServer extends Thread {
 	public static final int PORT_NUMBER = 8081;
 	protected Socket socket;
-	ProductControler productControler = new ProductControler();
-	UserControler userControler = new UserControler();
-	ReviewControler reviewControler = new ReviewControler();
-	ArrayList<Product> basicProductList;
-	ArrayList<Product> fullProductList;
-	ArrayList<Review> reviewList;
-	ArrayList<User> userList;
-	HashMap<String,Object> session = new HashMap<String, Object>();
+	private ProductControler productControler = new ProductControler();
+	private UserControler userControler = new UserControler();
+	private ReviewControler reviewControler = new ReviewControler();
+	private ArrayList<Product> basicProductList;
+	private ArrayList<Product> fullProductList;
+	private ArrayList<Review> reviewList;
+	private HashMap<String,Object> session = new HashMap<String, Object>();
 
 	private SocketServer(Socket socket) {
 		this.socket = socket;
@@ -37,6 +36,7 @@ public class SocketServer extends Thread {
 	}
 
 	public void run() {
+		User userStatus = null;
 		InputStream in = null;
 		OutputStream out = null;
 		try {
@@ -75,7 +75,7 @@ public class SocketServer extends Thread {
 		    		mensajeOut.setSession(session);
 		    		objectOutputStream.writeObject(mensajeOut);
 		    	break;
-				case "/setSessionStatus":
+				/*case "/setSessionStatus":
 					User userLoggedIn = (User) mensajeIn.getObject();
 					session.put("sessionStatus", userLoggedIn);
 					mensajeOut.setContext("/setSessionResponse");
@@ -84,10 +84,13 @@ public class SocketServer extends Thread {
 
 		    	break;
 		    	case "/getSessionStatus":
+		    		System.out.println(basicProductList);
+		    		System.out.println(userStatus.getName());
+		    		session.put("sessionStatus", userStatus);
 		    		mensajeOut.setContext("/getSessionStatus");
 		    		mensajeOut.setSession(session);
 		    		objectOutputStream.writeObject(mensajeOut);
-		    	break;
+		    	break;*/
 		    	case "/uploadReview":
 		    		HashMap<String,Object> data = (HashMap<String,Object>) mensajeIn.getObject();
 		    		Review review = (Review) data.get("review");
@@ -95,6 +98,16 @@ public class SocketServer extends Thread {
 		    		boolean reviewUploadStatus = reviewControler.uploadReview(review,idProduct);
 		    		mensajeOut.setContext("/getReviewUploadResponse");
 		    		session.put("uploadReview",reviewUploadStatus);
+		    		mensajeOut.setSession(session);
+		    		objectOutputStream.writeObject(mensajeOut);
+		    	break;
+		    	case "/login":
+		    		HashMap<String,String> loginData = (HashMap<String,String>) mensajeIn.getObject();
+		    		String password = loginData.get("password").toString();
+		    		String nameEmail = loginData.get("nameEmail").toString();
+		    		User loginUser = userControler.login(nameEmail, password);
+		    		mensajeOut.setContext("/getLoginResponse");
+		    		session.put("loginUser", loginUser);
 		    		mensajeOut.setSession(session);
 		    		objectOutputStream.writeObject(mensajeOut);
 		    	break;

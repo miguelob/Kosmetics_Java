@@ -18,6 +18,7 @@ import javax.swing.border.MatteBorder;
 
 import icai.dtc.isw.client.Client;
 import icai.dtc.isw.domain.Product;
+import icai.dtc.isw.domain.User;
 
 import java.awt.Cursor;
 
@@ -33,6 +34,8 @@ public class ScreenViewProfile extends JFrame {
 	JPanel currentPanel;
 
 	public ScreenViewProfile() throws HeadlessException {
+		Client client = Client.getInstance();
+		User user = (User) client.getSessionStatus();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		initialiseProducts();
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -50,10 +53,67 @@ public class ScreenViewProfile extends JFrame {
 		scrollPane.setColumnHeaderView(header);
 		header.setLayout(new BorderLayout(0, 0));
 		
-		//Brand name
-		//Button that takes the user to the main page
-		MyJButton mjbtnKosmetics = new MyJButton("Kosmetics.");
-		header.add(mjbtnKosmetics, BorderLayout.WEST);
+				// Contains
+		// Arrow to previous page
+		// Kosmetics logo
+
+		JPanel panelKosmetics = new JPanel();
+		panelKosmetics.setBackground((Color) new Color(255, 153, 153));
+		panelKosmetics.setBorder(new MatteBorder(1, 15, 1, 1, (Color) new Color(255, 153, 153)));
+		header.add(panelKosmetics, BorderLayout.WEST);
+
+		JButton btnGoBack = new JButton(new ImageIcon("media/icons/left-arrow_16.png"));
+		btnGoBack.setBorder(null);
+		btnGoBack.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnGoBack.setContentAreaFilled(false);
+		btnGoBack.setDisabledIcon(new ImageIcon("media/icons/left-arrow_grey_16.png"));
+		btnGoBack.setEnabled(true);
+		panelKosmetics.add(btnGoBack);
+
+		btnGoBack.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e){
+						if(GUIConstants.PANTALLA_PRINCIPAL == null){
+							JFrame frame = new PantallaProductos();
+							frame.setVisible(true);
+							
+						}
+						else{
+							GUIConstants.PANTALLA_PRINCIPAL.setVisible(true);						
+
+						}
+						GUIConstants.PANTALLA_ANTERIOR = ScreenViewProfile.this;
+						ScreenViewProfile.this.dispose();
+						
+
+			}
+		});
+
+
+		MyJButton bntKosmetics = new MyJButton();
+		bntKosmetics.setBorder(new MatteBorder(1, 15, 1, 1, (Color) new Color(255, 153, 153)));
+		panelKosmetics.add(bntKosmetics);
+		bntKosmetics.setText("Kosmetics.");
+		bntKosmetics.setFont(GUIConstants.FONT_TITLE);
+		bntKosmetics.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		bntKosmetics.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e){
+						if(GUIConstants.PANTALLA_PRINCIPAL == null){
+							JFrame frame = new PantallaProductos();
+							frame.setVisible(true);
+							
+						}
+						else{
+							GUIConstants.PANTALLA_PRINCIPAL.setVisible(true);						
+
+						}
+						GUIConstants.PANTALLA_ANTERIOR = ScreenViewProfile.this;
+						ScreenViewProfile.this.dispose();
+						
+
+			}
+		});
 		
 		//Profile button
 		//Takes the user to his profile
@@ -105,7 +165,7 @@ public class ScreenViewProfile extends JFrame {
 		panelTop.setBackground(new Color(255, 255, 255));
 		panelUserInfo.add(panelTop, BorderLayout.NORTH);
 
-		JLabel lblUsername = new JLabel("kyliejenner  ");
+		JLabel lblUsername = new JLabel(user.getName());
 		panelTop.add(lblUsername);
 		lblUsername.setFont(GUIConstants.FONT_MEDIUM_TITLE);
 
@@ -115,7 +175,7 @@ public class ScreenViewProfile extends JFrame {
 		btnEditProfile.setContentAreaFilled(false);
 		panelTop.add(btnEditProfile);
 
-		JLabel lblEmail = new JLabel("kyliejenner@gmail.com");
+		JLabel lblEmail = new JLabel(user.getEmail());
 		lblEmail.setBorder(new MatteBorder(20, 1, 10, 1, Color.WHITE));
 		panelUserInfo.add(lblEmail, BorderLayout.CENTER);
 		lblEmail.setFont(GUIConstants.FONT_REGULAR_BOLD);
@@ -134,11 +194,11 @@ public class ScreenViewProfile extends JFrame {
 		panelCharacteristics.add(lblCharacteristic1, BorderLayout.CENTER);
 		lblCharacteristic1.setFont(GUIConstants.FONT_REGULAR);
 
-		JLabel lblCharacteristic2 = new JLabel("<html> <b> Skin condition: </b> Dry <html>");
+		JLabel lblCharacteristic2 = new JLabel("<html> <b> Skin condition: </b>"+user.getSkinCondition()+"<html>");
 		panelCharacteristics.add(lblCharacteristic2, BorderLayout.CENTER);
 		lblCharacteristic2.setFont(GUIConstants.FONT_REGULAR);
 
-		JLabel lblCharacteristic3 = new JLabel("<html> <b> Birthdate: </b> 08/10/1997 <html>");
+		JLabel lblCharacteristic3 = new JLabel("<html> <b> Birthdate: </b>"+user.getBirthDate()+"<html>");
 		panelCharacteristics.add(lblCharacteristic3, BorderLayout.CENTER);
 		lblCharacteristic3.setFont(GUIConstants.FONT_REGULAR);
 

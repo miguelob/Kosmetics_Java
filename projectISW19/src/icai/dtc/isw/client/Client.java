@@ -103,6 +103,9 @@ public class Client {
 	public User getSessionStatus() {
 		return userStatus;
 	}
+	public void setSessionStatus(User user) {
+		userStatus = user;
+	}
 	
 
 	public void sent(Message messageOut, Message messageIn) {

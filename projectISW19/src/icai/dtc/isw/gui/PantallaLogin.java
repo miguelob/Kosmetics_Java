@@ -177,6 +177,8 @@ public class PantallaLogin extends JFrame {
 					JFrame pantallaActual = new ScreenViewProfile();
 					GUIConstants.PANTALLA_ACTUAL = pantallaActual;
 					pantallaActual.setVisible(true);
+				}else {
+					GestorErrores.login(PantallaLogin.this);
 				}
 				
 			}

@@ -359,13 +359,11 @@ public class PantallaCrearUsuario_2 extends JFrame {
 					Client client = Client.getInstance();
 					boolean status = (boolean) client.clientInteraction("/uploadUser", (Object) user);
 					if(status) { //Validates correct upload
-						status = (boolean) client.clientInteraction("/setSessionStatus", user);
-						if(status){ //validates correct status of the session
-							PantallaCrearUsuario_2.this.dispose();
-							JFrame pantallaActual = new ScreenViewProfile();
-							GUIConstants.PANTALLA_ACTUAL = pantallaActual;
-							pantallaActual.setVisible(true);
-						}
+						client.setSessionStatus(user);
+						PantallaCrearUsuario_2.this.dispose();
+						JFrame pantallaActual = new ScreenViewProfile();
+						GUIConstants.PANTALLA_ACTUAL = pantallaActual;
+						pantallaActual.setVisible(true);
 					}else {
 						System.out.println("ERROR");
 					}

@@ -30,6 +30,7 @@ import icai.dtc.isw.domain.Product;
 import icai.dtc.isw.domain.Question;
 import icai.dtc.isw.domain.Review;
 import icai.dtc.isw.domain.Survey;
+import icai.dtc.isw.domain.User;
 
 import javax.swing.border.LineBorder;
 import javax.swing.JButton;
@@ -83,6 +84,24 @@ public class PantallaProductoIndividual extends JFrame {
 		//Profile button
 		//Takes the user to his profile
 		MyJButton mjbtnProfile = new MyJButton("Profile");
+		mjbtnProfile.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e)
+				{ 	
+					User user = client.getSessionStatus();
+					if(user == null) {
+						JFrame pantallaActual = new PantallaLogin();
+						GUIConstants.PANTALLA_ACTUAL = pantallaActual;
+						pantallaActual.setVisible(true);
+					}else {
+						JFrame pantallaActual = new ScreenViewProfile();
+						GUIConstants.PANTALLA_ACTUAL = pantallaActual;
+						PantallaProductoIndividual.this.setVisible(false);
+						pantallaActual.setVisible(true);
+					}
+
+				}
+		});
 		header.add(mjbtnProfile, BorderLayout.EAST);
 		
 		JPanel panel = new JPanel();
@@ -131,10 +150,15 @@ public class PantallaProductoIndividual extends JFrame {
 		btnWriteanopinion.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				PantallaCrearReview frame = new PantallaCrearReview();
-				frame.setVisible(true);
-				PantallaProductoIndividual.this.dispose();
-				//System.exit(0);
+				User user = client.getSessionStatus();
+				if(user != null) {
+					PantallaCrearReview frame = new PantallaCrearReview();
+					frame.setVisible(true);
+					PantallaProductoIndividual.this.dispose();
+				}else {
+					//mostrar error
+				}
+				
 				
 			}
 		});

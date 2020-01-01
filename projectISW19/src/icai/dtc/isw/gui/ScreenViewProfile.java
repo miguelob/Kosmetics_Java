@@ -18,6 +18,7 @@ import javax.swing.border.MatteBorder;
 
 import icai.dtc.isw.client.Client;
 import icai.dtc.isw.domain.Product;
+import icai.dtc.isw.domain.User;
 
 import java.awt.Cursor;
 
@@ -31,8 +32,11 @@ public class ScreenViewProfile extends JFrame {
 	Client client;
 	JPanel panel;
 	JPanel currentPanel;
+	User user;
 
 	public ScreenViewProfile() throws HeadlessException {
+		Client client = Client.getInstance();
+		user = (User) client.getSessionStatus();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		initialiseProducts();
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -162,7 +166,7 @@ public class ScreenViewProfile extends JFrame {
 		panelTop.setBackground(new Color(255, 255, 255));
 		panelUserInfo.add(panelTop, BorderLayout.NORTH);
 
-		JLabel lblUsername = new JLabel("kyliejenner  ");
+		JLabel lblUsername = new JLabel(user.getName());
 		panelTop.add(lblUsername);
 		lblUsername.setFont(GUIConstants.FONT_MEDIUM_TITLE);
 
@@ -172,7 +176,7 @@ public class ScreenViewProfile extends JFrame {
 		btnEditProfile.setContentAreaFilled(false);
 		panelTop.add(btnEditProfile);
 
-		JLabel lblEmail = new JLabel("kyliejenner@gmail.com");
+		JLabel lblEmail = new JLabel(user.getEmail());
 		lblEmail.setBorder(new MatteBorder(20, 1, 10, 1, Color.WHITE));
 		panelUserInfo.add(lblEmail, BorderLayout.CENTER);
 		lblEmail.setFont(GUIConstants.FONT_REGULAR_BOLD);
@@ -185,17 +189,18 @@ public class ScreenViewProfile extends JFrame {
 		panelCharacteristics.setBackground(new Color(255, 255, 255));
 		panelUserInfo.add(panelCharacteristics, BorderLayout.SOUTH);
 
-		ImageIcon imgSkinTone = Images.resize(new ImageIcon("media/images/medium2.png"), 24, 24);
+		//ImageIcon imgSkinTone = Images.resize(new ImageIcon("media/images/medium2.png"), 24, 24);
 		JLabel lblCharacteristic1 = new JLabel("<html> <b> Skin tone: </b> <html>");
-		lblCharacteristic1.setIcon(imgSkinTone);
+		lblCharacteristic1.setIcon(this.getUserSkinToneImage());
+		lblCharacteristic1.setHorizontalTextPosition(JLabel.LEFT);
 		panelCharacteristics.add(lblCharacteristic1, BorderLayout.CENTER);
 		lblCharacteristic1.setFont(GUIConstants.FONT_REGULAR);
 
-		JLabel lblCharacteristic2 = new JLabel("<html> <b> Skin condition: </b> Dry <html>");
+		JLabel lblCharacteristic2 = new JLabel("<html> <b> Skin condition: </b>"+user.getSkinCondition()+"<html>");
 		panelCharacteristics.add(lblCharacteristic2, BorderLayout.CENTER);
 		lblCharacteristic2.setFont(GUIConstants.FONT_REGULAR);
 
-		JLabel lblCharacteristic3 = new JLabel("<html> <b> Birthdate: </b> 08/10/1997 <html>");
+		JLabel lblCharacteristic3 = new JLabel("<html> <b> Birthdate: </b>"+user.getBirthDate()+"<html>");
 		panelCharacteristics.add(lblCharacteristic3, BorderLayout.CENTER);
 		lblCharacteristic3.setFont(GUIConstants.FONT_REGULAR);
 
@@ -247,7 +252,7 @@ public class ScreenViewProfile extends JFrame {
 	
 		
 	public void initialiseProducts(){
-		client = new Client();
+		client = Client.getInstance();
 		products = (ArrayList) client.clientInteraction("/getProductBasicInfo",null);
 	}
 
@@ -416,6 +421,12 @@ public void setCurrentPanel(JPanel newPanel)
   this.setVisible(true);
   currentPanel = newPanel;
 
+}
+
+//Gets the skin tone of the user who is logged in
+public ImageIcon getUserSkinToneImage(){
+	ImageIcon userSkinToneImage = new ImageIcon("media/images/" + user.getSkinColor().toLowerCase() + ".png");
+	return userSkinToneImage;
 }
 
 }

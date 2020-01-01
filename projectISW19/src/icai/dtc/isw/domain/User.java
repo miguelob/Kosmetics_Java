@@ -5,7 +5,8 @@ import java.util.Date;
 import javax.swing.ImageIcon;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 
 public class User implements Serializable{
@@ -14,7 +15,7 @@ public class User implements Serializable{
     //public final int idUser;
     private String name;
     private String email;
-    private String userPasword;
+    private String userPassword;
     private Date birthDate;
     private String skinColor;
     private String skinCondition;
@@ -26,11 +27,28 @@ public class User implements Serializable{
         //this.idUser=idUser;
         this.name=name;
         this.email=email;
-        this.userPasword=userPasword;
+        this.userPassword=userPasword;
         this.birthDate=birthDate;
         this.skinColor=skinColor;
         this.skinCondition=skinCondition;
         this.setImage(imageBytes);
+    }
+    /*public User(String name,String email,String userPasword,
+            Date birthDate,String skinColor,String skinCondition, byte[] imageBytes){
+			//this.idUser=idUser;
+			this.name=name;
+			this.email=email;
+			this.password=userPasword;
+			this.birthDate=birthDate;
+			this.skinColor=skinColor;
+			this.skinCondition=skinCondition;
+			this.setImage(imageBytes);
+	}*/
+
+    public User(String name, String email, char[] userPassword){
+        this.name=name;
+        this.email=email;
+        this.userPassword=String.valueOf(userPassword);
     }
     private void setImage(byte[] imageBytes) {
     	if(imageBytes != null)
@@ -41,6 +59,34 @@ public class User implements Serializable{
     public String getName() {
     	return name;
     }
+    public String getEmail() {
+    	return email;
+    }
+    public String getPassword() {
+    	return userPassword;
+    }
+    public Date getBirthDate() {
+    	return birthDate;
+    }
+    public String getSkinColor() {
+    	return skinColor;
+    }
+    public String getSkinCondition() {
+    	return skinCondition;
+    }
+    public ImageIcon getProfileImage() {
+    	return userImage;
+    }
+	public void setSkinTone(String skinTone) {
+        this.skinColor=skinTone;
+	}
+	public void setSkinCondition(String skinCondition) {
+        this.skinCondition = skinCondition;
+	}
+	public void setBirthDate(String date) throws ParseException { 
+	    birthDate = new SimpleDateFormat("dd/MM/yyyy").parse(date);
+		//this.birthDate = date;
+	}
 
 
 }

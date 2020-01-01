@@ -10,6 +10,8 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.lang.model.util.ElementScanner6;
+
 import org.apache.log4j.Logger;
 
 import icai.dtc.isw.configuration.PropertiesISW;
@@ -19,19 +21,26 @@ import icai.dtc.isw.domain.Review;
 import icai.dtc.isw.message.Message;
 
 public class Client {
+	private static Client instance;
 	private String host;
 	private int port;
 	private HashMap<String,Object> session;
 	final static Logger logger = Logger.getLogger(Client.class);
+	private User userStatus;
 
 	
-	public Client() {
+	private Client() {
 		this.host = PropertiesISW.getInstance().getProperty("host");
 		this.port = Integer.parseInt(PropertiesISW.getInstance().getProperty("port"));
 		Logger.getRootLogger().info("Host: "+host+" port"+port);
 		session=new HashMap<String, Object>();
 	}
-	
+	public static Client getInstance() {
+		if(instance == null)
+			instance = new Client();
+		return instance;
+		
+	}
 	public Object clientInteraction(String command,Object obj) {
 		
 		Message mensajeEnvio=new Message();
@@ -56,11 +65,23 @@ public class Client {
 			case "/getReview":
 				response=(ArrayList<Review>)(mensajeVuelta.getSession().get("reviews"));
 			break;
-				
+			case "/getUserUploadResponse":
+				response = (boolean) mensajeVuelta.getSession().get("uploadUser");
+			break;
+			case "/getReviewUploadResponse":
+				response = (boolean) mensajeVuelta.getSession().get("reviewUpload");
+			break;
+			case "/setSessionResponse":
+				response = true;
+			break;
+			case "/getLoginResponse":
+				userStatus = (User) mensajeVuelta.getSession().get("loginUser");
+				response = userStatus;
+			break;
 			default:
 				Logger.getRootLogger().info("Option not found");
 				System.out.println("\nError a la vuelta");
-				break;
+			break;
 			
 			/*case "/getCustomerResponse":
 				response = (ArrayList<Customer>)(mensajeVuelta.getSession().get("Customer"));
@@ -78,6 +99,12 @@ public class Client {
 		}
 		//System.out.println("3.- En Main.- El valor devuelto es: "+((String)mensajeVuelta.getSession().get("Nombre")));
 		return response;
+	}
+	public User getSessionStatus() {
+		return userStatus;
+	}
+	public void setSessionStatus(User user) {
+		userStatus = user;
 	}
 	
 

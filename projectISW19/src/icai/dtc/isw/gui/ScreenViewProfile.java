@@ -32,10 +32,11 @@ public class ScreenViewProfile extends JFrame {
 	Client client;
 	JPanel panel;
 	JPanel currentPanel;
+	User user;
 
 	public ScreenViewProfile() throws HeadlessException {
 		Client client = Client.getInstance();
-		User user = (User) client.getSessionStatus();
+		user = (User) client.getSessionStatus();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		initialiseProducts();
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -188,9 +189,10 @@ public class ScreenViewProfile extends JFrame {
 		panelCharacteristics.setBackground(new Color(255, 255, 255));
 		panelUserInfo.add(panelCharacteristics, BorderLayout.SOUTH);
 
-		ImageIcon imgSkinTone = Images.resize(new ImageIcon("media/images/medium2.png"), 24, 24);
+		//ImageIcon imgSkinTone = Images.resize(new ImageIcon("media/images/medium2.png"), 24, 24);
 		JLabel lblCharacteristic1 = new JLabel("<html> <b> Skin tone: </b> <html>");
-		lblCharacteristic1.setIcon(imgSkinTone);
+		lblCharacteristic1.setIcon(this.getUserSkinToneImage());
+		lblCharacteristic1.setHorizontalTextPosition(JLabel.LEFT);
 		panelCharacteristics.add(lblCharacteristic1, BorderLayout.CENTER);
 		lblCharacteristic1.setFont(GUIConstants.FONT_REGULAR);
 
@@ -419,6 +421,12 @@ public void setCurrentPanel(JPanel newPanel)
   this.setVisible(true);
   currentPanel = newPanel;
 
+}
+
+//Gets the skin tone of the user who is logged in
+public ImageIcon getUserSkinToneImage(){
+	ImageIcon userSkinToneImage = new ImageIcon("media/images/" + user.getSkinColor().toLowerCase() + ".png");
+	return userSkinToneImage;
 }
 
 }

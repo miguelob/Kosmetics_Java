@@ -37,4 +37,10 @@ public class GestorErrores {
 			JOptionPane.showMessageDialog(frame, "Date format must be DD/MM/YY");
 		return value;
 	}
+	public static void login(JFrame frame) {
+		JOptionPane.showMessageDialog(frame,"Password or E-mail/Username doesn't match.");
+	}
+	public static void writeReview(JFrame frame) {
+		JOptionPane.showMessageDialog(frame,"You need to be logged in to write a review.");
+	}
 }

@@ -156,7 +156,7 @@ public class PantallaProductoIndividual extends JFrame {
 					frame.setVisible(true);
 					PantallaProductoIndividual.this.dispose();
 				}else {
-					//mostrar error
+					GestorErrores.writeReview(PantallaProductoIndividual.this);
 				}
 				
 				

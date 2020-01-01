@@ -17,7 +17,6 @@ import java.util.Iterator;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 
 import java.awt.BorderLayout;
@@ -31,6 +30,7 @@ import icai.dtc.isw.domain.Product;
 import icai.dtc.isw.domain.Question;
 import icai.dtc.isw.domain.Review;
 import icai.dtc.isw.domain.Survey;
+import icai.dtc.isw.domain.User;
 
 import javax.swing.border.LineBorder;
 import javax.swing.JButton;
@@ -38,8 +38,13 @@ import java.awt.Cursor;
 
 public class PantallaProductoIndividual extends JFrame {
 	
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public PantallaProductoIndividual(Product product) throws HeadlessException {
-		Client client = new Client();
+		Client client = Client.getInstance();
 		Product fullProduct = (Product) client.clientInteraction("/getProductFullInfo",product);
 		this.setIconImage((new ImageIcon("media/icons/Main_Logo.png")).getImage());
 		this.setTitle("Kosmetics: " + fullProduct.getName());
@@ -61,7 +66,6 @@ public class PantallaProductoIndividual extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		getContentPane().add(scrollPane, BorderLayout.CENTER);
 		scrollPane.setBackground(new Color(255, 153, 153));
-		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		
 		//Header
 		//Brand name to the left
@@ -72,79 +76,33 @@ public class PantallaProductoIndividual extends JFrame {
 		scrollPane.setColumnHeaderView(header);
 		header.setLayout(new BorderLayout(0, 0));
 		
-		// Contains
-		// Arrow to previous page
-		// Kosmetics logo
-
-		JPanel panelKosmetics = new JPanel();
-		panelKosmetics.setBackground((Color) new Color(255, 153, 153));
-		panelKosmetics.setBorder(new MatteBorder(1, 15, 1, 1, (Color) new Color(255, 153, 153)));
-		header.add(panelKosmetics, BorderLayout.WEST);
-
-		JButton btnGoBack = new JButton(new ImageIcon("media/icons/left-arrow_16.png"));
-		btnGoBack.setBorder(null);
-		btnGoBack.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnGoBack.setContentAreaFilled(false);
-		btnGoBack.setDisabledIcon(new ImageIcon("media/icons/left-arrow_grey_16.png"));
-		btnGoBack.setEnabled(true);
-		panelKosmetics.add(btnGoBack);
-
-		btnGoBack.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e){
-				if (GUIConstants.PANTALLA_ANTERIOR != null)
-					 {  GUIConstants.PANTALLA_ANTERIOR.setVisible(true);
-						GUIConstants.PANTALLA_ANTERIOR = PantallaProductoIndividual.this;
-						PantallaProductoIndividual.this.dispose();
-
-					 }
-
-			}
-		});
-
-		JButton btnKosmetics = new JButton();
-		btnKosmetics.setBorder(new MatteBorder(10,1, 1, 1, (Color) new Color(255, 153, 153)));
-		panelKosmetics.add(btnKosmetics);
-		btnKosmetics.setText("Kosmetics.");
-		btnKosmetics.setBorder(null);
-		btnKosmetics.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnKosmetics.setContentAreaFilled(false);
-		btnKosmetics.setFont(GUIConstants.FONT_TITLE);
-
-		btnKosmetics.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e){
-				if (GUIConstants.PANTALLA_ANTERIOR != null)
-					 {  GUIConstants.PANTALLA_PRINCIPAL.setVisible(true);
-						GUIConstants.PANTALLA_ANTERIOR = PantallaProductoIndividual.this;
-						PantallaProductoIndividual.this.dispose();
-
-					 }
-
-			}
-		});
+		//Brand name
+		//Button that takes the user to the main page
+		MyJButton mjbtnKosmetics = new MyJButton("Kosmetics.");
+		header.add(mjbtnKosmetics, BorderLayout.WEST);
 		
 		//Profile button
 		//Takes the user to his profile
-		JButton jbtnProfile = new JButton();
-		jbtnProfile.setBorder(new MatteBorder(1, 1, 1, 15, (Color) new Color(255, 153, 153)));
-		jbtnProfile.setBackground(new Color(255, 204, 255));
-		jbtnProfile.setText("Profile");
-		jbtnProfile.setIcon( new ImageIcon("media/icons/user.png"));
-		jbtnProfile.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		jbtnProfile.setContentAreaFilled(false);
-		jbtnProfile.setFont(GUIConstants.FONT_TITLE);
-
-		jbtnProfile.addActionListener(new ActionListener(){
+		MyJButton mjbtnProfile = new MyJButton("Profile");
+		mjbtnProfile.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e)
-				{ 	JFrame pantallaActual = new PantallaCrearUsuario();
-					GUIConstants.PANTALLA_ACTUAL = pantallaActual;
-					pantallaActual.setVisible(true);
+				{ 	
+					User user = client.getSessionStatus();
+					if(user == null) {
+						JFrame pantallaActual = new PantallaLogin();
+						GUIConstants.PANTALLA_ACTUAL = pantallaActual;
+						pantallaActual.setVisible(true);
+					}else {
+						JFrame pantallaActual = new ScreenViewProfile();
+						GUIConstants.PANTALLA_ACTUAL = pantallaActual;
+						PantallaProductoIndividual.this.setVisible(false);
+						pantallaActual.setVisible(true);
+					}
 
 				}
 		});
-		header.add(jbtnProfile, BorderLayout.EAST);
+		header.add(mjbtnProfile, BorderLayout.EAST);
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new MatteBorder(1, 65, 1, 45, (Color) new Color(255, 255, 255)));
@@ -192,10 +150,15 @@ public class PantallaProductoIndividual extends JFrame {
 		btnWriteanopinion.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				PantallaCrearReview frame = new PantallaCrearReview();
-				frame.setVisible(true);
-				PantallaProductoIndividual.this.dispose();
-				//System.exit(0);
+				User user = client.getSessionStatus();
+				if(user != null) {
+					PantallaCrearReview frame = new PantallaCrearReview();
+					frame.setVisible(true);
+					PantallaProductoIndividual.this.dispose();
+				}else {
+					GestorErrores.writeReview(PantallaProductoIndividual.this);
+				}
+				
 				
 			}
 		});
@@ -209,10 +172,7 @@ public class PantallaProductoIndividual extends JFrame {
 		panelInfo.setBackground(Color.WHITE);
 		
 		//Label for the official description of the product
-		JTextArea lblDescription = new JTextArea();
-		lblDescription.setWrapStyleWord(true);
-		lblDescription.setLineWrap(true);
-		lblDescription.setEditable(false);
+		JLabel lblDescription = new JLabel();
 		panelInfo.add(lblDescription);
 		lblDescription.setText(fullProduct.getDescription());
 		lblDescription.setFont(GUIConstants.FONT_REGULAR);
@@ -286,11 +246,7 @@ public class PantallaProductoIndividual extends JFrame {
 					panelReviews.add(panelIndividualReview);
 					panelIndividualReview.setLayout(new BorderLayout(0, 0));
 					
-					//Review text
-					JTextArea mjlblReviewText = new JTextArea(reviews.get(i).getComment());
-					mjlblReviewText.setWrapStyleWord(true);
-					mjlblReviewText.setLineWrap(true);
-					mjlblReviewText.setEditable(false);
+					MyJLabel mjlblReviewText = new MyJLabel(reviews.get(i).getComment());
 					mjlblReviewText.setFont(GUIConstants.FONT_REGULAR);
 					mjlblReviewText.setForeground(Color.LIGHT_GRAY);
 					panelIndividualReview.add(mjlblReviewText, BorderLayout.CENTER);
@@ -320,6 +276,11 @@ public class PantallaProductoIndividual extends JFrame {
 					
 					AutoStars.setStars(panelStarFlowIndivifualReview, reviews.get(i).getProductScore(),"small");
 		}
+		this.setResizable(true);
+		this.pack();
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		this.setVisible(true);
 	}
+
 
 }

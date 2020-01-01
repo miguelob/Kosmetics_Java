@@ -26,10 +26,12 @@ import javax.swing.JSlider;
 import javax.swing.SwingConstants;
 import javax.swing.JFormattedTextField;
 import javax.swing.JScrollPane;
+import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 
 import icai.dtc.isw.client.Client;
 import icai.dtc.isw.domain.Product;
+import icai.dtc.isw.domain.User;
 
 
 public class PantallaProductos extends JFrame {
@@ -60,7 +62,7 @@ public class PantallaProductos extends JFrame {
 	 */
 	public PantallaProductos() {
 		initialiseProducts();
-		GUIConstants.PANTALLA_PRINCIPAL = this;
+		GUIConstants.PANTALLA_PRODUCTOS = this;
 		BorderLayout borderLayout = (BorderLayout) getContentPane().getLayout();
 		borderLayout.setVgap(20);
 		borderLayout.setHgap(25);
@@ -77,6 +79,18 @@ public class PantallaProductos extends JFrame {
 		jpanel.setBackground(new Color(255, 153, 153));
 		getContentPane().add(jpanel, BorderLayout.NORTH);
 		jpanel.setLayout(new BorderLayout(1, 1));
+		
+		//Panel with an arrow button to go back to the previous page
+		JPanel jpanelGoBack = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		jpanelGoBack.setBackground(Color.WHITE);
+		jpanel.add(jpanelGoBack, BorderLayout.NORTH);
+		JButton btnGoBack = new JButton(new ImageIcon("media/icons/left-arrow_16.png"));
+		btnGoBack.setBorder(null);
+		btnGoBack.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnGoBack.setContentAreaFilled(false);
+		btnGoBack.setDisabledIcon(new ImageIcon("media/icons/left-arrow_grey_16.png"));
+		btnGoBack.setEnabled(false);
+		jpanelGoBack.add(btnGoBack);
 
 		
 		JButton jbtnProfile = new JButton();
@@ -91,9 +105,18 @@ public class PantallaProductos extends JFrame {
 		jbtnProfile.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e)
-				{ 	JFrame pantallaActual = new PantallaCrearUsuario();
-					GUIConstants.PANTALLA_ACTUAL = pantallaActual;
-					pantallaActual.setVisible(true);
+				{ 	
+					User user = client.getSessionStatus();
+					if(user == null) {
+						JFrame pantallaActual = new PantallaLogin();
+						GUIConstants.PANTALLA_ACTUAL = pantallaActual;
+						pantallaActual.setVisible(true);
+					}else {
+						JFrame pantallaActual = new ScreenViewProfile();
+						GUIConstants.PANTALLA_ACTUAL = pantallaActual;
+						PantallaProductos.this.setVisible(false);
+						pantallaActual.setVisible(true);
+					}
 
 				}
 		});
@@ -138,41 +161,10 @@ public class PantallaProductos extends JFrame {
 		mjbtnLipstick.setFont(GUIConstants.FONT_TITLE);
 		myJPanel_3.add(mjbtnLipstick);
 		
-		// Contains
-		// Arrow to previous page
-		// Kosmetics logo
-
-		JPanel panelKosmetics = new JPanel();
-		panelKosmetics.setBackground((Color) new Color(255, 153, 153));
-		panelKosmetics.setBorder(new MatteBorder(1, 15, 1, 1, (Color) new Color(255, 153, 153)));
-		jpanel.add(panelKosmetics, BorderLayout.WEST);
-
-		JButton btnGoBack = new JButton(new ImageIcon("media/icons/left-arrow_16.png"));
-		btnGoBack.setBorder(null);
-		btnGoBack.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnGoBack.setContentAreaFilled(false);
-		btnGoBack.setDisabledIcon(new ImageIcon("media/icons/left-arrow_grey_16.png"));
-		btnGoBack.setEnabled(true);
-		panelKosmetics.add(btnGoBack);
-
-		btnGoBack.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e){
-				if (GUIConstants.PANTALLA_ANTERIOR != null)
-					 {  GUIConstants.PANTALLA_ANTERIOR.setVisible(true);
-						GUIConstants.PANTALLA_ANTERIOR = PantallaProductos.this;
-						PantallaProductos.this.dispose();
-
-					 }
-
-			}
-		});
-
-		MyJButton bntKosmetics = new MyJButton();
-		bntKosmetics.setBorder(new MatteBorder(10, 15, 1, 1, (Color) new Color(255, 153, 153)));
-		panelKosmetics.add(bntKosmetics);
-		bntKosmetics.setText("Kosmetics.");
-		bntKosmetics.setFont(GUIConstants.FONT_TITLE);
+		JLabel jlblKosmetics = new JLabel();
+		jlblKosmetics.setBorder(new MatteBorder(10, 15, 1, 1, (Color) new Color(255, 153, 153)));
+		jpanel.add(jlblKosmetics, BorderLayout.WEST);
+		jlblKosmetics.setText("Kosmetics.");
 		
 		// Contains
 		// -searchbar
@@ -289,8 +281,7 @@ public class PantallaProductos extends JFrame {
 	        	  @Override
 	        	  public void actionPerformed(ActionEvent e) {
 	        		  PantallaProductoIndividual frame = new PantallaProductoIndividual(product);
-					  frame.setVisible(true);
-					  GUIConstants.PANTALLA_ANTERIOR = PantallaProductos.this;
+	        		  frame.setVisible(true);
 	        		  PantallaProductos.this.dispose();
 	        		  //System.exit(0);
 	        		  
@@ -354,7 +345,7 @@ public class PantallaProductos extends JFrame {
 	}
 	
 	public void initialiseProducts(){
-		client = new Client();
+		client = Client.getInstance();
 		products = (ArrayList) client.clientInteraction("/getProductBasicInfo",null);
 	}
 

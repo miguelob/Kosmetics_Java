@@ -24,8 +24,13 @@ import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.HashMap;
 import java.awt.Cursor;
 import javax.swing.border.MatteBorder;
+
+import icai.dtc.isw.client.Client;
+import icai.dtc.isw.domain.User;
+
 import java.awt.Rectangle;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -137,7 +142,7 @@ public class PantallaLogin extends JFrame {
 		txtEmail.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent ke){
-			if (e.getKeyCode() == KeyEvent.VK_TAB){
+			if (ke.getKeyCode() == KeyEvent.VK_TAB){
 				txtPassword.setText("");
 			}
 		}
@@ -162,10 +167,21 @@ public class PantallaLogin extends JFrame {
 		btnLogin.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e){
-				PantallaLogin.this.dispose();
-				JFrame pantallaActual = new ScreenViewProfile();
-				GUIConstants.PANTALLA_ACTUAL = pantallaActual;
-				pantallaActual.setVisible(true);
+				Client client = Client.getInstance();
+				HashMap<String,String> data = new HashMap<String,String>();
+				data.put("password", String.valueOf(txtPassword.getPassword()));
+				data.put("nameEmail", txtEmail.getText());
+				User loginUser = (User) client.clientInteraction("/login", data);
+				if(loginUser != null) {
+					PantallaLogin.this.dispose();
+					JFrame pantallaActual = new ScreenViewProfile();
+					GUIConstants.PANTALLA_ACTUAL = pantallaActual;
+					GUIConstants.PANTALLA_PRINCIPAL.dispose();
+					pantallaActual.setVisible(true);
+				}else {
+					GestorErrores.login(PantallaLogin.this);
+				}
+				
 			}
 		});
 		panelLogin.add(btnLogin, BorderLayout.NORTH);

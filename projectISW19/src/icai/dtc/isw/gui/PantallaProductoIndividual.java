@@ -46,6 +46,7 @@ public class PantallaProductoIndividual extends JFrame {
 	public PantallaProductoIndividual(Product product) throws HeadlessException {
 		Client client = Client.getInstance();
 		Product fullProduct = (Product) client.clientInteraction("/getProductFullInfo",product);
+		ArrayList<Review> reviews = fullProduct.getReviews();
 		this.setIconImage((new ImageIcon("media/icons/Main_Logo.png")).getImage());
 		this.setTitle("Kosmetics: " + fullProduct.getName());
 		//TEMPORAL CLOSE METHOD SO THAT PROGRAM DONT GET ALWAYS ON MEMORY
@@ -152,7 +153,7 @@ public class PantallaProductoIndividual extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				User user = client.getSessionStatus();
 				if(user != null) {
-					PantallaCrearReview frame = new PantallaCrearReview();
+					PantallaCrearReview frame = new PantallaCrearReview(reviews);
 					frame.setVisible(true);
 					PantallaProductoIndividual.this.dispose();
 				}else {
@@ -238,9 +239,8 @@ public class PantallaProductoIndividual extends JFrame {
 		panelReviews.setLayout(new GridLayout(0, 2, 50, 30));
 		panelReviews.setBorder(new MatteBorder(30, 60, 30, 60, Color.WHITE));
 		
-		for(int i=0; i<fullProduct.getReviews().size(); i++) {
+		for(int i=0; i<reviews.size(); i++) {
 			//Panel for an individual review
-					ArrayList<Review> reviews = fullProduct.getReviews();
 					JPanel panelIndividualReview = new JPanel();
 					panelIndividualReview.setBackground(Color.WHITE);
 					panelReviews.add(panelIndividualReview);

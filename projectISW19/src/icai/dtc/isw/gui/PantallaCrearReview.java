@@ -12,8 +12,11 @@ import java.awt.Cursor;
 import javax.swing.SwingConstants;
 import javax.swing.border.MatteBorder;
 
+import icai.dtc.isw.domain.Review;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -30,7 +33,7 @@ public class PantallaCrearReview extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					PantallaCrearReview frame = new PantallaCrearReview();
+					PantallaCrearReview frame = new PantallaCrearReview(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -39,7 +42,7 @@ public class PantallaCrearReview extends JFrame {
 		});
 	}
 
-	public PantallaCrearReview() throws HeadlessException {
+	public PantallaCrearReview(ArrayList<Review> reviews) throws HeadlessException {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -192,15 +195,49 @@ public class PantallaCrearReview extends JFrame {
 		panelAside.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		//Panel for an indivifual review from a different user
-		JPanel panelIndividualReview = new JPanel();
+		/*JPanel panelIndividualReview = new JPanel();
 		panelIndividualReview.setBackground(Color.WHITE);
 		panelAside.add(panelIndividualReview);
-		panelIndividualReview.setLayout(new BorderLayout(0, 0));
+		panelIndividualReview.setLayout(new BorderLayout(0, 0));*/
 		
-		MyJLabel mjlblReviewText = new MyJLabel("<html>The lip blush formula in entirely different than the matte lip kits, <br>"
-				+ "but still has the vibrant beautiful appearance. <br>"
-				+ "It�s light weight and smooth, feels like butter. This product doesn�t get crusty or dry out. <br>"
-				+ "All four shades are stunning and highly pigmented. New favorite for sure!!</html>");
+		for(int i=0; i<reviews.size(); i++) {
+			//Panel for an individual review
+				JPanel panelIndividualReview = new JPanel();
+				panelIndividualReview.setBackground(Color.WHITE);
+				panelAside.add(panelIndividualReview);
+				panelIndividualReview.setLayout(new BorderLayout(0, 0));
+					
+					MyJLabel mjlblReviewText = new MyJLabel(reviews.get(i).getComment());
+					mjlblReviewText.setFont(GUIConstants.FONT_REGULAR);
+					mjlblReviewText.setForeground(Color.LIGHT_GRAY);
+					panelIndividualReview.add(mjlblReviewText, BorderLayout.CENTER);
+					
+					//Header of the review
+					//Includes username, title, number of stars
+					JPanel panelHeaderReview = new JPanel();
+					panelHeaderReview.setBackground(Color.WHITE);
+					panelIndividualReview.add(panelHeaderReview, BorderLayout.NORTH);
+					panelHeaderReview.setLayout(new BorderLayout());
+					
+					//User name of the individual review's author
+					MyJLabel mjlblUsername = new MyJLabel();
+					panelHeaderReview.add(mjlblUsername, BorderLayout.WEST);
+					mjlblUsername.setText(reviews.get(i).getUser().getName());
+					mjlblUsername.setBorder(new MatteBorder(15, 10, 15, 15, (Color) new Color(255, 255, 255)));
+					
+					//Title of the individual review
+					MyJLabel mjlblTitle = new MyJLabel();
+					panelHeaderReview.add(mjlblTitle, BorderLayout.CENTER);
+					mjlblTitle.setText(reviews.get(i).getCommentTitle());
+					mjlblTitle.setFont(GUIConstants.FONT_REGULAR_ITALICS);
+					
+					JPanel panelStarFlowIndivifualReview = new JPanel();
+					panelStarFlowIndivifualReview.setBackground(Color.WHITE);
+					panelHeaderReview.add(panelStarFlowIndivifualReview, BorderLayout.EAST);
+					
+					AutoStars.setStars(panelStarFlowIndivifualReview, reviews.get(i).getProductScore(),"small");
+		}
+		/*MyJLabel mjlblReviewText = new MyJLabel();
 		mjlblReviewText.setFont(GUIConstants.FONT_REGULAR);
 		mjlblReviewText.setForeground(Color.LIGHT_GRAY);
 		panelIndividualReview.add(mjlblReviewText, BorderLayout.CENTER);
@@ -241,7 +278,7 @@ public class PantallaCrearReview extends JFrame {
 		panelStarFlowIndivifualReview.add(lblStar_5a);
 		
 		MyJLabel mjlblUser = new MyJLabel("maroag");
-		panelAside.add(mjlblUser);
+		panelAside.add(mjlblUser);*/
 	}
 	
 	public void addSurvey(JPanel panelSurvey)

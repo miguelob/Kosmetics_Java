@@ -43,7 +43,8 @@ public class PantallaCrearReview extends JFrame {
 	}
 
 	public PantallaCrearReview(ArrayList<Review> reviews) throws HeadlessException {
-
+		this.setIconImage((new ImageIcon("media/icons/Main_Logo.png")).getImage());
+		this.setTitle("Kosmetics.");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		

@@ -13,9 +13,12 @@ import javax.swing.SwingConstants;
 import javax.swing.border.MatteBorder;
 
 import icai.dtc.isw.domain.Review;
+import icai.dtc.isw.domain.User;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.ButtonGroup;
@@ -28,7 +31,13 @@ import java.awt.Font;
 import javax.swing.JRadioButton;
 
 public class PantallaCrearReview extends JFrame {
-	
+	private int note = 0;
+	private JLabel btnStar_1;
+	private JLabel btnStar_2;
+	private JLabel btnStar_3;
+	private JLabel btnStar_4;
+	private JLabel btnStar_5;
+	private JPanel panelStarFlow;
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -147,21 +156,60 @@ public class PantallaCrearReview extends JFrame {
 		panelStarsDescription.setBackground(Color.WHITE);
 		panelStarsDescription.add(new MyJLabel("Your overall rating of this product"));
 		panelStars.add(panelStarsDescription, BorderLayout.NORTH);
-		JPanel panelStarFlow = new JPanel();
+		panelStarFlow = new JPanel();
 		panelStarFlow.setBackground(Color.WHITE);
 		panelStars.add(panelStarFlow, BorderLayout.CENTER);
 		
-		MyJButton2States lblStar_1 = new MyJButton2States(new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"));
-		lblStar_1.setContentAreaFilled(false);
-		panelStarFlow.add(lblStar_1);
-		MyJButton2States lblStar_2 = new MyJButton2States(new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"));
-		panelStarFlow.add(lblStar_2);
-		MyJButton2States lblStar_3 = new MyJButton2States(new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"));
-		panelStarFlow.add(lblStar_3);
-		MyJButton2States lblStar_4 = new MyJButton2States(new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"));
-		panelStarFlow.add(lblStar_4);
-		MyJButton2States lblStar_5 = new MyJButton2States(new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"));
-		panelStarFlow.add(lblStar_5);
+		btnStar_1 = new JLabel(new ImageIcon("media/icons/star_empty_32.png"));
+		btnStar_1.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+            	PantallaCrearReview.this.setNote(1);
+				PantallaCrearReview.this.changeStars();;
+            }
+
+        });
+		panelStarFlow.add(btnStar_1);
+		btnStar_2 = new JLabel(new ImageIcon("media/icons/star_empty_32.png"));
+		btnStar_2.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+            	PantallaCrearReview.this.setNote(2);
+				PantallaCrearReview.this.changeStars();;
+            }
+
+        });
+		panelStarFlow.add(btnStar_2);
+		btnStar_3 = new JLabel(new ImageIcon("media/icons/star_empty_32.png"));
+		btnStar_3.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+            	PantallaCrearReview.this.setNote(3);
+				PantallaCrearReview.this.changeStars();;
+            }
+
+        });
+		panelStarFlow.add(btnStar_3);
+		btnStar_4 = new JLabel(new ImageIcon("media/icons/star_empty_32.png"));
+		btnStar_4.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+            	PantallaCrearReview.this.setNote(4);
+				PantallaCrearReview.this.changeStars();;
+            }
+
+        });
+		panelStarFlow.add(btnStar_4);
+		btnStar_5 = new JLabel(new ImageIcon("media/icons/star_empty_32.png"));
+		btnStar_5.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+            	PantallaCrearReview.this.setNote(5);
+				PantallaCrearReview.this.changeStars();;
+            }
+
+        });
+		panelStarFlow.add(btnStar_5);
 		
 		//Panel for the review's text and quick survey
 		JPanel panelShareYourExperience = new JPanel();
@@ -371,6 +419,42 @@ public class PantallaCrearReview extends JFrame {
 		group3.add(rdbtnNotSure3);
 		group3.add(rdbtnNo3);
 		
+	}
+	public void setNote(int i) {
+		note = i;
+	}
+	public void changeStars() {
+		if(note == 1) {
+			btnStar_1.setIcon(new ImageIcon("media/icons/star_32.png"));
+			btnStar_2.setIcon(new ImageIcon("media/icons/star_empty_32.png"));
+			btnStar_3.setIcon(new ImageIcon("media/icons/star_empty_32.png"));
+			btnStar_4.setIcon(new ImageIcon("media/icons/star_empty_32.png"));
+			btnStar_5.setIcon(new ImageIcon("media/icons/star_empty_32.png"));
+		}else if(note == 2){
+			btnStar_1.setIcon(new ImageIcon("media/icons/star_32.png"));
+			btnStar_2.setIcon(new ImageIcon("media/icons/star_32.png"));
+			btnStar_3.setIcon(new ImageIcon("media/icons/star_empty_32.png"));
+			btnStar_4.setIcon(new ImageIcon("media/icons/star_empty_32.png"));
+			btnStar_5.setIcon(new ImageIcon("media/icons/star_empty_32.png"));
+		}else if(note == 3){
+			btnStar_1.setIcon(new ImageIcon("media/icons/star_32.png"));
+			btnStar_2.setIcon(new ImageIcon("media/icons/star_32.png"));
+			btnStar_3.setIcon(new ImageIcon("media/icons/star_32.png"));
+			btnStar_4.setIcon(new ImageIcon("media/icons/star_empty_32.png"));
+			btnStar_5.setIcon(new ImageIcon("media/icons/star_empty_32.png"));
+		}else if(note == 4){
+			btnStar_1.setIcon(new ImageIcon("media/icons/star_32.png"));
+			btnStar_2.setIcon(new ImageIcon("media/icons/star_32.png"));
+			btnStar_3.setIcon(new ImageIcon("media/icons/star_32.png"));
+			btnStar_4.setIcon(new ImageIcon("media/icons/star_32.png"));
+			btnStar_5.setIcon(new ImageIcon("media/icons/star_empty_32.png"));
+		}else {
+			btnStar_1.setIcon(new ImageIcon("media/icons/star_32.png"));
+			btnStar_2.setIcon(new ImageIcon("media/icons/star_32.png"));
+			btnStar_3.setIcon(new ImageIcon("media/icons/star_32.png"));
+			btnStar_4.setIcon(new ImageIcon("media/icons/star_32.png"));
+			btnStar_5.setIcon(new ImageIcon("media/icons/star_32.png"));
+		}
 	}
 
 

@@ -12,8 +12,14 @@ import java.awt.Cursor;
 import javax.swing.SwingConstants;
 import javax.swing.border.MatteBorder;
 
+import icai.dtc.isw.domain.Review;
+import icai.dtc.isw.domain.User;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -25,12 +31,18 @@ import java.awt.Font;
 import javax.swing.JRadioButton;
 
 public class PantallaCrearReview extends JFrame {
-	
+	private int note = 0;
+	private JLabel btnStar_1;
+	private JLabel btnStar_2;
+	private JLabel btnStar_3;
+	private JLabel btnStar_4;
+	private JLabel btnStar_5;
+	private JPanel panelStarFlow;
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					PantallaCrearReview frame = new PantallaCrearReview();
+					PantallaCrearReview frame = new PantallaCrearReview(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -39,8 +51,9 @@ public class PantallaCrearReview extends JFrame {
 		});
 	}
 
-	public PantallaCrearReview() throws HeadlessException {
-
+	public PantallaCrearReview(ArrayList<Review> reviews) throws HeadlessException {
+		this.setIconImage((new ImageIcon("media/icons/Main_Logo.png")).getImage());
+		this.setTitle("Kosmetics.");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
@@ -143,21 +156,60 @@ public class PantallaCrearReview extends JFrame {
 		panelStarsDescription.setBackground(Color.WHITE);
 		panelStarsDescription.add(new MyJLabel("Your overall rating of this product"));
 		panelStars.add(panelStarsDescription, BorderLayout.NORTH);
-		JPanel panelStarFlow = new JPanel();
+		panelStarFlow = new JPanel();
 		panelStarFlow.setBackground(Color.WHITE);
 		panelStars.add(panelStarFlow, BorderLayout.CENTER);
 		
-		MyJButton2States lblStar_1 = new MyJButton2States(new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"));
-		lblStar_1.setContentAreaFilled(false);
-		panelStarFlow.add(lblStar_1);
-		MyJButton2States lblStar_2 = new MyJButton2States(new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"));
-		panelStarFlow.add(lblStar_2);
-		MyJButton2States lblStar_3 = new MyJButton2States(new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"));
-		panelStarFlow.add(lblStar_3);
-		MyJButton2States lblStar_4 = new MyJButton2States(new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"));
-		panelStarFlow.add(lblStar_4);
-		MyJButton2States lblStar_5 = new MyJButton2States(new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"));
-		panelStarFlow.add(lblStar_5);
+		btnStar_1 = new JLabel(new ImageIcon("media/icons/star_empty_32.png"));
+		btnStar_1.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+            	PantallaCrearReview.this.setNote(1);
+				PantallaCrearReview.this.changeStars();;
+            }
+
+        });
+		panelStarFlow.add(btnStar_1);
+		btnStar_2 = new JLabel(new ImageIcon("media/icons/star_empty_32.png"));
+		btnStar_2.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+            	PantallaCrearReview.this.setNote(2);
+				PantallaCrearReview.this.changeStars();;
+            }
+
+        });
+		panelStarFlow.add(btnStar_2);
+		btnStar_3 = new JLabel(new ImageIcon("media/icons/star_empty_32.png"));
+		btnStar_3.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+            	PantallaCrearReview.this.setNote(3);
+				PantallaCrearReview.this.changeStars();;
+            }
+
+        });
+		panelStarFlow.add(btnStar_3);
+		btnStar_4 = new JLabel(new ImageIcon("media/icons/star_empty_32.png"));
+		btnStar_4.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+            	PantallaCrearReview.this.setNote(4);
+				PantallaCrearReview.this.changeStars();;
+            }
+
+        });
+		panelStarFlow.add(btnStar_4);
+		btnStar_5 = new JLabel(new ImageIcon("media/icons/star_empty_32.png"));
+		btnStar_5.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+            	PantallaCrearReview.this.setNote(5);
+				PantallaCrearReview.this.changeStars();;
+            }
+
+        });
+		panelStarFlow.add(btnStar_5);
 		
 		//Panel for the review's text and quick survey
 		JPanel panelShareYourExperience = new JPanel();
@@ -192,15 +244,49 @@ public class PantallaCrearReview extends JFrame {
 		panelAside.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		//Panel for an indivifual review from a different user
-		JPanel panelIndividualReview = new JPanel();
+		/*JPanel panelIndividualReview = new JPanel();
 		panelIndividualReview.setBackground(Color.WHITE);
 		panelAside.add(panelIndividualReview);
-		panelIndividualReview.setLayout(new BorderLayout(0, 0));
+		panelIndividualReview.setLayout(new BorderLayout(0, 0));*/
 		
-		MyJLabel mjlblReviewText = new MyJLabel("<html>The lip blush formula in entirely different than the matte lip kits, <br>"
-				+ "but still has the vibrant beautiful appearance. <br>"
-				+ "It�s light weight and smooth, feels like butter. This product doesn�t get crusty or dry out. <br>"
-				+ "All four shades are stunning and highly pigmented. New favorite for sure!!</html>");
+		for(int i=0; i<reviews.size(); i++) {
+			//Panel for an individual review
+				JPanel panelIndividualReview = new JPanel();
+				panelIndividualReview.setBackground(Color.WHITE);
+				panelAside.add(panelIndividualReview);
+				panelIndividualReview.setLayout(new BorderLayout(0, 0));
+					
+					MyJLabel mjlblReviewText = new MyJLabel(reviews.get(i).getComment());
+					mjlblReviewText.setFont(GUIConstants.FONT_REGULAR);
+					mjlblReviewText.setForeground(Color.LIGHT_GRAY);
+					panelIndividualReview.add(mjlblReviewText, BorderLayout.CENTER);
+					
+					//Header of the review
+					//Includes username, title, number of stars
+					JPanel panelHeaderReview = new JPanel();
+					panelHeaderReview.setBackground(Color.WHITE);
+					panelIndividualReview.add(panelHeaderReview, BorderLayout.NORTH);
+					panelHeaderReview.setLayout(new BorderLayout());
+					
+					//User name of the individual review's author
+					MyJLabel mjlblUsername = new MyJLabel();
+					panelHeaderReview.add(mjlblUsername, BorderLayout.WEST);
+					mjlblUsername.setText(reviews.get(i).getUser().getName());
+					mjlblUsername.setBorder(new MatteBorder(15, 10, 15, 15, (Color) new Color(255, 255, 255)));
+					
+					//Title of the individual review
+					MyJLabel mjlblTitle = new MyJLabel();
+					panelHeaderReview.add(mjlblTitle, BorderLayout.CENTER);
+					mjlblTitle.setText(reviews.get(i).getCommentTitle());
+					mjlblTitle.setFont(GUIConstants.FONT_REGULAR_ITALICS);
+					
+					JPanel panelStarFlowIndivifualReview = new JPanel();
+					panelStarFlowIndivifualReview.setBackground(Color.WHITE);
+					panelHeaderReview.add(panelStarFlowIndivifualReview, BorderLayout.EAST);
+					
+					AutoStars.setStars(panelStarFlowIndivifualReview, reviews.get(i).getProductScore(),"small");
+		}
+		/*MyJLabel mjlblReviewText = new MyJLabel();
 		mjlblReviewText.setFont(GUIConstants.FONT_REGULAR);
 		mjlblReviewText.setForeground(Color.LIGHT_GRAY);
 		panelIndividualReview.add(mjlblReviewText, BorderLayout.CENTER);
@@ -241,7 +327,7 @@ public class PantallaCrearReview extends JFrame {
 		panelStarFlowIndivifualReview.add(lblStar_5a);
 		
 		MyJLabel mjlblUser = new MyJLabel("maroag");
-		panelAside.add(mjlblUser);
+		panelAside.add(mjlblUser);*/
 	}
 	
 	public void addSurvey(JPanel panelSurvey)
@@ -333,6 +419,42 @@ public class PantallaCrearReview extends JFrame {
 		group3.add(rdbtnNotSure3);
 		group3.add(rdbtnNo3);
 		
+	}
+	public void setNote(int i) {
+		note = i;
+	}
+	public void changeStars() {
+		if(note == 1) {
+			btnStar_1.setIcon(new ImageIcon("media/icons/star_32.png"));
+			btnStar_2.setIcon(new ImageIcon("media/icons/star_empty_32.png"));
+			btnStar_3.setIcon(new ImageIcon("media/icons/star_empty_32.png"));
+			btnStar_4.setIcon(new ImageIcon("media/icons/star_empty_32.png"));
+			btnStar_5.setIcon(new ImageIcon("media/icons/star_empty_32.png"));
+		}else if(note == 2){
+			btnStar_1.setIcon(new ImageIcon("media/icons/star_32.png"));
+			btnStar_2.setIcon(new ImageIcon("media/icons/star_32.png"));
+			btnStar_3.setIcon(new ImageIcon("media/icons/star_empty_32.png"));
+			btnStar_4.setIcon(new ImageIcon("media/icons/star_empty_32.png"));
+			btnStar_5.setIcon(new ImageIcon("media/icons/star_empty_32.png"));
+		}else if(note == 3){
+			btnStar_1.setIcon(new ImageIcon("media/icons/star_32.png"));
+			btnStar_2.setIcon(new ImageIcon("media/icons/star_32.png"));
+			btnStar_3.setIcon(new ImageIcon("media/icons/star_32.png"));
+			btnStar_4.setIcon(new ImageIcon("media/icons/star_empty_32.png"));
+			btnStar_5.setIcon(new ImageIcon("media/icons/star_empty_32.png"));
+		}else if(note == 4){
+			btnStar_1.setIcon(new ImageIcon("media/icons/star_32.png"));
+			btnStar_2.setIcon(new ImageIcon("media/icons/star_32.png"));
+			btnStar_3.setIcon(new ImageIcon("media/icons/star_32.png"));
+			btnStar_4.setIcon(new ImageIcon("media/icons/star_32.png"));
+			btnStar_5.setIcon(new ImageIcon("media/icons/star_empty_32.png"));
+		}else {
+			btnStar_1.setIcon(new ImageIcon("media/icons/star_32.png"));
+			btnStar_2.setIcon(new ImageIcon("media/icons/star_32.png"));
+			btnStar_3.setIcon(new ImageIcon("media/icons/star_32.png"));
+			btnStar_4.setIcon(new ImageIcon("media/icons/star_32.png"));
+			btnStar_5.setIcon(new ImageIcon("media/icons/star_32.png"));
+		}
 	}
 
 

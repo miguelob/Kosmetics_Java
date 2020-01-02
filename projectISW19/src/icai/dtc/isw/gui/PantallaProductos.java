@@ -63,6 +63,7 @@ public class PantallaProductos extends JFrame {
 	public PantallaProductos() {
 		initialiseProducts();
 		GUIConstants.PANTALLA_PRODUCTOS = this;
+		GUIConstants.PANTALLA_PRINCIPAL = this;
 		BorderLayout borderLayout = (BorderLayout) getContentPane().getLayout();
 		borderLayout.setVgap(20);
 		borderLayout.setHgap(25);

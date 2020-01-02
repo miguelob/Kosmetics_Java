@@ -363,6 +363,7 @@ public class PantallaCrearUsuario_2 extends JFrame {
 						PantallaCrearUsuario_2.this.dispose();
 						JFrame pantallaActual = new ScreenViewProfile();
 						GUIConstants.PANTALLA_ACTUAL = pantallaActual;
+						GUIConstants.PANTALLA_PRINCIPAL.dispose();
 						pantallaActual.setVisible(true);
 					}else {
 						System.out.println("ERROR");

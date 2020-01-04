@@ -86,16 +86,14 @@ public class PantallaCrearReview extends JFrame {
 	panelKosmetics.add(btnGoBack);
 	
 	btnGoBack.addActionListener(new ActionListener(){
-	@Override
-	public void actionPerformed(ActionEvent e){
-	if (GUIConstants.PANTALLA_ANTERIOR != null)
-	{  GUIConstants.PANTALLA_ANTERIOR.setVisible(true);
-	GUIConstants.PANTALLA_ANTERIOR = PantallaCrearReview.this;
-	PantallaCrearReview.this.dispose();
-	
-	}
-	
-	}
+		@Override
+		public void actionPerformed(ActionEvent e){
+			if (GUIConstants.PANTALLA_ANTERIOR != null){
+				GUIConstants.PANTALLA_ANTERIOR.setVisible(true);
+				GUIConstants.PANTALLA_ANTERIOR = PantallaCrearReview.this;
+				PantallaCrearReview.this.dispose();
+			}
+		}
 	});
 	
 	MyJButton bntKosmetics = new MyJButton();
@@ -105,13 +103,12 @@ public class PantallaCrearReview extends JFrame {
 	bntKosmetics.setFont(GUIConstants.FONT_TITLE);
 	bntKosmetics.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 	bntKosmetics.addActionListener(new ActionListener(){
-	@Override
-	public void actionPerformed(ActionEvent e){
-	   GUIConstants.PANTALLA_PRINCIPAL.setVisible(true);
-	GUIConstants.PANTALLA_ANTERIOR = PantallaCrearReview.this;
-	PantallaCrearReview.this.dispose();
-	
-	}
+		@Override
+		public void actionPerformed(ActionEvent e){
+		   GUIConstants.PANTALLA_PRINCIPAL.setVisible(true);
+		   GUIConstants.PANTALLA_ANTERIOR = PantallaCrearReview.this;
+		   PantallaCrearReview.this.dispose();
+		}
 	});
 	
 	//Profile button
@@ -162,53 +159,53 @@ public class PantallaCrearReview extends JFrame {
 	
 	btnStar_1 = new JLabel(new ImageIcon("media/icons/star_empty_32.png"));
 	btnStar_1.addMouseListener(new MouseAdapter() {
-	            @Override
-	            public void mouseClicked(MouseEvent e) {
-	            PantallaCrearReview.this.setNote(1);
-	PantallaCrearReview.this.changeStars();;
-	            }
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            PantallaCrearReview.this.setNote(1);
+            PantallaCrearReview.this.changeStars();;
+        }
 	
-	        });
+	});
 	panelStarFlow.add(btnStar_1);
 	btnStar_2 = new JLabel(new ImageIcon("media/icons/star_empty_32.png"));
 	btnStar_2.addMouseListener(new MouseAdapter() {
-	            @Override
-	            public void mouseClicked(MouseEvent e) {
-	            PantallaCrearReview.this.setNote(2);
-	PantallaCrearReview.this.changeStars();;
-	            }
-	
-	        });
+        @Override
+        public void mouseClicked(MouseEvent e) {
+        	PantallaCrearReview.this.setNote(2);
+        	PantallaCrearReview.this.changeStars();;
+        }
+
+    });
 	panelStarFlow.add(btnStar_2);
 	btnStar_3 = new JLabel(new ImageIcon("media/icons/star_empty_32.png"));
 	btnStar_3.addMouseListener(new MouseAdapter() {
-	            @Override
-	            public void mouseClicked(MouseEvent e) {
-	            PantallaCrearReview.this.setNote(3);
-	PantallaCrearReview.this.changeStars();;
-	            }
-	
-	        });
+        @Override
+        public void mouseClicked(MouseEvent e) {
+        	PantallaCrearReview.this.setNote(3);
+        	PantallaCrearReview.this.changeStars();;
+        }
+
+    });
 	panelStarFlow.add(btnStar_3);
 	btnStar_4 = new JLabel(new ImageIcon("media/icons/star_empty_32.png"));
 	btnStar_4.addMouseListener(new MouseAdapter() {
-	            @Override
-	            public void mouseClicked(MouseEvent e) {
-	            PantallaCrearReview.this.setNote(4);
-	PantallaCrearReview.this.changeStars();;
-	            }
-	
-	        });
+        @Override
+        public void mouseClicked(MouseEvent e) {
+        	PantallaCrearReview.this.setNote(4);
+        	PantallaCrearReview.this.changeStars();;
+        }
+
+    });
 	panelStarFlow.add(btnStar_4);
 	btnStar_5 = new JLabel(new ImageIcon("media/icons/star_empty_32.png"));
 	btnStar_5.addMouseListener(new MouseAdapter() {
-	            @Override
-	            public void mouseClicked(MouseEvent e) {
-	            PantallaCrearReview.this.setNote(5);
-	PantallaCrearReview.this.changeStars();;
-	            }
-	
-	        });
+        @Override
+        public void mouseClicked(MouseEvent e) {
+        	PantallaCrearReview.this.setNote(5);
+        	PantallaCrearReview.this.changeStars();;
+        }
+
+    });
 	panelStarFlow.add(btnStar_5);
 	
 	//Panel for the review's text and quick survey

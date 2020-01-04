@@ -94,8 +94,9 @@ public class SocketServer extends Thread {
 		    	case "/uploadReview":
 		    		HashMap<String,Object> data = (HashMap<String,Object>) mensajeIn.getObject();
 		    		Review review = (Review) data.get("review");
-		    		int idProduct = productControler.getProductID((Product) data.get("product"));
-		    		boolean reviewUploadStatus = reviewControler.uploadReview(review,idProduct);
+		    		//int idProduct = productControler.getProductID((Product) data.get("product"));
+		    		Product productReview = (Product) data.get("product");
+		    		boolean reviewUploadStatus = reviewControler.uploadReview(review,productReview);
 		    		mensajeOut.setContext("/getReviewUploadResponse");
 		    		session.put("uploadReview",reviewUploadStatus);
 		    		mensajeOut.setSession(session);

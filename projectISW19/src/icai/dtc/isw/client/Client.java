@@ -69,7 +69,7 @@ public class Client {
 				response = (boolean) mensajeVuelta.getSession().get("uploadUser");
 			break;
 			case "/getReviewUploadResponse":
-				response = (boolean) mensajeVuelta.getSession().get("reviewUpload");
+				response = (boolean) mensajeVuelta.getSession().get("uploadReview");
 			break;
 			case "/setSessionResponse":
 				response = true;

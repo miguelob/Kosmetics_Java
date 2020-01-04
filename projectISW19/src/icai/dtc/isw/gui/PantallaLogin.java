@@ -38,8 +38,11 @@ import java.awt.FlowLayout;
 public class PantallaLogin extends JFrame {
 
 	public PantallaLogin() throws HeadlessException {
+		this.setIconImage((new ImageIcon("media/icons/Main_Logo.png")).getImage());
+		this.setTitle("Log in");
 		this.setSize(500,600);
 		this.setLocationRelativeTo(null);
+		this.setResizable(false);
 		getContentPane().setBackground(Color.WHITE);
 		
 		JPanel panel = new JPanel();

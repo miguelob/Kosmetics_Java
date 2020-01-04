@@ -70,7 +70,7 @@ public class ProductDAO {
 	public static int getProductID(Product product) {
 		int id = -1;
 		Connection con=ConnectionDAO.getInstance().getConnection();
-		try (PreparedStatement pst = con.prepareStatement("SELECT \"ID_Product\" FROM  \"Products\" WHERE \"Name\" = " + product.getName());
+		try (PreparedStatement pst = con.prepareStatement("SELECT \"ID_Product\" FROM  \"Products\" WHERE \"Name\" = '" + product.getName()+"'");
 				ResultSet rs = pst.executeQuery()) {
 			if (rs.next()) {
 				id = rs.getInt(1);

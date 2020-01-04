@@ -32,8 +32,11 @@ import java.awt.FlowLayout;
 public class PantallaCrearUsuario extends JFrame {
 
 	public PantallaCrearUsuario() throws HeadlessException {
+		this.setIconImage((new ImageIcon("media/icons/Main_Logo.png")).getImage());
+		this.setTitle("Register");
 		this.setSize(500,600);
 		this.setLocationRelativeTo(null);
+		this.setResizable(false);
 		getContentPane().setBackground(Color.WHITE);
 		
 		JPanel panel = new JPanel();

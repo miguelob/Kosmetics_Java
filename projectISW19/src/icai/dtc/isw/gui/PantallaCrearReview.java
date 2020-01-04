@@ -12,6 +12,7 @@ import java.awt.Cursor;
 import javax.swing.SwingConstants;
 import javax.swing.border.MatteBorder;
 
+import icai.dtc.isw.client.Client;
 import icai.dtc.isw.domain.Product;
 import icai.dtc.isw.domain.Review;
 import icai.dtc.isw.domain.User;
@@ -21,6 +22,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -40,7 +42,12 @@ public class PantallaCrearReview extends JFrame {
 	private JLabel btnStar_4;
 	private JLabel btnStar_5;
 	private JPanel panelStarFlow;
-
+	private JTextField txtReviewTitle;
+	private JTextPane txtpnShareYourExperience;
+	private User user;
+	private Client client;
+	private Product product;
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 		public void run() {
@@ -53,7 +60,12 @@ public class PantallaCrearReview extends JFrame {
 		}});
 	}
 
-	public PantallaCrearReview(ArrayList<Review> reviews, Product product) throws HeadlessException {
+public PantallaCrearReview(ArrayList<Review> reviews, Product producto) throws HeadlessException {
+	this.pack();
+	this.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+	this.product = producto;
+	client = Client.getInstance();
+	user = client.getSessionStatus();
 	this.setIconImage((new ImageIcon("media/icons/Main_Logo.png")).getImage());
 	this.setTitle("Writing a review for "+product.getName());
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -215,7 +227,7 @@ public class PantallaCrearReview extends JFrame {
 	panelShareYourExperience.setBorder(new MatteBorder(1, 10, 1, 1, (Color) Color.WHITE));
 	panelShareYourExperience.setLayout(new BorderLayout());
 	panel_2.add(panelShareYourExperience, BorderLayout.CENTER);
-	JTextField txtReviewTitle = new JTextField();
+	txtReviewTitle = new JTextField();
 	txtReviewTitle.setFont(new Font("SansSerif", Font.PLAIN, 15));
 	txtReviewTitle.setText("Give a title to your review");
 	txtReviewTitle.setForeground(Color.DARK_GRAY);
@@ -227,12 +239,18 @@ public class PantallaCrearReview extends JFrame {
 	         });
 	panelShareYourExperience.add(txtReviewTitle, BorderLayout.NORTH);
 
-	JTextPane txtpnShareYourExperience = new JTextPane();
+	txtpnShareYourExperience = new JTextPane();
 	txtpnShareYourExperience.setFont(new Font("SansSerif", Font.PLAIN, 15));
 	txtpnShareYourExperience.setCaretColor(Color.BLACK);
 	txtpnShareYourExperience.setBorder(new LineBorder(new Color(192, 192, 192), 1));
 	txtpnShareYourExperience.setText("Share your experience: the quality, the price, did it meet your expectations?...");
 	txtpnShareYourExperience.setForeground(Color.DARK_GRAY);
+	txtpnShareYourExperience.addMouseListener(new MouseAdapter(){
+		@Override
+        public void mouseClicked(MouseEvent me){
+			txtpnShareYourExperience.setText("");
+        }
+    });
 	panelShareYourExperience.add(txtpnShareYourExperience, BorderLayout.CENTER);
 
 	//Panel for the quick survey
@@ -443,6 +461,23 @@ public class PantallaCrearReview extends JFrame {
 	        @Override
 	        public void mouseClicked(MouseEvent e) {
 	        	//aqui va el codigo para subir la review
+	        	boolean check = GestorErrores.newReview(note, txtReviewTitle.getText(), txtpnShareYourExperience.getText(), PantallaCrearReview.this);
+	        	if(check) {
+	        		HashMap<String,Object>data = new HashMap<String,Object>();
+		        	Review review = new Review(user,note,0,0,txtpnShareYourExperience.getText(),txtReviewTitle.getText());
+		        	data.put("review", review);
+		        	data.put("product", product);
+		        	boolean retorno = (boolean) client.clientInteraction("/uploadReview", data);
+		        	if(retorno) {
+		        		GestorErrores.uploadReviewOK(PantallaCrearReview.this);
+		        		PantallaCrearReview.this.dispose();
+		        		GUIConstants.PANTALLA_PRODUCTO_INDIVIDUAL.repaint();
+		        		GUIConstants.PANTALLA_PRODUCTO_INDIVIDUAL.revalidate();
+		        		GUIConstants.PANTALLA_PRODUCTO_INDIVIDUAL.setVisible(true);
+		        	}
+		        	else
+		        		GestorErrores.uploadReviewError(PantallaCrearReview.this);
+	        	}
 	        }
 
 	    });
@@ -485,5 +520,4 @@ public class PantallaCrearReview extends JFrame {
 			btnStar_5.setIcon(new ImageIcon("media/icons/star_32.png"));
 		}
 	}
-
 }

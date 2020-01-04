@@ -45,11 +45,11 @@ public class GestorErrores {
 	}
 	public static boolean newReview(int note, String title, String text, JFrame frame) {
 		boolean value = true;
-		if(title.isBlank() || title.isEmpty()) {
+		if(title.isBlank() || title.isEmpty() || title.contentEquals("Give a title to your review")){
 			JOptionPane.showMessageDialog(frame,"Please, fill in the title for the review.");
 			value = false;
 		}
-		if(text.isBlank() || text.isEmpty()) {
+		if(text.isBlank() || text.isEmpty() || text.contentEquals("Share your experience: the quality, the price, did it meet your expectations?...")) {
 			JOptionPane.showMessageDialog(frame,"Please, fill in the review.");
 			value = false;
 		}
@@ -59,7 +59,10 @@ public class GestorErrores {
 		}
 		return value;
 	}
-	public static void uploadReview(JFrame frame) {
+	public static void uploadReviewError(JFrame frame) {
 		JOptionPane.showMessageDialog(frame,"Something went wrong. Please, try it again.");
+	}
+	public static void uploadReviewOK(JFrame frame) {
+		JOptionPane.showMessageDialog(frame,"Review uploaded successfully.");
 	}
 }

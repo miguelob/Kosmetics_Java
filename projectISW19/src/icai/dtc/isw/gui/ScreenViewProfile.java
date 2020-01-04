@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 
 import icai.dtc.isw.client.Client;
@@ -37,14 +38,16 @@ public class ScreenViewProfile extends JFrame {
 	public ScreenViewProfile() throws HeadlessException {
 		Client client = Client.getInstance();
 		user = (User) client.getSessionStatus();
+		this.setIconImage((new ImageIcon("media/icons/Main_Logo.png")).getImage());
+		this.setTitle("Your profile");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		initialiseProducts();
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		getContentPane().add(scrollPane, BorderLayout.CENTER);
 		scrollPane.setBackground(new Color(255, 153, 153));
-		
+
 		//Header
 		//Brand name to the left
 		//Profile button to the right
@@ -53,7 +56,7 @@ public class ScreenViewProfile extends JFrame {
 		header.setBackground(new Color(255, 153, 153));
 		scrollPane.setColumnHeaderView(header);
 		header.setLayout(new BorderLayout(0, 0));
-		
+
 				// Contains
 		// Arrow to previous page
 		// Kosmetics logo
@@ -77,15 +80,15 @@ public class ScreenViewProfile extends JFrame {
 						if(GUIConstants.PANTALLA_PRINCIPAL == null){
 							JFrame frame = new PantallaProductos();
 							frame.setVisible(true);
-							
+
 						}
 						else{
-							GUIConstants.PANTALLA_PRINCIPAL.setVisible(true);						
+							GUIConstants.PANTALLA_PRINCIPAL.setVisible(true);
 
 						}
 						GUIConstants.PANTALLA_ANTERIOR = ScreenViewProfile.this;
 						ScreenViewProfile.this.dispose();
-						
+
 
 			}
 		});
@@ -103,24 +106,24 @@ public class ScreenViewProfile extends JFrame {
 						if(GUIConstants.PANTALLA_PRINCIPAL == null){
 							JFrame frame = new PantallaProductos();
 							frame.setVisible(true);
-							
+
 						}
 						else{
-							GUIConstants.PANTALLA_PRINCIPAL.setVisible(true);						
+							GUIConstants.PANTALLA_PRINCIPAL.setVisible(true);
 
 						}
 						GUIConstants.PANTALLA_ANTERIOR = ScreenViewProfile.this;
 						ScreenViewProfile.this.dispose();
-						
+
 
 			}
 		});
-		
+
 		//Profile button
 		//Takes the user to his profile
 		MyJButton mjbtnProfile = new MyJButton("Profile");
 		header.add(mjbtnProfile, BorderLayout.EAST);
-		
+
 		panel = new JPanel();
 		panel.setBorder(new MatteBorder(1, 65, 1, 45, (Color) new Color(255, 255, 255)));
 		panel.setBorder(new MatteBorder(1, 1, 1, 45, Color.WHITE));
@@ -128,13 +131,13 @@ public class ScreenViewProfile extends JFrame {
 		panel.setBackground(new Color(255, 255, 255));
 		scrollPane.setViewportView(panel);
 		panel.setLayout(new BorderLayout(0, 0));
-		
+
 		// Contains:
 		// - picture
 		// - username
-		// - button for editting the profile 
-		// - email 
-		// - characteristics 
+		// - button for editting the profile
+		// - email
+		// - characteristics
 
 		JPanel panelUser = new JPanel();
 		panel.add(panelUser, BorderLayout.NORTH);
@@ -147,9 +150,9 @@ public class ScreenViewProfile extends JFrame {
 
 		// Contains:
 		// - username
-		// - button for editting the profile 
-		// - email 
-		// - characteristics 
+		// - button for editting the profile
+		// - email
+		// - characteristics
 
 		JPanel panelUserInfo = new JPanel();
 		panelUserInfo.setLayout(new BorderLayout());
@@ -159,7 +162,7 @@ public class ScreenViewProfile extends JFrame {
 
 		// Contains:
 		// - username
-		// - button for editting the profile 
+		// - button for editting the profile
 
 		JPanel panelTop = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		panelTop.setBorder(new MatteBorder(1, 1, 1, 45, (Color) new Color(255, 255, 255)));
@@ -169,12 +172,22 @@ public class ScreenViewProfile extends JFrame {
 		JLabel lblUsername = new JLabel(user.getName());
 		panelTop.add(lblUsername);
 		lblUsername.setFont(GUIConstants.FONT_MEDIUM_TITLE);
+		lblUsername. setBorder(new MatteBorder(0, 0, 0, 20, Color.WHITE));
 
-		JButton btnEditProfile = new JButton(new ImageIcon("media/icons/settings-gears.png"));
-		btnEditProfile.setBorder(null);
-		btnEditProfile.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnEditProfile.setContentAreaFilled(false);
-		panelTop.add(btnEditProfile);
+		JButton btnLogOut = new JButton("Log out");
+		btnLogOut.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnLogOut.setBorder(new LineBorder(new Color(255, 175, 175), 6, true));
+		btnLogOut.setFont(GUIConstants.FONT_REGULAR);
+		btnLogOut.setBackground(Color.PINK);
+		btnLogOut.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e){
+				client.setSessionStatus(null);
+				ScreenViewProfile.this.dispose();
+				GUIConstants.PANTALLA_PRINCIPAL.setVisible(true);
+			}
+		});
+		panelTop.add(btnLogOut);
 
 		JLabel lblEmail = new JLabel(user.getEmail());
 		lblEmail.setBorder(new MatteBorder(20, 1, 10, 1, Color.WHITE));
@@ -228,7 +241,7 @@ public class ScreenViewProfile extends JFrame {
 		panelButtons.add(btnReviews);
 
 		btnFavourites.addActionListener(new ActionListener(){
-			@Override 
+			@Override
 			public void actionPerformed(ActionEvent e){
 				ScreenViewProfile.this.setCurrentPanel(ScreenViewProfile.this.getPanelFavourites());
 
@@ -236,7 +249,7 @@ public class ScreenViewProfile extends JFrame {
 		});
 
 		btnReviews.addActionListener(new ActionListener(){
-			@Override 
+			@Override
 			public void actionPerformed(ActionEvent e){
 				ScreenViewProfile.this.setCurrentPanel(ScreenViewProfile.this.getPanelReviews());
 
@@ -246,11 +259,11 @@ public class ScreenViewProfile extends JFrame {
 		currentPanel = this.getPanelFavourites();
 		panel.add(currentPanel, BorderLayout.SOUTH);
 	      }
-	
-	
-		
-	
-		
+
+
+
+
+
 	public void initialiseProducts(){
 		client = Client.getInstance();
 		products = (ArrayList) client.clientInteraction("/getProductBasicInfo",null);
@@ -278,7 +291,7 @@ public class ScreenViewProfile extends JFrame {
 		panelFavourites.setLayout(new GridLayout(0,1));
 		panelFavourites.setBorder(new MatteBorder(20, 1, 1, 45, (Color) new Color(255, 255, 255)));
 		panelFavourites.setBackground(new Color(255, 255, 255));
-		
+
 
 		Iterator<Product> it = products.iterator();
 	      while (it.hasNext())
@@ -286,7 +299,7 @@ public class ScreenViewProfile extends JFrame {
 	          MyJPanel productPanel = new MyJPanel();
 	          productPanel.setLayout(new GridLayout(1, 0));
 	          Product product = (Product) it.next();
-	          
+
 	          //Button with the photo of the product
 	          //Takes you to the product's screen
 	          MyJButton btnProduct = new MyJButton(Images.resize(product.getProductImage(),300,200));
@@ -298,11 +311,11 @@ public class ScreenViewProfile extends JFrame {
 	        		  frame.setVisible(true);
 	        		  ScreenViewProfile.this.dispose();
 	        		  //System.exit(0);
-	        		  
+
 	        	  }
 	          });
 	          productPanel.add(btnProduct);
-	          
+
 	          //Panel for the name, brand, category and type
 	          MyJPanel namePanel = new MyJPanel();
 	          namePanel.setLayout(new GridLayout(0, 1));
@@ -323,8 +336,8 @@ public class ScreenViewProfile extends JFrame {
 	          lblPrice.setForeground(new Color(255, 113, 113));
 	          namePanel.add(lblPrice);
 	          productPanel.add(namePanel);
-	          
-	          
+
+
 	          //Features of the product
 	          /*
 	          MyJLabel feature_1 = new MyJLabel("Longwear");
@@ -336,12 +349,12 @@ public class ScreenViewProfile extends JFrame {
 	          MyJLabel feature_3 = new MyJLabel("Matte");
 	          feature_2.setForeground(Color.DARK_GRAY);
 	          reviewPanel.add(feature_3);*/
-	 
+
 
 	          btnProduct.setHorizontalAlignment(SwingConstants.CENTER);
-	        
+
 	          panelFavourites.add(productPanel);
-			  
+
 	}
 	return panelFavourites;
 }
@@ -361,38 +374,38 @@ public JPanel getPanelReviews(){
 		panelIndividualReview.setBackground(Color.WHITE);
 		panelReviews.add(panelIndividualReview);
 		panelIndividualReview.setLayout(new BorderLayout(0, 0));
-		
+
 		MyJLabel mjlblReviewText = new MyJLabel("<html>The lip blush formula in entirely different than the matte lip kits, <br>"
 				+ "but still has the vibrant beautiful appearance. <br>"
-				+ "It�s light weight and smooth, feels like butter. This product doesn�t get crusty or dry out. <br>"
+				+ "It's light weight and smooth, feels like butter. This product doesn't get crusty or dry out. <br>"
 				+ "All four shades are stunning and highly pigmented. New favorite for sure!!</html>");
 		mjlblReviewText.setFont(GUIConstants.FONT_REGULAR);
 		mjlblReviewText.setForeground(Color.LIGHT_GRAY);
 		panelIndividualReview.add(mjlblReviewText, BorderLayout.CENTER);
-		
+
 		//Header of the review
 		//Includes username, title, number of stars
 		JPanel panelHeaderReview = new JPanel();
 		panelHeaderReview.setBackground(Color.WHITE);
 		panelIndividualReview.add(panelHeaderReview, BorderLayout.NORTH);
 		panelHeaderReview.setLayout(new BorderLayout());
-		
+
 		//User name of the individual review's author
 		MyJLabel mjlblUsername = new MyJLabel();
 		panelHeaderReview.add(mjlblUsername, BorderLayout.WEST);
 		mjlblUsername.setText("miguelob");
 		mjlblUsername.setBorder(new MatteBorder(15, 10, 15, 15, (Color) new Color(255, 255, 255)));
-		
+
 		//Title of the individual review
 		MyJLabel mjlblTitle = new MyJLabel();
 		panelHeaderReview.add(mjlblTitle, BorderLayout.CENTER);
 		mjlblTitle.setText("Absolutely Incredible!!");
 		mjlblTitle.setFont(GUIConstants.FONT_REGULAR_ITALICS);
-		
+
 		JPanel panelStarFlowIndivifualReview = new JPanel();
 		panelStarFlowIndivifualReview.setBackground(Color.WHITE);
 		panelHeaderReview.add(panelStarFlowIndivifualReview, BorderLayout.EAST);
-		
+
 		MyJButton2States lblStar_1a = new MyJButton2States(new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"), new ImageIcon("media/icons/star.png"));
 		lblStar_1a.setContentAreaFilled(false);
 		panelStarFlowIndivifualReview.add(lblStar_1a);
@@ -407,9 +420,9 @@ public JPanel getPanelReviews(){
 
 
 		panelReviews.add(panelIndividualReview);
-	}	
+	}
 
-		  
+
 
 return panelReviews;
 }
@@ -425,7 +438,7 @@ public void setCurrentPanel(JPanel newPanel)
 
 //Gets the skin tone of the user who is logged in
 public ImageIcon getUserSkinToneImage(){
-	ImageIcon userSkinToneImage = new ImageIcon("media/images/" + user.getSkinColor().toLowerCase() + ".png");
+	ImageIcon userSkinToneImage =Images.resize(new ImageIcon("media/images/" + user.getSkinColor().toLowerCase() + ".png"), 20, 20);
 	return userSkinToneImage;
 }
 

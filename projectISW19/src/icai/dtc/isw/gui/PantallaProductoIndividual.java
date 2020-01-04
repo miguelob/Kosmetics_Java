@@ -153,7 +153,7 @@ public class PantallaProductoIndividual extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				User user = client.getSessionStatus();
 				if(user != null) {
-					PantallaCrearReview frame = new PantallaCrearReview(reviews);
+					PantallaCrearReview frame = new PantallaCrearReview(reviews,fullProduct);
 					frame.setVisible(true);
 					PantallaProductoIndividual.this.dispose();
 				}else {

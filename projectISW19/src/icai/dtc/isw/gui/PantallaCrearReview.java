@@ -12,6 +12,7 @@ import java.awt.Cursor;
 import javax.swing.SwingConstants;
 import javax.swing.border.MatteBorder;
 
+import icai.dtc.isw.domain.Product;
 import icai.dtc.isw.domain.Review;
 import icai.dtc.isw.domain.User;
 
@@ -43,7 +44,7 @@ public class PantallaCrearReview extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 		public void run() {
 			try {
-				PantallaCrearReview frame = new PantallaCrearReview(null);
+				PantallaCrearReview frame = new PantallaCrearReview(null, null);
 				frame.setVisible(true);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -51,7 +52,7 @@ public class PantallaCrearReview extends JFrame {
 		}});
 	}
 	
-	public PantallaCrearReview(ArrayList<Review> reviews) throws HeadlessException {
+	public PantallaCrearReview(ArrayList<Review> reviews, Product product) throws HeadlessException {
 	this.setIconImage((new ImageIcon("media/icons/Main_Logo.png")).getImage());
 	this.setTitle("Kosmetics.");
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -99,7 +100,7 @@ public class PantallaCrearReview extends JFrame {
 	MyJButton bntKosmetics = new MyJButton();
 	bntKosmetics.setBorder(new MatteBorder(10, 15, 1, 1, (Color) new Color(255, 153, 153)));
 	panelKosmetics.add(bntKosmetics);
-	bntKosmetics.setText("Kosmetics.");
+	bntKosmetics.setText("Writing a review for "+product.getName());
 	bntKosmetics.setFont(GUIConstants.FONT_TITLE);
 	bntKosmetics.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 	bntKosmetics.addActionListener(new ActionListener(){
@@ -125,7 +126,7 @@ public class PantallaCrearReview extends JFrame {
 	
 	//Products name
 	
-	JLabel mjlblProductName = new JLabel("Lip Blush Bundle");
+	JLabel mjlblProductName = new JLabel(product.getName());
 	mjlblProductName.setBackground(Color.WHITE);
 	mjlblProductName.setHorizontalAlignment(SwingConstants.CENTER);
 	mjlblProductName.setFont(GUIConstants.FONT_BIG_TITLE);
@@ -425,6 +426,13 @@ public class PantallaCrearReview extends JFrame {
 		btnSendReview.setBorder(new LineBorder(new Color(255, 175, 175), 6, true));
 		btnSendReview.setFont(GUIConstants.FONT_REGULAR);
 		btnSendReview.setBackground(Color.PINK);
+		btnSendReview.addMouseListener(new MouseAdapter() {
+	        @Override
+	        public void mouseClicked(MouseEvent e) {
+	        	//aqui va el codigo para subir la review
+	        }
+
+	    });
 		panelButtonSendReview.add(btnSendReview);
 	
 	}

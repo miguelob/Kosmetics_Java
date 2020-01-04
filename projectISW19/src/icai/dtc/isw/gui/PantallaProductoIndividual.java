@@ -99,19 +99,11 @@ public class PantallaProductoIndividual extends JFrame {
 		btnGoBack.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e){
-				if (GUIConstants.PANTALLA_ANTERIOR != null){  
-						GUIConstants.PANTALLA_ANTERIOR.repaint();
-						GUIConstants.PANTALLA_ANTERIOR.revalidate();
-						GUIConstants.PANTALLA_ANTERIOR.setVisible(true);
-						GUIConstants.PANTALLA_ANTERIOR = PantallaProductoIndividual.this;
-						PantallaProductoIndividual.this.dispose();
-				}else {
-					GUIConstants.PANTALLA_PRINCIPAL.repaint();
-					GUIConstants.PANTALLA_PRINCIPAL.revalidate();
-					GUIConstants.PANTALLA_PRINCIPAL.setVisible(true);
-					PantallaProductoIndividual.this.dispose();
-				}
-
+				GUIConstants.PANTALLA_PRINCIPAL.repaint();
+				GUIConstants.PANTALLA_PRINCIPAL.revalidate();
+				GUIConstants.PANTALLA_PRINCIPAL.setVisible(true);
+				GUIConstants.PANTALLA_ANTERIOR = PantallaProductoIndividual.this;
+				PantallaProductoIndividual.this.dispose();
 			}
 		});
 
@@ -127,12 +119,12 @@ public class PantallaProductoIndividual extends JFrame {
 		btnKosmetics.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e){
-				if (GUIConstants.PANTALLA_ANTERIOR != null)
-					 {  GUIConstants.PANTALLA_PRINCIPAL.setVisible(true);
-						GUIConstants.PANTALLA_ANTERIOR = PantallaProductoIndividual.this;
-						PantallaProductoIndividual.this.dispose();
+				GUIConstants.PANTALLA_PRINCIPAL.repaint();
+				GUIConstants.PANTALLA_PRINCIPAL.revalidate();
+				GUIConstants.PANTALLA_PRINCIPAL.setVisible(true);
+				GUIConstants.PANTALLA_ANTERIOR = PantallaProductoIndividual.this;
+				PantallaProductoIndividual.this.dispose();
 
-					 }
 
 			}
 		});
@@ -143,8 +135,7 @@ public class PantallaProductoIndividual extends JFrame {
 		MyJButton mjbtnProfile = new MyJButton("Profile");
 		mjbtnProfile.addActionListener(new ActionListener(){
 			@Override
-			public void actionPerformed(ActionEvent e)
-				{
+			public void actionPerformed(ActionEvent e){
 					User user = client.getSessionStatus();
 					if(user == null) {
 						JFrame pantallaActual = new PantallaLogin();

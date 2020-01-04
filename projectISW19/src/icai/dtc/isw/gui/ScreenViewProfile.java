@@ -108,19 +108,11 @@ public class ScreenViewProfile extends JFrame {
 		bntKosmetics.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e){
-						if(GUIConstants.PANTALLA_PRINCIPAL == null){
-							JFrame frame = new PantallaProductos();
-							frame.setVisible(true);
-
-						}
-						else{
-							GUIConstants.PANTALLA_PRINCIPAL.setVisible(true);
-
-						}
-						GUIConstants.PANTALLA_ANTERIOR = ScreenViewProfile.this;
-						ScreenViewProfile.this.dispose();
-
-
+				GUIConstants.PANTALLA_PRINCIPAL.repaint();
+				GUIConstants.PANTALLA_PRINCIPAL.revalidate();
+				GUIConstants.PANTALLA_PRINCIPAL.setVisible(true);
+				GUIConstants.PANTALLA_ANTERIOR = ScreenViewProfile.this;
+				ScreenViewProfile.this.dispose();
 			}
 		});
 

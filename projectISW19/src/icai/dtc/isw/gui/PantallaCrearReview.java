@@ -119,9 +119,11 @@ public PantallaCrearReview(ArrayList<Review> reviews, Product producto) throws H
 	bntKosmetics.addActionListener(new ActionListener(){
 		@Override
 		public void actionPerformed(ActionEvent e){
-		   GUIConstants.PANTALLA_PRINCIPAL.setVisible(true);
-		   GUIConstants.PANTALLA_ANTERIOR = PantallaCrearReview.this;
-		   PantallaCrearReview.this.dispose();
+			GUIConstants.PANTALLA_PRINCIPAL.repaint();
+			GUIConstants.PANTALLA_PRINCIPAL.revalidate();
+			GUIConstants.PANTALLA_PRINCIPAL.setVisible(true);
+			GUIConstants.PANTALLA_ANTERIOR = PantallaCrearReview.this;
+			PantallaCrearReview.this.dispose();
 		}
 	});
 

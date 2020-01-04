@@ -43,4 +43,23 @@ public class GestorErrores {
 	public static void writeReview(JFrame frame) {
 		JOptionPane.showMessageDialog(frame,"You need to be logged in to write a review.");
 	}
+	public static boolean newReview(int note, String title, String text, JFrame frame) {
+		boolean value = true;
+		if(title.isBlank() || title.isEmpty()) {
+			JOptionPane.showMessageDialog(frame,"Please, fill in the title for the review.");
+			value = false;
+		}
+		if(text.isBlank() || text.isEmpty()) {
+			JOptionPane.showMessageDialog(frame,"Please, fill in the review.");
+			value = false;
+		}
+		if(note == 0) {
+			JOptionPane.showMessageDialog(frame,"Please, choose a overall qualification of the product.\nYou can do it clicking the starts on the screen.");
+			value = false;
+		}
+		return value;
+	}
+	public static void uploadReview(JFrame frame) {
+		JOptionPane.showMessageDialog(frame,"Something went wrong. Please, try it again.");
+	}
 }

@@ -54,7 +54,7 @@ public class PantallaCrearReview extends JFrame {
 	
 	public PantallaCrearReview(ArrayList<Review> reviews, Product product) throws HeadlessException {
 	this.setIconImage((new ImageIcon("media/icons/Main_Logo.png")).getImage());
-	this.setTitle("Kosmetics.");
+	this.setTitle("Writing a review for "+product.getName());
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	setExtendedState(JFrame.MAXIMIZED_BOTH);
 	
@@ -100,7 +100,7 @@ public class PantallaCrearReview extends JFrame {
 	MyJButton bntKosmetics = new MyJButton();
 	bntKosmetics.setBorder(new MatteBorder(10, 15, 1, 1, (Color) new Color(255, 153, 153)));
 	panelKosmetics.add(bntKosmetics);
-	bntKosmetics.setText("Writing a review for "+product.getName());
+	bntKosmetics.setText("Kosmetics.");
 	bntKosmetics.setFont(GUIConstants.FONT_TITLE);
 	bntKosmetics.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 	bntKosmetics.addActionListener(new ActionListener(){

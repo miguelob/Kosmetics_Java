@@ -105,6 +105,68 @@ public class UserDAO {
         }
 		return id;
 	}
+	public static boolean setFavorite(Product product, User user, boolean value) {
+		boolean status = false;
+		final Connection con=ConnectionDAO.getInstance().getConnection();
+		try {
+			final PreparedStatement pst = con.prepareStatement("UPDATE \"Favorites\" SET \"Value\" = '"+value+"' WHERE \"ID_User\" = '"+UserDAO.getUserID(user)+"' AND \"ID_Product\" = '"+ProductDAO.getProductID(product)+"'");
+			pst.executeUpdate();
+			status = true;
+		}catch (SQLException ex) {
+			System.out.println(ex.getMessage());
+		}
+		return status;
+	}
+	public static boolean getFavoriteStatus(Product product, User user) {
+		boolean status = false;
+		final Connection con=ConnectionDAO.getInstance().getConnection();
+		try (PreparedStatement pst = con.prepareStatement("SELECT \"Value\" FROM  \"Users\" WHERE \"ID_User\" = '"+UserDAO.getUserID(user)+"' AND \"ID_Product\" = '"+ProductDAO.getProductID(product)+"'");
+				ResultSet rs = pst.executeQuery()) {
+			if (rs.next()) {
+				status = rs.getBoolean(1);
+			}
+        } catch (SQLException ex) {
+        	try{
+    			PreparedStatement pst = con.prepareStatement("INSERT INTO \"Favorites\"(\"ID_Product\", \"ID_User\", \"Value\") VALUES(?,?,?)");
+    			
+    			pst.setInt(1,ProductDAO.getProductID(product));
+    			pst.setInt(2,UserDAO.getUserID(user));
+    			pst.setBoolean(3,false);
+
+    			pst.executeUpdate();
+
+           } catch (SQLException e) {
+               System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
+           }
+            System.out.println(ex.getMessage());
+        
+        }
+		return status;
+	}
+	public static void getFavorites(User user, ArrayList<Product> list) {
+		final Connection con=ConnectionDAO.getInstance().getConnection();
+		try (PreparedStatement pst = con.prepareStatement("SELECT \"ID_Product\" FROM  \"Favorites\" WHERE \"ID_User\" = '" +UserDAO.getUserID(user)+"' AND \"Value\" = '"+true+"'");
+				ResultSet rs1 = pst.executeQuery()) {
+			while (rs1.next()) {
+				try (PreparedStatement pst2 = con.prepareStatement("SELECT * FROM \"Products\" WHERE \"ID_Product\" = '"+rs1.getInt(1)+"'");
+		                ResultSet rs = pst2.executeQuery()) {
+
+		            while (rs.next()) {
+		            	//this will change
+		            	list.add(new Product(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDouble(5), rs.getString(6),rs.getBytes(8)));
+		            }
+
+		        } catch (SQLException ex) {
+
+		            System.out.println(ex.getMessage());
+		        }
+			}
+        } catch (SQLException ex) {
+
+            System.out.println(ex.getMessage());
+        
+        }
+	}
 	private static byte[] getImageBytes(ImageIcon image) {
 		byte[] imgBytes = null;
 		try {

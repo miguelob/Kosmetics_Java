@@ -211,7 +211,7 @@ public class PantallaProductos extends JFrame {
 
 		JButton mjbtnActualize = new JButton();
 		mjbtnActualize.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		mjbtnActualize.setText("LIPSTICK");
+		mjbtnActualize.setText("Aplicar Filtros");
 		mjbtnActualize.setContentAreaFilled(false);
 		mjbtnActualize.setBorder(BorderFactory.createEmptyBorder());
 		mjbtnActualize.setFont(GUIConstants.FONT_TITLE);
@@ -235,7 +235,7 @@ public class PantallaProductos extends JFrame {
 				// }
 
 				//Popularity filtering 
-				ArrayList<Integer> seleccionPopularity = new  ArrayList<Integer>;
+				ArrayList<Integer> seleccionPopularity = new  ArrayList<Integer>();
 				boolean filtroPopularityUsado =false;//si no se ha seleccinado ningun filtro de popularidad no se aplican 
 				for(int i = 5; i< 10; i++){
 					Checkbox checkbox = (Checkbox) panel.getComponent(i);
@@ -246,7 +246,7 @@ public class PantallaProductos extends JFrame {
 				}
 				
 				//Brand filtering
-				ArrayList<String> seleccionBrands = new  ArrayList<String>;
+				ArrayList<String> seleccionBrands = new  ArrayList<String>();
 				boolean filtroBrandUsado=false;//si no se ha seleccinado ninguna marca no se aplican filtros de marcas 		
 				for(int i =11; i<panel.getComponentCount(); i++){
 					Checkbox checkbox = (Checkbox) panel.getComponent(i);
@@ -283,7 +283,7 @@ public class PantallaProductos extends JFrame {
 						}
 					}
 				}
-				
+
 				PantallaProductos.this.loadVisableProducts();			
 			}
 		});

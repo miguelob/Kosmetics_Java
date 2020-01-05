@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import icai.dtc.isw.controler.UserControler;
+import icai.dtc.isw.dao.SurveyDAO;
 import icai.dtc.isw.domain.User;
 import icai.dtc.isw.message.Message;
 import icai.dtc.isw.controler.ProductControler;
@@ -93,11 +94,15 @@ public class SocketServer extends Thread {
 		    	case "/uploadReview":
 		    		HashMap<String,Object> data = (HashMap<String,Object>) mensajeIn.getObject();
 		    		Review review = (Review) data.get("review");
-		    		//int idProduct = productControler.getProductID((Product) data.get("product"));
 		    		Product productReview = (Product) data.get("product");
+		    		HashMap<Integer,int[]> surveyAns = (HashMap<Integer,int[]>) data.get("survey");
+		    		boolean surveyUploadStatus = reviewControler.uploadSurvey(productReview,surveyAns);
 		    		boolean reviewUploadStatus = reviewControler.uploadReview(review,productReview);
+		    		boolean retorno = false;
+		    		if(surveyUploadStatus & reviewUploadStatus)
+		    			retorno = true;
 		    		mensajeOut.setContext("/getReviewUploadResponse");
-		    		session.put("uploadReview",reviewUploadStatus);
+		    		session.put("uploadReview",retorno);
 		    		mensajeOut.setSession(session);
 		    		objectOutputStream.writeObject(mensajeOut);
 		    	break;

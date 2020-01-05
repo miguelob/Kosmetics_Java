@@ -256,7 +256,11 @@ public class ScreenViewProfile extends JFrame {
 
 		currentPanel = this.getPanelFavourites();
 		panel.add(currentPanel, BorderLayout.SOUTH);
-	      }
+		this.setResizable(true);
+		this.pack();
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		this.setVisible(true);
+}
 
 
 
@@ -426,7 +430,11 @@ public void setCurrentPanel(JPanel newPanel)
 { panel.remove(currentPanel);
   panel.add(newPanel, BorderLayout.SOUTH);
   this.repaint();
-  this.setVisible(true);
+
+  this.setResizable(true);
+	this.pack();
+	this.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+	this.setVisible(true);
   currentPanel = newPanel;
 
 }

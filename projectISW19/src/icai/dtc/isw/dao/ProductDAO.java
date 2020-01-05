@@ -82,6 +82,21 @@ public class ProductDAO {
         }
 		return id;
 	}
+	public static int getSurveyID(Product product) {
+		int id = -1;
+		Connection con=ConnectionDAO.getInstance().getConnection();
+		try (PreparedStatement pst = con.prepareStatement("SELECT \"ID_Survey\" FROM  \"Products\" WHERE \"Name\" = '" + product.getName()+"'");
+				ResultSet rs = pst.executeQuery()) {
+			if (rs.next()) {
+				id = rs.getInt(1);
+			}
+        } catch (SQLException ex) {
+
+            System.out.println(ex.getMessage());
+        
+        }
+		return id;
+	}
 	public static int refreshScore(Product product) {
 		int valor = 0;
 		Connection con=ConnectionDAO.getInstance().getConnection();

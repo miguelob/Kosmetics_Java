@@ -96,8 +96,6 @@ public class SocketServer extends Thread {
 		    		//int idProduct = productControler.getProductID((Product) data.get("product"));
 		    		Product productReview = (Product) data.get("product");
 		    		boolean reviewUploadStatus = reviewControler.uploadReview(review,productReview);
-		    		if(reviewUploadStatus)
-		    			productControler.refreshScore(productReview);
 		    		mensajeOut.setContext("/getReviewUploadResponse");
 		    		session.put("uploadReview",reviewUploadStatus);
 		    		mensajeOut.setSession(session);
@@ -123,7 +121,13 @@ public class SocketServer extends Thread {
 		    		objectOutputStream.writeObject(mensajeOut);
 		    	break;
 		    	case "/refreshProductScore":
-		    	
+		    		Product producto = (Product) mensajeIn.getObject();
+		    		int score = productControler.refreshScore(producto);
+		    		mensajeOut.setContext("/getRefreshScoreResponse");
+		    		session.put("refreshScore", score);
+		    		mensajeOut.setSession(session);
+		    		objectOutputStream.defaultWriteObject();
+		    				
 		    	break;
 		    	/*case "/getUser":
 		    		userList = new ArrayList<User>();

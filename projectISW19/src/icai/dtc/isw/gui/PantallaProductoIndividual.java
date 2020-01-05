@@ -227,29 +227,51 @@ public class PantallaProductoIndividual extends JFrame {
 		});
 		panelStarsFlow.add(btnWriteanopinion);
 		
-		User user = client.getSessionStatus();
+		ImageIcon notLiked = new ImageIcon("media/icons/like-blank.png" );
+		ImageIcon liked = new ImageIcon("media/icons/like-full.png");
+		JLabel lblFavourite = new JLabel();
 		HashMap<String,Object> data = new HashMap<String,Object>();
-		data.put("user",user);
-		data.put("product", product);
-		if(user != null) {
+		if(client.getSessionStatus()!=null) {
+			User user = client.getSessionStatus();
+			data.put("user",user);
+			data.put("product", product);
+			lblFavourite.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 			boolean status = (boolean) client.clientInteraction("/getFavoriteStatus", data);
-			ImageIcon notLiked = new ImageIcon("media/icons/like-blank.png" );
-			ImageIcon liked = new ImageIcon("media/icons/like-full.png");
-			JLabel lblFavourite = new JLabel();
 			if(status) 
 				lblFavourite.setIcon(liked);
 			else
 				lblFavourite.setIcon(notLiked);
-			lblFavourite.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-			lblFavourite.addMouseListener(new MouseAdapter() {
-		        @Override
-		        public void mouseClicked(MouseEvent e) {
-		        	
-		        }
-
-		    });
-			panelStarsFlow.add(lblFavourite);
+		}else {
+			lblFavourite.setIcon(notLiked);
 		}
+		lblFavourite.addMouseListener(new MouseAdapter() {
+	        @Override
+	        public void mouseClicked(MouseEvent e) {
+	        	if(client.getSessionStatus() == null) {
+	        		GestorErrores.likeProduct(PantallaProductoIndividual.this);
+	        	}else{
+	        		boolean status = (boolean) client.clientInteraction("/getFavoriteStatus", data);
+	        		if(status) {
+	        			data.put("value", false);
+	        			boolean estado = (boolean) client.clientInteraction("/setFavoriteStatus", data);
+	        			if(estado)
+	        				lblFavourite.setIcon(notLiked);
+	        			else
+	        				GestorErrores.errorLike(PantallaProductoIndividual.this);
+	        		}else {
+	        			data.put("value", true);
+	        			boolean estado = (boolean) client.clientInteraction("/setFavoriteStatus", data);
+	        			if(estado)
+	        				lblFavourite.setIcon(liked);
+	        			else
+	        				GestorErrores.errorLike(PantallaProductoIndividual.this);
+	        		}
+	        	}
+	        }
+
+	    });
+		panelStarsFlow.add(lblFavourite);
+
 
 		//Panel containing the info about the product
 		//Includes Official description and price

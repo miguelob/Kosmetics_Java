@@ -14,7 +14,9 @@ import javax.swing.border.MatteBorder;
 
 import icai.dtc.isw.client.Client;
 import icai.dtc.isw.domain.Product;
+import icai.dtc.isw.domain.Question;
 import icai.dtc.isw.domain.Review;
+import icai.dtc.isw.domain.Survey;
 import icai.dtc.isw.domain.User;
 
 import java.awt.event.ActionEvent;
@@ -22,7 +24,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -47,6 +52,10 @@ public class PantallaCrearReview extends JFrame {
 	private User user;
 	private Client client;
 	private Product product;
+	private Survey survey;
+	private Collection<Question> questions;
+	private int contador = 0;
+	private HashMap<Integer,int[]> surveyAns = new HashMap<Integer,int[]>();
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -61,8 +70,6 @@ public class PantallaCrearReview extends JFrame {
 	}
 
 public PantallaCrearReview(ArrayList<Review> reviews, Product producto) throws HeadlessException {
-	this.pack();
-	this.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 	this.product = producto;
 	client = Client.getInstance();
 	user = client.getSessionStatus();
@@ -364,7 +371,64 @@ public PantallaCrearReview(ArrayList<Review> reviews, Product producto) throws H
 	public void addSurvey(JPanel panelSurvey)
 	{
 	//First Question
-		MyJLabel mjlblIsItLong = new MyJLabel("Is it long-lasting?");
+		survey = product.getSurvey();
+		questions = survey.getQuestions();
+		Iterator<Question> it = questions.iterator();
+		while(it.hasNext()) {
+			contador++;
+			Question question = (Question) it.next();
+			MyJLabel mjlblIsItLong = new MyJLabel(question.getQuestionText());
+			panelSurvey.add(mjlblIsItLong);
+
+			JPanel panelSurveyRadioButtons = new JPanel();
+			panelSurveyRadioButtons.setBackground(Color.WHITE);
+			panelSurvey.add(panelSurveyRadioButtons);
+
+			JRadioButton rdbtnYes = new JRadioButton("Yes");
+			rdbtnYes.setBackground(Color.WHITE);
+			rdbtnYes.setFont(GUIConstants.FONT_REGULAR);
+			rdbtnYes.addActionListener(new ActionListener(){
+				private int contador = PantallaCrearReview.this.getContador();
+				@Override
+				public void actionPerformed(ActionEvent e){
+					int[] intArray = new int[]{1,0,0}; 
+					PantallaCrearReview.this.put(contador,intArray);
+				}
+			});
+			panelSurveyRadioButtons.add(rdbtnYes);
+
+			JRadioButton rdbtnNotSure = new JRadioButton("I'm not sure");
+			rdbtnNotSure.setBackground(Color.WHITE);
+			rdbtnNotSure.setFont(GUIConstants.FONT_REGULAR);
+			rdbtnNotSure.addActionListener(new ActionListener(){
+				private int contador = PantallaCrearReview.this.getContador();
+				@Override
+				public void actionPerformed(ActionEvent e){
+					int[] intArray = new int[]{0,1,0}; 
+					PantallaCrearReview.this.put(contador,intArray);
+				}
+			});
+			panelSurveyRadioButtons.add(rdbtnNotSure);
+
+			JRadioButton rdbtnNo = new JRadioButton("No");
+			rdbtnNo.setBackground(Color.WHITE);
+			rdbtnNo.setFont(GUIConstants.FONT_REGULAR);
+			rdbtnNo.addActionListener(new ActionListener(){
+				private int contador = PantallaCrearReview.this.getContador();
+				@Override
+				public void actionPerformed(ActionEvent e){
+					int[] intArray = new int[]{0,0,1}; 
+					PantallaCrearReview.this.put(contador,intArray);
+				}
+			});
+			panelSurveyRadioButtons.add(rdbtnNo);
+
+			ButtonGroup group = new ButtonGroup();
+			group.add(rdbtnYes);
+			group.add(rdbtnNotSure);
+			group.add(rdbtnNo);
+		}
+		/*MyJLabel mjlblIsItLong = new MyJLabel("Is it long-lasting?");
 		panelSurvey.add(mjlblIsItLong);
 
 		JPanel panelSurveyRadioButtons = new JPanel();
@@ -449,7 +513,7 @@ public PantallaCrearReview(ArrayList<Review> reviews, Product producto) throws H
 		group3.add(rdbtnYes3);
 		group3.add(rdbtnNotSure3);
 		group3.add(rdbtnNo3);
-
+		*/
 		JPanel panelButtonSendReview = new JPanel();
 		panelButtonSendReview.setBackground(Color.WHITE);
 		panelSurvey.add(panelButtonSendReview);
@@ -469,13 +533,15 @@ public PantallaCrearReview(ArrayList<Review> reviews, Product producto) throws H
 		        	Review review = new Review(user,note,0,0,txtpnShareYourExperience.getText(),txtReviewTitle.getText());
 		        	data.put("review", review);
 		        	data.put("product", product);
+		        	data.put("survey", surveyAns);
 		        	boolean retorno = (boolean) client.clientInteraction("/uploadReview", data);
 		        	if(retorno) {
 		        		GestorErrores.uploadReviewOK(PantallaCrearReview.this);
-		        		PantallaCrearReview.this.dispose();
+		        		GUIConstants.PANTALLA_PRODUCTO_INDIVIDUAL.addReview(review);
 		        		GUIConstants.PANTALLA_PRODUCTO_INDIVIDUAL.repaint();
 		        		GUIConstants.PANTALLA_PRODUCTO_INDIVIDUAL.revalidate();
 		        		GUIConstants.PANTALLA_PRODUCTO_INDIVIDUAL.setVisible(true);
+		        		PantallaCrearReview.this.dispose();
 		        	}
 		        	else
 		        		GestorErrores.uploadReviewError(PantallaCrearReview.this);
@@ -484,7 +550,10 @@ public PantallaCrearReview(ArrayList<Review> reviews, Product producto) throws H
 
 	    });
 		panelButtonSendReview.add(btnSendReview);
-
+		this.setResizable(true);
+		this.pack();
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		this.setVisible(true);
 	}
 	public void setNote(int i) {
 		note = i;
@@ -521,5 +590,11 @@ public PantallaCrearReview(ArrayList<Review> reviews, Product producto) throws H
 			btnStar_4.setIcon(new ImageIcon("media/icons/star_32.png"));
 			btnStar_5.setIcon(new ImageIcon("media/icons/star_32.png"));
 		}
+	}
+	private int getContador() {
+		return contador;
+	}
+	private void put(int pos,int[] valores) {
+		surveyAns.put(pos,valores);
 	}
 }

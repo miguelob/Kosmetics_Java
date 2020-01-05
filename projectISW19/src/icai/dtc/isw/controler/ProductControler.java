@@ -16,4 +16,7 @@ public class ProductControler{
 	public int getProductID(Product product) {
 			return ProductDAO.getProductID(product);
 	}
+	public int refreshScore(Product product) {
+			return ProductDAO.refreshScore(product);
+	}
 }

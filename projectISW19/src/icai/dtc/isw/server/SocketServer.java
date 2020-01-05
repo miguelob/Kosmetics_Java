@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import icai.dtc.isw.controler.UserControler;
+import icai.dtc.isw.dao.SurveyDAO;
 import icai.dtc.isw.domain.User;
 import icai.dtc.isw.message.Message;
 import icai.dtc.isw.controler.ProductControler;
@@ -25,8 +26,7 @@ public class SocketServer extends Thread {
 	private UserControler userControler = new UserControler();
 	private ReviewControler reviewControler = new ReviewControler();
 	private ArrayList<Product> basicProductList;
-	private ArrayList<Product> fullProductList;
-	private ArrayList<Review> reviewList;
+	private ArrayList<Review> reviewList; 
 	private HashMap<String,Object> session = new HashMap<String, Object>();
 
 	private SocketServer(Socket socket) {
@@ -94,11 +94,15 @@ public class SocketServer extends Thread {
 		    	case "/uploadReview":
 		    		HashMap<String,Object> data = (HashMap<String,Object>) mensajeIn.getObject();
 		    		Review review = (Review) data.get("review");
-		    		//int idProduct = productControler.getProductID((Product) data.get("product"));
 		    		Product productReview = (Product) data.get("product");
+		    		HashMap<Integer,int[]> surveyAns = (HashMap<Integer,int[]>) data.get("survey");
+		    		boolean surveyUploadStatus = reviewControler.uploadSurvey(productReview,surveyAns);
 		    		boolean reviewUploadStatus = reviewControler.uploadReview(review,productReview);
+		    		boolean retorno = false;
+		    		if(surveyUploadStatus & reviewUploadStatus)
+		    			retorno = true;
 		    		mensajeOut.setContext("/getReviewUploadResponse");
-		    		session.put("uploadReview",reviewUploadStatus);
+		    		session.put("uploadReview",retorno);
 		    		mensajeOut.setSession(session);
 		    		objectOutputStream.writeObject(mensajeOut);
 		    	break;
@@ -111,6 +115,24 @@ public class SocketServer extends Thread {
 		    		session.put("loginUser", loginUser);
 		    		mensajeOut.setSession(session);
 		    		objectOutputStream.writeObject(mensajeOut);
+		    	break;
+		    	case "/getUserReviews":
+		    		reviewList = new ArrayList<Review>();
+		    		User tempUser = (User) mensajeIn.getObject();
+		    		reviewControler.getReviews(tempUser, reviewList);
+		    		mensajeOut.setContext("/getUserReviewsResponse");
+		    		session.put("userReviews",reviewList);
+		    		mensajeOut.setSession(session);
+		    		objectOutputStream.writeObject(mensajeOut);
+		    	break;
+		    	case "/refreshProductScore":
+		    		Product producto = (Product) mensajeIn.getObject();
+		    		int score = productControler.refreshScore(producto);
+		    		mensajeOut.setContext("/getRefreshScoreResponse");
+		    		session.put("refreshScore", score);
+		    		mensajeOut.setSession(session);
+		    		objectOutputStream.writeObject(mensajeOut);
+		    				
 		    	break;
 		    	/*case "/getUser":
 		    		userList = new ArrayList<User>();
@@ -132,7 +154,7 @@ public class SocketServer extends Thread {
 		    	
 		    	
 		    	default:
-		    		System.out.println("\nPar�metro no encontrado");
+		    		System.out.println("\nParametro no encontrado");
 		    		break;
 		    		
 		    		/*case "/getCustomer":

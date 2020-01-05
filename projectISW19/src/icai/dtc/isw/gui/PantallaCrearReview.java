@@ -472,10 +472,11 @@ public PantallaCrearReview(ArrayList<Review> reviews, Product producto) throws H
 		        	boolean retorno = (boolean) client.clientInteraction("/uploadReview", data);
 		        	if(retorno) {
 		        		GestorErrores.uploadReviewOK(PantallaCrearReview.this);
-		        		PantallaCrearReview.this.dispose();
+		        		GUIConstants.PANTALLA_PRODUCTO_INDIVIDUAL.addReview(review);
 		        		GUIConstants.PANTALLA_PRODUCTO_INDIVIDUAL.repaint();
 		        		GUIConstants.PANTALLA_PRODUCTO_INDIVIDUAL.revalidate();
 		        		GUIConstants.PANTALLA_PRODUCTO_INDIVIDUAL.setVisible(true);
+		        		PantallaCrearReview.this.dispose();
 		        	}
 		        	else
 		        		GestorErrores.uploadReviewError(PantallaCrearReview.this);

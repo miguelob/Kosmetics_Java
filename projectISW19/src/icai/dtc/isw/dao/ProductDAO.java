@@ -82,6 +82,18 @@ public class ProductDAO {
         }
 		return id;
 	}
+	public static void refreshScore(Product product) {
+		Connection con=ConnectionDAO.getInstance().getConnection();
+		try (PreparedStatement pst = con.prepareStatement("SELECT AVG(\"Score_Product\") FROM public.\"Reviews\" WHERE \"ID_Product\" = " + ProductDAO.getProductID(product));
+			 ResultSet rs = pst.executeQuery()) {
+				if(rs.next()) {
+					product.setScore(rs.getFloat(1));
+				}
+		} catch (SQLException ex) {
+
+            System.out.println(ex.getMessage());
+        }
+	}
 		
 	
 	public static void main(String[] args) {

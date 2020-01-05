@@ -63,6 +63,6 @@ public class GestorErrores {
 		JOptionPane.showMessageDialog(frame,"Something went wrong. Please, try it again.");
 	}
 	public static void uploadReviewOK(JFrame frame) {
-		JOptionPane.showMessageDialog(frame,"Review uploaded successfully.");
+		JOptionPane.showMessageDialog(frame,"Review uploaded successfully.\nSometimes, the review might not be visible untill reload.");
 	}
 }

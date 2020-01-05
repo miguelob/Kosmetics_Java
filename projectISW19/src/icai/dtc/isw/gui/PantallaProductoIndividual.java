@@ -42,6 +42,10 @@ public class PantallaProductoIndividual extends JFrame {
 	 *
 	 */
 	private static final long serialVersionUID = 1L;
+	private JPanel panelReviews;
+	private JLabel lblNumberOfReviews;
+	private int numReviews = 0;
+	private int num_updated = 0;
 
 	public PantallaProductoIndividual(Product product) throws HeadlessException {
 		GUIConstants.PANTALLA_PRODUCTO_INDIVIDUAL= this;
@@ -185,8 +189,11 @@ public class PantallaProductoIndividual extends JFrame {
 		panel_1.add(panelStarsFlow, BorderLayout.NORTH);
 
 		AutoStars.setStars(panelStarsFlow, fullProduct.getScore(),"big");
+		
+		numReviews = fullProduct.getReviews().size();
+		num_updated = numReviews+1;
 
-		JLabel lblNumberOfReviews = new JLabel("    "+fullProduct.getReviews().size()+" Reviews                            ");
+		lblNumberOfReviews = new JLabel("    "+numReviews+" Reviews                            ");
 		lblNumberOfReviews.setFont(GUIConstants.FONT_REGULAR);
 		panelStarsFlow.add(lblNumberOfReviews);
 
@@ -281,7 +288,7 @@ public class PantallaProductoIndividual extends JFrame {
 
 		//Panel for all the reviews
 		//2 columns
-		JPanel panelReviews = new JPanel();
+		panelReviews = new JPanel();
 		panelReviews.setBackground(Color.WHITE);
 		panel.add(panelReviews, BorderLayout.SOUTH);
 		panelReviews.setLayout(new GridLayout(0, 2, 50, 30));
@@ -328,6 +335,44 @@ public class PantallaProductoIndividual extends JFrame {
 		this.pack();
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		this.setVisible(true);
+	}
+	public void addReview(Review review) {
+		JPanel panelIndividualReview = new JPanel();
+		panelIndividualReview.setBackground(Color.WHITE);
+		panelReviews.add(panelIndividualReview);
+		panelIndividualReview.setLayout(new BorderLayout(0, 0));
+
+		MyJLabel mjlblReviewText = new MyJLabel(review.getComment());
+		mjlblReviewText.setFont(GUIConstants.FONT_REGULAR);
+		mjlblReviewText.setForeground(Color.LIGHT_GRAY);
+		panelIndividualReview.add(mjlblReviewText, BorderLayout.CENTER);
+
+		//Header of the review
+		//Includes username, title, number of stars
+		JPanel panelHeaderReview = new JPanel();
+		panelHeaderReview.setBackground(Color.WHITE);
+		panelIndividualReview.add(panelHeaderReview, BorderLayout.NORTH);
+		panelHeaderReview.setLayout(new BorderLayout());
+
+		//User name of the individual review's author
+		MyJLabel mjlblUsername = new MyJLabel();
+		panelHeaderReview.add(mjlblUsername, BorderLayout.WEST);
+		mjlblUsername.setText(review.getUser().getName());
+		mjlblUsername.setBorder(new MatteBorder(15, 10, 15, 15, (Color) new Color(255, 255, 255)));
+
+		//Title of the individual review
+		MyJLabel mjlblTitle = new MyJLabel();
+		panelHeaderReview.add(mjlblTitle, BorderLayout.CENTER);
+		mjlblTitle.setText(review.getCommentTitle());
+		mjlblTitle.setFont(GUIConstants.FONT_REGULAR_ITALICS);
+
+		JPanel panelStarFlowIndivifualReview = new JPanel();
+		panelStarFlowIndivifualReview.setBackground(Color.WHITE);
+		panelHeaderReview.add(panelStarFlowIndivifualReview, BorderLayout.EAST);
+
+		AutoStars.setStars(panelStarFlowIndivifualReview, review.getProductScore(),"small");
+		lblNumberOfReviews.setText("    "+(num_updated)+" Reviews                            "); 	
+		num_updated++;
 	}
 
 

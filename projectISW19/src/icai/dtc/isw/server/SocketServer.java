@@ -25,8 +25,7 @@ public class SocketServer extends Thread {
 	private UserControler userControler = new UserControler();
 	private ReviewControler reviewControler = new ReviewControler();
 	private ArrayList<Product> basicProductList;
-	private ArrayList<Product> fullProductList;
-	private ArrayList<Review> reviewList;
+	private ArrayList<Review> reviewList; 
 	private HashMap<String,Object> session = new HashMap<String, Object>();
 
 	private SocketServer(Socket socket) {
@@ -109,6 +108,15 @@ public class SocketServer extends Thread {
 		    		User loginUser = userControler.login(nameEmail, password);
 		    		mensajeOut.setContext("/getLoginResponse");
 		    		session.put("loginUser", loginUser);
+		    		mensajeOut.setSession(session);
+		    		objectOutputStream.writeObject(mensajeOut);
+		    	break;
+		    	case "/getUserReviews":
+		    		reviewList = new ArrayList<Review>();
+		    		User tempUser = (User) mensajeIn.getObject();
+		    		reviewControler.getReviews(tempUser, reviewList);
+		    		mensajeOut.setContext("/getUserReviewsResponse");
+		    		session.put("userReviews",reviewList);
 		    		mensajeOut.setSession(session);
 		    		objectOutputStream.writeObject(mensajeOut);
 		    	break;

@@ -78,6 +78,9 @@ public class Client {
 				userStatus = (User) mensajeVuelta.getSession().get("loginUser");
 				response = userStatus;
 			break;
+			case "/getUserReviewsResponse":
+				response = (ArrayList<Review>) mensajeVuelta.getSession().get("userReviews");
+			break;
 			default:
 				Logger.getRootLogger().info("Option not found");
 				System.out.println("\nError a la vuelta");

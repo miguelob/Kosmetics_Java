@@ -1,10 +1,11 @@
 package icai.dtc.isw.gui;
 import java.awt.Color;
 import java.awt.LayoutManager;
+import java.io.Serializable;
 
 import javax.swing.JPanel;
 
-public class MyJPanel extends JPanel {
+public class MyJPanel extends JPanel implements Serializable {
 
 	public MyJPanel() {
 		this.changeBackgroundColor();

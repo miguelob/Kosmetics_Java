@@ -294,8 +294,78 @@ public class ScreenViewProfile extends JFrame {
 		panelFavourites.setBorder(new MatteBorder(20, 1, 1, 45, (Color) new Color(255, 255, 255)));
 		panelFavourites.setBackground(new Color(255, 255, 255));
 
+		ArrayList<Product> products = (ArrayList<Product>) client.clientInteraction("/getFavoriteProducts", client.getSessionStatus());
+		if(products != null) {
+			for(int i = 0; i<products.size();i++) {
+				//Panel for every product available. Includes name, brand, category, description, price
+		          MyJPanel productPanel = new MyJPanel();
+		          productPanel.setLayout(new GridLayout(1, 0));
+		          Product product = (Product) products.get(i);
 
-		Iterator<Product> it = products.iterator();
+		          //Button with the photo of the product
+		          //Takes you to the product's screen
+		          MyJButton btnProduct = new MyJButton(Images.resize(product.getProductImage(),300,200));
+		          btnProduct.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		          btnProduct.addActionListener(new ActionListener() {
+		        	  @Override
+		        	  public void actionPerformed(ActionEvent e) {
+		        		  PantallaProductoIndividual frame = new PantallaProductoIndividual(product);
+		        		  frame.setVisible(true);
+		        		  ScreenViewProfile.this.dispose();
+		        		  //System.exit(0);
+
+		        	  }
+		          });
+		          productPanel.add(btnProduct);
+
+		          //Panel for the name, brand, category and type
+		          MyJPanel namePanel = new MyJPanel();
+		          namePanel.setLayout(new GridLayout(0, 1));
+		          //Name of the product
+		          MyJLabel lblName = new MyJLabel(product.getName());
+		          lblName.setFont(GUIConstants.FONT_MEDIUM_TITLE);
+		          namePanel.add(lblName);
+		          //Brand of the product
+		          MyJLabel lblBrand = new MyJLabel(product.getBrand());
+		          lblBrand.setFont(GUIConstants.FONT_TITLE);
+		          namePanel.add(lblBrand);
+		          btnProduct.setHorizontalAlignment(SwingConstants.CENTER);
+		          //Category of the product
+		          namePanel.add(new MyJLabel(product.getCategory()));
+		          //Price of the product
+		          MyJLabel lblPrice = new MyJLabel(String.valueOf(product.getPrice()) + " $");
+		          lblPrice.setFont(GUIConstants.FONT_MEDIUM_TITLE);
+		          lblPrice.setForeground(new Color(255, 113, 113));
+		          namePanel.add(lblPrice);
+		          productPanel.add(namePanel);
+		          
+		          MyJPanel reviewPanel = new MyJPanel();
+				  reviewPanel.setLayout(new GridLayout(0, 1));
+				  reviewPanel.setBorder(new MatteBorder(0, 0, 0, 20, Color.WHITE));
+				  reviewPanel.setBackground(Color.WHITE);
+				  //reviewPanel.setBorder(new MatteBorder(1, 1, 1, 50, Color.BLACK));
+		          //Panel for the stars
+				  MyJPanel starsPanel = new MyJPanel();
+				  starsPanel.setBackground(Color.WHITE);
+		          AutoStars.setStars(starsPanel, product.getScore(),"big");
+		          reviewPanel.add(starsPanel);
+		          ArrayList<String> features = product.getFeatures();
+		          for(int k = 0; k<features.size();k++) {
+		        	  MyJLabel feature = new MyJLabel(features.get(k));
+		              feature.setForeground(Color.DARK_GRAY);
+		              reviewPanel.add(feature);
+		          }
+		          btnProduct.setHorizontalAlignment(SwingConstants.CENTER);
+		          productPanel.add(reviewPanel, BorderLayout.EAST);
+		          btnProduct.setHorizontalAlignment(SwingConstants.CENTER);
+
+		          panelFavourites.add(productPanel);
+				
+				
+				
+			}
+		}
+		/*Iterator<Product> it = products.iterator();
 	      while (it.hasNext())
 	      {	 //Panel for every product available. Includes name, brand, category, description, price
 	          MyJPanel productPanel = new MyJPanel();
@@ -350,14 +420,12 @@ public class ScreenViewProfile extends JFrame {
 	          reviewPanel.add(feature_2);
 	          MyJLabel feature_3 = new MyJLabel("Matte");
 	          feature_2.setForeground(Color.DARK_GRAY);
-	          reviewPanel.add(feature_3);*/
+	          reviewPanel.add(feature_3);
 
 
 	          btnProduct.setHorizontalAlignment(SwingConstants.CENTER);
 
-	          panelFavourites.add(productPanel);
-
-	}
+	          panelFavourites.add(productPanel);*/
 	return panelFavourites;
 }
 

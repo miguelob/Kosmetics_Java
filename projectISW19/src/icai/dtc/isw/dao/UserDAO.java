@@ -105,6 +105,91 @@ public class UserDAO {
         }
 		return id;
 	}
+	public static boolean setFavorite(Product product, User user, boolean value) {
+		boolean status = false;
+		final Connection con=ConnectionDAO.getInstance().getConnection();
+		try {
+			final PreparedStatement pst = con.prepareStatement("UPDATE \"Favorites\" SET \"Value\" = '"+value+"' WHERE \"ID_User\" = '"+UserDAO.getUserID(user)+"' AND \"ID_Product\" = '"+ProductDAO.getProductID(product)+"'");
+			pst.executeUpdate();
+			status = true;
+		}catch (SQLException ex) {
+			System.out.println(ex.getMessage());
+		}
+		return status;
+	}
+	public static boolean getFavoriteStatus(Product product, User user) {
+		boolean status = false;
+		final Connection con=ConnectionDAO.getInstance().getConnection();
+		try (PreparedStatement pst = con.prepareStatement("SELECT \"Value\" FROM  \"Favorites\" WHERE \"ID_User\" = '"+UserDAO.getUserID(user)+"' AND \"ID_Product\" = '"+ProductDAO.getProductID(product)+"'");
+				ResultSet rs = pst.executeQuery()) {
+			if (rs.next()) {
+				status = rs.getBoolean(1);
+			}
+        } catch (SQLException ex) {
+        	try{
+    			PreparedStatement pst = con.prepareStatement("INSERT INTO \"Favorites\"(\"ID_Product\", \"ID_User\", \"Value\") VALUES(?,?,?)");
+    			
+    			pst.setInt(1,ProductDAO.getProductID(product));
+    			pst.setInt(2,UserDAO.getUserID(user));
+    			pst.setBoolean(3,false);
+
+    			pst.executeUpdate();
+
+           } catch (SQLException e) {
+               System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
+           }
+            System.out.println(ex.getMessage());
+        
+        }
+		return status;
+	}
+	public static void getFavorites(User user, ArrayList<Product> list) {
+		final Connection con=ConnectionDAO.getInstance().getConnection();
+		try (PreparedStatement pst = con.prepareStatement("SELECT \"ID_Product\" FROM  \"Favorites\" WHERE \"ID_User\" = '" +UserDAO.getUserID(user)+"' AND \"Value\" = '"+true+"'");
+				ResultSet rs2 = pst.executeQuery()) {
+			while (rs2.next()) {
+				try (PreparedStatement pst2 = con.prepareStatement("SELECT * FROM \"Products\" WHERE \"ID_Product\" = '"+rs2.getInt(1)+"'");
+		                ResultSet rs = pst2.executeQuery()) {
+
+		            while (rs.next()) {
+		            	//this will change
+		            	list.add(new Product(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDouble(5), rs.getString(6),rs.getBytes(8)));
+		            }
+
+		        } catch (SQLException ex) {
+
+		            System.out.println(ex.getMessage());
+		        }
+			}
+			for(int i = 0 ; i<list.size();i++) {
+				try (PreparedStatement pst3 = con.prepareStatement("SELECT AVG(\"Score_Product\") FROM public.\"Reviews\" WHERE \"ID_Product\" = " + ProductDAO.getProductID(list.get(i)));
+					 ResultSet rs3 = pst.executeQuery()) {
+						if(rs3.next()) {
+							list.get(i).setScore(rs3.getFloat(1));
+						}
+				} catch (SQLException ex) {
+		
+		            System.out.println(ex.getMessage());
+		        }
+				//FIRST QUERY OF CHARACTERISTICS
+				try (PreparedStatement pst4 = con.prepareStatement("SELECT \"Characteristic\" FROM public.\"Products\" as A1 inner join \"IDs_Prod_Charac\" as B1 on A1.\"ID_Product\" = B1.\"ID_Product\" inner join \"Characteristics\" AS c1 on B1.\"ID_Characteristic\" = C1.\"ID_Characteristic\" WHERE A1.\"ID_Product\" =" + list.get(i).getId());
+						ResultSet rs4 = pst4.executeQuery()) {
+		
+		            while (rs4.next()) {
+		            	list.get(i).addFeature(rs4.getString(1));
+		            }
+		
+		        } catch (SQLException ex) {
+		
+		            System.out.println(ex.getMessage());
+		        }
+			}
+        } catch (SQLException ex) {
+
+            System.out.println(ex.getMessage());
+        
+        }
+	}
 	private static byte[] getImageBytes(ImageIcon image) {
 		byte[] imgBytes = null;
 		try {

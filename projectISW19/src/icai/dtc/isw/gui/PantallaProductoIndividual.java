@@ -7,16 +7,20 @@ import java.awt.GridLayout;
 import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 
 import java.awt.BorderLayout;
@@ -135,7 +139,7 @@ public class PantallaProductoIndividual extends JFrame {
 
 			}
 		});
-		
+
 
 		//Profile button
 		//Takes the user to his profile
@@ -192,7 +196,7 @@ public class PantallaProductoIndividual extends JFrame {
 		panel_1.add(panelStarsFlow, BorderLayout.NORTH);
 
 		AutoStars.setStars(panelStarsFlow, fullProduct.getScore(),"big");
-		
+
 		numReviews = fullProduct.getReviews().size();
 		num_updated = numReviews+1;
 
@@ -222,6 +226,52 @@ public class PantallaProductoIndividual extends JFrame {
 			}
 		});
 		panelStarsFlow.add(btnWriteanopinion);
+		
+		ImageIcon notLiked = new ImageIcon("media/icons/like-blank.png" );
+		ImageIcon liked = new ImageIcon("media/icons/like-full.png");
+		JLabel lblFavourite = new JLabel();
+		HashMap<String,Object> data = new HashMap<String,Object>();
+		if(client.getSessionStatus()!=null) {
+			User user = client.getSessionStatus();
+			data.put("user",user);
+			data.put("product", product);
+			lblFavourite.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			boolean status = (boolean) client.clientInteraction("/getFavoriteStatus", data);
+			if(status) 
+				lblFavourite.setIcon(liked);
+			else
+				lblFavourite.setIcon(notLiked);
+		}else {
+			lblFavourite.setIcon(notLiked);
+		}
+		lblFavourite.addMouseListener(new MouseAdapter() {
+	        @Override
+	        public void mouseClicked(MouseEvent e) {
+	        	if(client.getSessionStatus() == null) {
+	        		GestorErrores.likeProduct(PantallaProductoIndividual.this);
+	        	}else{
+	        		boolean status = (boolean) client.clientInteraction("/getFavoriteStatus", data);
+	        		if(status) {
+	        			data.put("value", false);
+	        			boolean estado = (boolean) client.clientInteraction("/setFavoriteStatus", data);
+	        			if(estado)
+	        				lblFavourite.setIcon(notLiked);
+	        			else
+	        				GestorErrores.errorLike(PantallaProductoIndividual.this);
+	        		}else {
+	        			data.put("value", true);
+	        			boolean estado = (boolean) client.clientInteraction("/setFavoriteStatus", data);
+	        			if(estado)
+	        				lblFavourite.setIcon(liked);
+	        			else
+	        				GestorErrores.errorLike(PantallaProductoIndividual.this);
+	        		}
+	        	}
+	        }
+
+	    });
+		panelStarsFlow.add(lblFavourite);
+
 
 		//Panel containing the info about the product
 		//Includes Official description and price
@@ -231,10 +281,13 @@ public class PantallaProductoIndividual extends JFrame {
 		panelInfo.setBackground(Color.WHITE);
 
 		//Label for the official description of the product
-		JLabel lblDescription = new JLabel();
-		panelInfo.add(lblDescription);
-		lblDescription.setText(fullProduct.getDescription());
-		lblDescription.setFont(GUIConstants.FONT_REGULAR);
+			JTextArea lblDescription = new JTextArea();
+			lblDescription.setLineWrap(true);
+			lblDescription.setWrapStyleWord(true);
+			lblDescription.setEditable(false);
+			panelInfo.add(lblDescription);
+			lblDescription.setText(fullProduct.getDescription());
+			lblDescription.setFont(GUIConstants.FONT_REGULAR);
 
 
 		JLabel lblPrice = new JLabel(Double.toString(fullProduct.getPrice()) + " $");
@@ -374,7 +427,7 @@ public class PantallaProductoIndividual extends JFrame {
 		panelHeaderReview.add(panelStarFlowIndivifualReview, BorderLayout.EAST);
 
 		AutoStars.setStars(panelStarFlowIndivifualReview, review.getProductScore(),"small");
-		lblNumberOfReviews.setText("    "+(num_updated)+" Reviews                            "); 	
+		lblNumberOfReviews.setText("    "+(num_updated)+" Reviews                            ");
 		num_updated++;
 		GUIConstants.PANTALLA_PRINCIPAL.revalidate();
 		GUIConstants.PANTALLA_PRINCIPAL.repaint();

@@ -43,6 +43,12 @@ public class GestorErrores {
 	public static void writeReview(JFrame frame) {
 		JOptionPane.showMessageDialog(frame,"You need to be logged in to write a review.");
 	}
+	public static void likeProduct(JFrame frame) {
+		JOptionPane.showMessageDialog(frame,"You need to be logged in to mark this product as favourite.");
+	}
+	public static void errorLike(JFrame frame) {
+		JOptionPane.showMessageDialog(frame,"There was an error while marking the product as favourite.\nPlease, try it again.S");
+	}
 	public static boolean newReview(int note, String title, String text, JFrame frame) {
 		boolean value = true;
 		if(title.isBlank() || title.isEmpty() || title.contentEquals("Give a title to your review")){

@@ -134,6 +134,36 @@ public class SocketServer extends Thread {
 		    		objectOutputStream.writeObject(mensajeOut);
 		    				
 		    	break;
+		    	case "/setFavoriteStatus":
+		    		HashMap<String,Object> favData = (HashMap<String,Object>) mensajeIn.getObject();
+		    		Product favProduct = (Product) favData.get("product");
+		    		boolean favStatus = (boolean) favData.get("value");
+		    		User favUser = (User) favData.get("user");
+		    		boolean status = userControler.setFavorite(favProduct,favUser,favStatus);
+		    		mensajeOut.setContext("/setFavoriteStatusResponse");
+		    		session.put("favStatus", status);
+		    		mensajeOut.setSession(session);
+		    		objectOutputStream.writeObject(mensajeOut);
+		    	break;
+		    	case "/getFavoriteStatus":
+		    		HashMap<String,Object> dataTemp = (HashMap<String,Object>) mensajeIn.getObject();
+		    		Product productQue = (Product) dataTemp.get("product");
+		    		User userQue = (User) dataTemp.get("user");
+		    		boolean retornoTemp = userControler.getFavoriteStatus(productQue,userQue);
+		    		mensajeOut.setContext("/getFavoriteStatusResponse");
+		    		session.put("getFavStatus", retornoTemp);
+		    		mensajeOut.setSession(session);
+		    		objectOutputStream.writeObject(mensajeOut);
+		    	break;
+		    	case "/getFavoriteProducts":
+		    		User queryUser = (User) mensajeIn.getObject();
+		    		ArrayList<Product> favorites = new ArrayList<Product>();
+		    		userControler.getFavorites(queryUser, favorites);
+		    		mensajeOut.setContext("/getFavoritesResponse");
+		    		session.put("getFavorites", favorites);
+		    		mensajeOut.setSession(session);
+		    		objectOutputStream.writeObject(mensajeOut);
+		    	break;
 		    	/*case "/getUser":
 		    		userList = new ArrayList<User>();
 		    		//userControler.getUser(userList);

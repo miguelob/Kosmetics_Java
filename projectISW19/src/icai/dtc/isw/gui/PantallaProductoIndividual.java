@@ -46,12 +46,15 @@ public class PantallaProductoIndividual extends JFrame {
 	private JLabel lblNumberOfReviews;
 	private int numReviews = 0;
 	private int num_updated = 0;
+	private JPanel panelStarsFlow;
+	private Client client;
+	private Product fullProduct;
 
 	public PantallaProductoIndividual(Product product) throws HeadlessException {
 		GUIConstants.PANTALLA_PRODUCTO_INDIVIDUAL= this;
 		GUIConstants.PANTALLA_ANTERIOR = this;
-		Client client = Client.getInstance();
-		Product fullProduct = (Product) client.clientInteraction("/getProductFullInfo",product);
+		client = Client.getInstance();
+		fullProduct = (Product) client.clientInteraction("/getProductFullInfo",product);
 		ArrayList<Review> reviews = fullProduct.getReviews();
 		this.setIconImage((new ImageIcon("media/icons/Main_Logo.png")).getImage());
 		this.setTitle("Kosmetics: " + fullProduct.getName());
@@ -182,7 +185,7 @@ public class PantallaProductoIndividual extends JFrame {
 		panel_1.setLayout(new BorderLayout(0, 0));
 
 		//Panel containing the average number stars that users have given the product
-		JPanel panelStarsFlow = new JPanel();
+		panelStarsFlow = new JPanel();
 		panelStarsFlow.setLayout(new FlowLayout(FlowLayout.LEFT));
 		panelStarsFlow.setToolTipText("");
 		panelStarsFlow.setBackground(Color.WHITE);
@@ -373,6 +376,8 @@ public class PantallaProductoIndividual extends JFrame {
 		AutoStars.setStars(panelStarFlowIndivifualReview, review.getProductScore(),"small");
 		lblNumberOfReviews.setText("    "+(num_updated)+" Reviews                            "); 	
 		num_updated++;
+		GUIConstants.PANTALLA_PRINCIPAL.revalidate();
+		GUIConstants.PANTALLA_PRINCIPAL.repaint();
 	}
 
 

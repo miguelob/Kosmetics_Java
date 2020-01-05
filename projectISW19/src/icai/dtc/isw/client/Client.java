@@ -16,6 +16,7 @@ import org.apache.log4j.Logger;
 
 import icai.dtc.isw.configuration.PropertiesISW;
 import icai.dtc.isw.domain.User;
+import icai.dtc.isw.gui.AutoStars;
 import icai.dtc.isw.domain.Product;
 import icai.dtc.isw.domain.Review;
 import icai.dtc.isw.message.Message;
@@ -80,6 +81,9 @@ public class Client {
 			break;
 			case "/getUserReviewsResponse":
 				response = (ArrayList<Review>) mensajeVuelta.getSession().get("userReviews");
+			break;
+			case "/getRefreshScoreResponse":
+				response = (int) mensajeVuelta.getSession().get("refreshScore");
 			break;
 			default:
 				Logger.getRootLogger().info("Option not found");

@@ -126,7 +126,7 @@ public class SocketServer extends Thread {
 		    		mensajeOut.setContext("/getRefreshScoreResponse");
 		    		session.put("refreshScore", score);
 		    		mensajeOut.setSession(session);
-		    		objectOutputStream.defaultWriteObject();
+		    		objectOutputStream.writeObject(mensajeOut);
 		    				
 		    	break;
 		    	/*case "/getUser":
@@ -149,7 +149,7 @@ public class SocketServer extends Thread {
 		    	
 		    	
 		    	default:
-		    		System.out.println("\nPar�metro no encontrado");
+		    		System.out.println("\nParametro no encontrado");
 		    		break;
 		    		
 		    		/*case "/getCustomer":

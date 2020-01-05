@@ -85,6 +85,15 @@ public class Client {
 			case "/getRefreshScoreResponse":
 				response = (int) mensajeVuelta.getSession().get("refreshScore");
 			break;
+			case "/setFavoriteStatusResponse":
+				response = (boolean) mensajeVuelta.getSession().get("favStatus");
+			break;
+			case "/getFavoriteStatusResponse":
+				response = (boolean) mensajeVuelta.getSession().get("getFavStatus");
+			break;
+			case "/getFavoritesResponse":
+				response = (ArrayList<Product>) mensajeVuelta.getSession().get("getFavorites");
+			break;
 			default:
 				Logger.getRootLogger().info("Option not found");
 				System.out.println("\nError a la vuelta");

@@ -163,7 +163,6 @@ public class SocketServer extends Thread {
 		    		session.put("getFavorites", favorites);
 		    		mensajeOut.setSession(session);
 		    		objectOutputStream.writeObject(mensajeOut);
-		    		
 		    	break;
 		    	/*case "/getUser":
 		    		userList = new ArrayList<User>();

@@ -14,7 +14,9 @@ import javax.swing.border.MatteBorder;
 
 import icai.dtc.isw.client.Client;
 import icai.dtc.isw.domain.Product;
+import icai.dtc.isw.domain.Question;
 import icai.dtc.isw.domain.Review;
+import icai.dtc.isw.domain.Survey;
 import icai.dtc.isw.domain.User;
 
 import java.awt.event.ActionEvent;
@@ -22,7 +24,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -47,6 +51,8 @@ public class PantallaCrearReview extends JFrame {
 	private User user;
 	private Client client;
 	private Product product;
+	private Survey survey;
+	private Collection<Question> questions;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -364,7 +370,39 @@ public PantallaCrearReview(ArrayList<Review> reviews, Product producto) throws H
 	public void addSurvey(JPanel panelSurvey)
 	{
 	//First Question
-		MyJLabel mjlblIsItLong = new MyJLabel("Is it long-lasting?");
+		survey = product.getSurvey();
+		questions = survey.getQuestions();
+		Iterator<Question> it = questions.iterator();
+		while(it.hasNext()) {
+			Question question = (Question) it.next();
+			MyJLabel mjlblIsItLong = new MyJLabel(question.getQuestionText());
+			panelSurvey.add(mjlblIsItLong);
+
+			JPanel panelSurveyRadioButtons = new JPanel();
+			panelSurveyRadioButtons.setBackground(Color.WHITE);
+			panelSurvey.add(panelSurveyRadioButtons);
+
+			JRadioButton rdbtnYes = new JRadioButton("Yes");
+			rdbtnYes.setBackground(Color.WHITE);
+			rdbtnYes.setFont(GUIConstants.FONT_REGULAR);
+			panelSurveyRadioButtons.add(rdbtnYes);
+
+			JRadioButton rdbtnNotSure = new JRadioButton("I'm not sure");
+			rdbtnNotSure.setBackground(Color.WHITE);
+			rdbtnNotSure.setFont(GUIConstants.FONT_REGULAR);
+			panelSurveyRadioButtons.add(rdbtnNotSure);
+
+			JRadioButton rdbtnNo = new JRadioButton("No");
+			rdbtnNo.setBackground(Color.WHITE);
+			rdbtnNo.setFont(GUIConstants.FONT_REGULAR);
+			panelSurveyRadioButtons.add(rdbtnNo);
+
+			ButtonGroup group = new ButtonGroup();
+			group.add(rdbtnYes);
+			group.add(rdbtnNotSure);
+			group.add(rdbtnNo);
+		}
+		/*MyJLabel mjlblIsItLong = new MyJLabel("Is it long-lasting?");
 		panelSurvey.add(mjlblIsItLong);
 
 		JPanel panelSurveyRadioButtons = new JPanel();
@@ -449,7 +487,7 @@ public PantallaCrearReview(ArrayList<Review> reviews, Product producto) throws H
 		group3.add(rdbtnYes3);
 		group3.add(rdbtnNotSure3);
 		group3.add(rdbtnNo3);
-
+		*/
 		JPanel panelButtonSendReview = new JPanel();
 		panelButtonSendReview.setBackground(Color.WHITE);
 		panelSurvey.add(panelButtonSendReview);

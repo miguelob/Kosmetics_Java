@@ -36,6 +36,8 @@ public class ScreenViewProfile extends JFrame {
 	User user;
 
 	public ScreenViewProfile() throws HeadlessException {
+		this.pack();
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		Client client = Client.getInstance();
 		user = (User) client.getSessionStatus();
 		this.setIconImage((new ImageIcon("media/icons/Main_Logo.png")).getImage());
@@ -77,7 +79,7 @@ public class ScreenViewProfile extends JFrame {
 		btnGoBack.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e){
-						if(GUIConstants.PANTALLA_PRINCIPAL == null){
+						/*if(GUIConstants.PANTALLA_PRINCIPAL == null){
 							JFrame frame = new PantallaProductos();
 							frame.setVisible(true);
 
@@ -87,8 +89,11 @@ public class ScreenViewProfile extends JFrame {
 
 						}
 						GUIConstants.PANTALLA_ANTERIOR = ScreenViewProfile.this;
-						ScreenViewProfile.this.dispose();
-
+						ScreenViewProfile.this.dispose();*/
+				GUIConstants.PANTALLA_ANTERIOR.repaint();
+				GUIConstants.PANTALLA_ANTERIOR.revalidate();
+				GUIConstants.PANTALLA_ANTERIOR.setVisible(true);
+				ScreenViewProfile.this.dispose();
 
 			}
 		});
@@ -103,19 +108,11 @@ public class ScreenViewProfile extends JFrame {
 		bntKosmetics.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e){
-						if(GUIConstants.PANTALLA_PRINCIPAL == null){
-							JFrame frame = new PantallaProductos();
-							frame.setVisible(true);
-
-						}
-						else{
-							GUIConstants.PANTALLA_PRINCIPAL.setVisible(true);
-
-						}
-						GUIConstants.PANTALLA_ANTERIOR = ScreenViewProfile.this;
-						ScreenViewProfile.this.dispose();
-
-
+				GUIConstants.PANTALLA_PRINCIPAL.repaint();
+				GUIConstants.PANTALLA_PRINCIPAL.revalidate();
+				GUIConstants.PANTALLA_PRINCIPAL.setVisible(true);
+				GUIConstants.PANTALLA_ANTERIOR = ScreenViewProfile.this;
+				ScreenViewProfile.this.dispose();
 			}
 		});
 

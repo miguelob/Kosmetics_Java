@@ -28,9 +28,9 @@ public class ReviewDAO {
 		boolean status = false;
 		final Connection con=ConnectionDAO.getInstance().getConnection();
 		try{
-			final PreparedStatement pst = con.prepareStatement("INSERT INTO \"Reviews\"(\"ID_Product\", \"ID_User\", \"Title_Comment\", \"Comment\", \"Score_Product\", \"Score_Review\", \"Score_Review_Participants\",) VALUES(?,?,?,?,?,?,?)");
+			final PreparedStatement pst = con.prepareStatement("INSERT INTO \"Reviews\"(\"ID_Product\", \"ID_User\", \"Title_Comment\", \"Comment\", \"Score_Product\", \"Score_Review\", \"Score_Review_Participants\") VALUES(?,?,?,?,?,?,?)");
 			
-			pst.setInt(1, product.getId());
+			pst.setInt(1,ProductDAO.getProductID(product));
 			pst.setInt(2,UserDAO.getUserID(review.getUser()));
 			pst.setString(3,review.getCommentTitle());
 			pst.setString(4, review.getComment());

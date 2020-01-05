@@ -93,7 +93,7 @@ public class UserDAO {
 	public static int getUserID(User user) {
 		int id = -1;
 		Connection con=ConnectionDAO.getInstance().getConnection();
-		try (PreparedStatement pst = con.prepareStatement("SELECT \"ID_User\" FROM  \"Products\" WHERE \"Name\" = " + user.getName());
+		try (PreparedStatement pst = con.prepareStatement("SELECT \"ID_User\" FROM  \"Users\" WHERE \"Name\" = '" + user.getName()+"'");
 				ResultSet rs = pst.executeQuery()) {
 			if (rs.next()) {
 				id = rs.getInt(1);

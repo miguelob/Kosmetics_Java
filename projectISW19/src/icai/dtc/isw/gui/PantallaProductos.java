@@ -47,6 +47,8 @@ public class PantallaProductos extends JFrame {
 			public void run() {
 				try {
 					PantallaProductos frame = new PantallaProductos();
+					frame.pack();
+					frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 					frame.setIconImage((new ImageIcon("media/icons/Main_Logo.png")).getImage());
 					frame.setTitle("Kosmetics.");
 					frame.setVisible(true);
@@ -64,6 +66,7 @@ public class PantallaProductos extends JFrame {
 		initialiseProducts();
 		GUIConstants.PANTALLA_PRODUCTOS = this;
 		GUIConstants.PANTALLA_PRINCIPAL = this;
+		GUIConstants.PANTALLA_ANTERIOR = this;
 		BorderLayout borderLayout = (BorderLayout) getContentPane().getLayout();
 		borderLayout.setVgap(20);
 		borderLayout.setHgap(25);
